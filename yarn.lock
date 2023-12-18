@@ -1717,6 +1717,14 @@
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
   integrity sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==
 
+"@storybook/addon-a11y@^7.6.5":
+  version "7.6.5"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-7.6.5.tgz#73c8fba2e7169e0e61304953e73e8b428db71742"
+  integrity sha512-mbwjgdlNDcp0nL29s9FoF+HEFmWn0fMXfTcgMNjQWHs+sfmOy6w3llk0n0RJeDjc+x2Y8Oj2c+JwLU1hhJBnag==
+  dependencies:
+    "@storybook/addon-highlight" "7.6.5"
+    axe-core "^4.2.0"
+
 "@storybook/addon-actions@7.5.2":
   version "7.5.2"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-7.5.2.tgz#8b692a4c4d62115ed3b93f9fd2aeecdc0a02e3f5"
@@ -1826,6 +1834,13 @@
     "@storybook/core-events" "7.5.2"
     "@storybook/global" "^5.0.0"
     "@storybook/preview-api" "7.5.2"
+
+"@storybook/addon-highlight@7.6.5":
+  version "7.6.5"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-highlight/-/addon-highlight-7.6.5.tgz#588818963c48cc1d0f06a20323e72e3f0077b7c4"
+  integrity sha512-CxzmIb30F9nLPQwT0lCPYhOAwGlGF4IkgkO8hYA7VfGCGUkJZEyyN/YkP/ZCUSdCIRChDBouR3KiFFd4mDFKzg==
+  dependencies:
+    "@storybook/global" "^5.0.0"
 
 "@storybook/addon-interactions@^7.5.2":
   version "7.5.2"
@@ -3039,6 +3054,11 @@ available-typed-arrays@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/available-typed-arrays/-/available-typed-arrays-1.0.5.tgz#92f95616501069d07d10edb2fc37d3e1c65123b7"
   integrity sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==
+
+axe-core@^4.2.0:
+  version "4.8.2"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.8.2.tgz#2f6f3cde40935825cf4465e3c1c9e77b240ff6ae"
+  integrity sha512-/dlp0fxyM3R8YW7MFzaHWXrf4zzbr0vaYb23VBFCl83R7nWNPg/yaQw2Dc8jzCMmDVLhSdzH8MjrsuIUuvX+6g==
 
 babel-core@^7.0.0-bridge.0:
   version "7.0.0-bridge.0"
