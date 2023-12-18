@@ -5,16 +5,13 @@ import { updateTaskState } from "../lib/store";
 
 export default function TaskList() {
   // We're retrieving our state from the store
-  const tasks = useSelector((state) => {
-    const tasksInOrder = [
-      ...state.taskbox.tasks.filter((t) => t.state === "TASK_PINNED"),
-      ...state.taskbox.tasks.filter((t) => t.state !== "TASK_PINNED"),
-    ];
-    const filteredTasks = tasksInOrder.filter(
-      (t) => t.state === "TASK_INBOX" || t.state === "TASK_PINNED",
-    );
-    return filteredTasks;
-  });
+  const tasks = useSelector((state) => [...state.taskbox.tasks]);
+  const tasksInOrder = [
+    ...tasks.filter((t) => t.state === "TASK_PINNED"), 
+    ...tasks.filter((t) => t.state !== "TASK_PINNED"),
+  ];
+  const filteredTasks = tasksInOrder.filter((t) => t.state === "TASK_INBOX" || t.state === "TASK_PINNED");
+  const archivedTasks = tasks.filter((t) => t.state === "TASK_ARCHIVED");
 
   const { status } = useSelector((state) => state.taskbox);
 
@@ -62,7 +59,15 @@ export default function TaskList() {
 
   return (
     <div className="list-items" data-testid="success" key={"success"}>
-      {tasks.map((task) => (
+      {filteredTasks.map((task) => (
+        <Task
+          key={task.id}
+          task={task}
+          onPinTask={(task) => pinTask(task)}
+          onArchiveTask={(task) => archiveTask(task)}
+        />
+      ))}
+      {archivedTasks.map((task) => (
         <Task
           key={task.id}
           task={task}
