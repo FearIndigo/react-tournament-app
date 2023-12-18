@@ -78,6 +78,28 @@ export const WithPinnedTasks = {
   ],
 };
 
+export const WithArchivedTasks = {
+  decorators: [
+    (story) => {
+      const archivedtasks = [
+        ...MockedState.tasks.slice(0, 5),
+        { id: "6", title: "Task 6 (archived)", state: "TASK_ARCHIVED" },
+      ];
+
+      return (
+        <Mockstore
+          taskboxState={{
+            ...MockedState,
+            tasks: archivedtasks,
+          }}
+        >
+          {story()}
+        </Mockstore>
+      );
+    },
+  ],
+};
+
 export const Loading = {
   decorators: [
     (story) => (
