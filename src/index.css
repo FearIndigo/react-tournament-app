@@ -289,6 +289,10 @@ textarea {
   flex: 1;
 }
 
+.list-item .title input {
+  text-overflow: ellipsis;
+}
+
 .list-item input[type="text"] {
   background: transparent;
   width: 100%;
