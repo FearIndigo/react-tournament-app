@@ -11,7 +11,7 @@ function Member({ teamId, showMembers, readOnly }: TeamProps) {
   return (
     <div className="flex flex-col">
       <h3>Team Name</h3>
-      {showMembers ? <MemberList members={[0, 1, 2]} readOnly={readOnly} /> : null}
+      {showMembers && <MemberList members={[0, 1, 2]} readOnly={readOnly} />}
     </div>
   );
 }
