@@ -1,24 +1,11 @@
-export interface MemberData {
-  id: number;
-  name: string;
-}
+type MemberProps = {
+  memberId: number;
+  readOnly: boolean;
+};
 
-export interface MemberProps {
-  data: MemberData;
-  readOnly?: boolean;
-}
-
-function Member({ data, readOnly }: MemberProps) {
-  return readOnly ? (
-    <div className="flex items-center">
-      <p>{data.name}</p>
-      <p className="opacity-50">{`#${data.id}`}</p>
-    </div>
-  ) : (
-    <div className="flex items-center">
-      <input type="text" placeholder="Name..." value={data.name} />
-    </div>
-  );
+function Member({ memberId, readOnly }: MemberProps) {
+  // TODO fetch member data from store
+  return <span>Member Name</span>;
 }
 
 export default Member;
