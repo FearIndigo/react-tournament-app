@@ -7,6 +7,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
+    'plugin:tailwindcss/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -16,6 +17,6 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    "react/react-in-jsx-scope": "off"
+    'react/react-in-jsx-scope': 'off'
   },
 }
