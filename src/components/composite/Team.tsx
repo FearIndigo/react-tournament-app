@@ -1,4 +1,4 @@
-import MemberList from './MemberList.tsx';
+import MemberList from "./MemberList.tsx";
 
 type TeamProps = {
   teamId: number;

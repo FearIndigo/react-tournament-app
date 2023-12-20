@@ -1,4 +1,4 @@
-import Team from './components/composite/Team.tsx';
+import Team from "./components/composite/Team.tsx";
 
 function App() {
   return (

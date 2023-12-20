@@ -1,4 +1,4 @@
-import Member from '../element/Member.tsx';
+import Member from "../element/Member.tsx";
 
 type MemberListProps = {
   members: number[];
