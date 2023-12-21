@@ -4,7 +4,7 @@ type MemberProps = {
 };
 
 function Member({ memberId, readOnly }: MemberProps) {
-  // TODO fetch member data from store
+  // TODO fetch member data
   return <span>Member Name</span>;
 }
 

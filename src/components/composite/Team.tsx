@@ -7,7 +7,7 @@ type TeamProps = {
 };
 
 function Member({ teamId, showMembers, readOnly }: TeamProps) {
-  // TODO fetch team data from store
+  // TODO fetch team data
   return (
     <div className="flex flex-col">
       <h3>Team Name</h3>
