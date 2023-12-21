@@ -6,10 +6,13 @@ type MemberListProps = {
 };
 
 function MemberList({ members, readOnly }: MemberListProps) {
-  const content = members.map((memberId) => (
-    <Member key={memberId} memberId={memberId} readOnly={readOnly} />
-  ));
-  return <div className="flex flex-col">{content}</div>;
+  return (
+    <div className="flex flex-col">
+      {members.map((memberId) => (
+        <Member key={memberId} memberId={memberId} readOnly={readOnly} />
+      ))}
+    </div>
+  );
 }
 
 export default MemberList;
