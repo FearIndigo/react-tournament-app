@@ -1,0 +1,20 @@
+{
+  "title": "memberDocType",
+  "version": 0,
+  "keyCompression": true,
+  "primaryKey": "id",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "fistName": {
+      "type": "string"
+    },
+    "secondName": {
+      "type": "string"
+    }
+  },
+  "required": ["id", "fistName", "secondName"]
+}

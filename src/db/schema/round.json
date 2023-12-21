@@ -1,0 +1,28 @@
+{
+  "title": "roundDocType",
+  "version": 0,
+  "keyCompression": true,
+  "primaryKey": "id",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "name": {
+      "type": "string"
+    },
+    "roundType": {
+      "type": "string",
+      "enum": ["knockout", "roundRobin"]
+    },
+    "games": {
+      "ref": "games",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": ["id", "name", "roundType", "games"]
+}

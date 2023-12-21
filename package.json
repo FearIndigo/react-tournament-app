@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-schema-types": "rxdb-schema-types -i ./src/db/schema -o ./src/db/types"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -32,6 +33,7 @@
     "eslint-plugin-tailwindcss": "^3.13.0",
     "postcss": "^8.4.32",
     "prettier": "^3.1.1",
+    "rxdb-schema-types": "^1.0.1",
     "tailwindcss": "^3.3.7",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"

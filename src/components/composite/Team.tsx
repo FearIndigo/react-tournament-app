@@ -1,17 +1,38 @@
 import MemberList from './MemberList.tsx'
+import { useRxData } from 'rxdb-hooks'
+import { TeamDocType } from '../../db/types/team'
 
 type TeamProps = {
-  teamId: number
+  teamId: string
   showMembers: boolean
   readOnly: boolean
 }
 
 function Member({ teamId, showMembers, readOnly }: TeamProps) {
-  // TODO fetch team data
+  const { result: result, isFetching } = useRxData<TeamDocType>(
+    'teams',
+    (collection) =>
+      collection.find({
+        selector: {
+          id: teamId,
+        },
+      })
+  )
+
+  if (isFetching) {
+    return <span className='animate-pulse'>loading...</span>
+  }
+
+  if (result?.length == 0) {
+    return <span className='text-red-500'>missing!</span>
+  }
+
+  const team = result[0]
+
   return (
     <div className='flex flex-col'>
-      <h3>Team Name</h3>
-      {showMembers && <MemberList members={[0, 1, 2]} readOnly={readOnly} />}
+      <span className='text-lg font-bold'>{team.name}</span>
+      {showMembers && <MemberList members={team.members} readOnly={readOnly} />}
     </div>
   )
 }

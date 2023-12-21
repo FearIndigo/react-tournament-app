@@ -1,7 +1,7 @@
 import Member from '../element/Member.tsx'
 
 type MemberListProps = {
-  members: number[]
+  members: string[]
   readOnly: boolean
 }
 

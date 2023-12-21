@@ -1,36 +1,88 @@
-import { createRxDatabase } from 'rxdb'
+import { createRxDatabase, RxJsonSchema, addRxPlugin } from 'rxdb'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
+import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
+import { CompetitionDocType } from './types/competition'
+import { GameDocType } from './types/game'
+import { MemberDocType } from './types/member'
+import { RoundDocType } from './types/round'
+import { ScoreDocType } from './types/score'
+import { TeamDocType } from './types/team'
+import competitionsSchemaJson from './schema/competition.json'
+import gamesSchemaJson from './schema/game.json'
+import membersSchemaJson from './schema/member.json'
+import roundsSchemaJson from './schema/round.json'
+import scoresSchemaJson from './schema/score.json'
+import teamsSchemaJson from './schema/team.json'
+import {
+  TournamentDatabase,
+  TournamentDatabaseCollections,
+} from './types/types'
 
 async function initialize() {
-  // create RxDB
-  const db = await createRxDatabase({
-    name: 'react-tournament-app',
+  // enable dev mode
+  if (process.env.NODE_ENV !== 'production') {
+    await import('rxdb/plugins/dev-mode').then((module) =>
+      addRxPlugin(module.RxDBDevModePlugin)
+    )
+  }
+
+  // Storage
+  const storageWithKeyCompression = wrappedKeyCompressionStorage({
     storage: getRxStorageDexie(),
   })
 
+  // create RxDB
+  const db: TournamentDatabase =
+    await createRxDatabase<TournamentDatabaseCollections>({
+      name: 'react-tournament-app',
+      storage: storageWithKeyCompression,
+    })
+
+  // Schemas
+  const competitionsSchema: RxJsonSchema<CompetitionDocType> =
+    competitionsSchemaJson
+  const gamesSchema: RxJsonSchema<GameDocType> = gamesSchemaJson
+  const membersSchema: RxJsonSchema<MemberDocType> = membersSchemaJson
+  const roundsSchema: RxJsonSchema<RoundDocType> = roundsSchemaJson
+  const scoresSchema: RxJsonSchema<ScoreDocType> = scoresSchemaJson
+  const teamsSchema: RxJsonSchema<TeamDocType> = teamsSchemaJson
+
   // create collections
   await db.addCollections({
-    characters: {
-      schema: {
-        title: 'characters',
-        version: 0,
-        type: 'object',
-        primaryKey: 'id',
-        properties: {
-          id: {
-            type: 'string',
-            maxLength: 100,
-          },
-          name: {
-            type: 'string',
-          },
-        },
-      },
+    competitions: {
+      schema: competitionsSchema,
+    },
+    games: {
+      schema: gamesSchema,
+    },
+    members: {
+      schema: membersSchema,
+    },
+    rounds: {
+      schema: roundsSchema,
+    },
+    scores: {
+      schema: scoresSchema,
+    },
+    teams: {
+      schema: teamsSchema,
     },
   })
 
   // maybe sync collection to a remote
   // ...
+
+  // TODO add way to customise data in UI this is just for debugging
+  db.members.insert({
+    id: '0',
+    fistName: 'Firstname',
+    secondName: 'Lastname',
+  })
+  db.teams.insert({
+    id: '0',
+    name: 'Test Team',
+    members: ['0', '1', '2'],
+  })
 
   return db
 }

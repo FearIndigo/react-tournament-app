@@ -2,12 +2,16 @@ import { useEffect, useState } from 'react'
 import { Provider } from 'rxdb-hooks'
 import initialize from './db/initialize_db.ts'
 import App from './App.tsx'
-import { RxDatabase } from 'rxdb'
+import { TournamentDatabase } from './db/types/types'
+
+let didInit = false
 
 const Root = () => {
-  const [db, setDb] = useState<RxDatabase>()
+  const [db, setDb] = useState<TournamentDatabase>()
 
   useEffect(() => {
+    if (didInit) return
+    didInit = true
     // RxDB instantiation can be asynchronous
     initialize().then(setDb)
   }, [])
