@@ -78,6 +78,11 @@ async function initialize() {
     fistName: 'Firstname',
     secondName: 'Lastname',
   })
+  db.members.insert({
+    id: '1',
+    fistName: 'Lorem',
+    secondName: 'Ipsum',
+  })
   db.teams.insert({
     id: '0',
     name: 'Test Team',
