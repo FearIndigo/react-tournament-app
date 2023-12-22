@@ -85,6 +85,11 @@ async function initialize() {
     id: '0',
     name: 'Test Team',
     members: ['0', '1', '2'],
+  })
+  await db.teams.insert({
+    id: '1',
+    name: 'Test Team 2',
+    members: ['0', '2', '3', '4'],
   })*/
 
   return db

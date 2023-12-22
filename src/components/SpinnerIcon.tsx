@@ -2,6 +2,10 @@ type SpinnerIconProps = {
   className?: string
 }
 
+SpinnerIcon.defaultProps = {
+  className: '',
+}
+
 function SpinnerIcon({ className }: SpinnerIconProps) {
   return (
     <svg

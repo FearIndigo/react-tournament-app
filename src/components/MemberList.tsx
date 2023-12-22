@@ -1,15 +1,33 @@
 import Member from './Member.tsx'
+import { MemberDocument } from '../db/types/types'
 
 type MemberListProps = {
-  members: string[]
+  members: MemberDocument[]
+  className?: string
   readOnly?: boolean
+  showEditButton?: boolean
 }
 
-function MemberList({ members, readOnly }: MemberListProps) {
+MemberList.defaultProps = {
+  readOnly: true,
+  className: '',
+}
+
+function MemberList({
+  members,
+  className,
+  readOnly,
+  showEditButton,
+}: MemberListProps) {
   return (
-    <div className='flex flex-col space-y-1 p-3'>
-      {members.map((memberId) => (
-        <Member key={memberId} memberId={memberId} readOnly={readOnly} />
+    <div className={`flex flex-col space-y-1 ${className}`}>
+      {members.map((member) => (
+        <Member
+          key={member.id}
+          member={member}
+          readOnly={readOnly}
+          showEditButton={showEditButton}
+        />
       ))}
     </div>
   )

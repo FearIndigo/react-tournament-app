@@ -1,90 +1,106 @@
 import MemberList from './MemberList.tsx'
-import { useRxData } from 'rxdb-hooks'
-import { TeamDocType } from '../db/types/team'
-import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import TextLoading from './TextLoading.tsx'
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  PencilIcon,
+} from '@heroicons/react/24/outline'
 import { useState } from 'react'
-import TextMissing from './TextMissing.tsx'
 import TextInput from './TextInput.tsx'
-import { TeamDocument } from '../db/types/types'
+import { MemberCollection, TeamDocument } from '../db/types/types'
+import { useRxData } from 'rxdb-hooks'
+import { MemberDocType } from '../db/types/member'
+import TextLoading from './TextLoading.tsx'
 
 type TeamProps = {
-  teamId: string
+  team: TeamDocument
   showMembers?: boolean
   readOnly?: boolean
+  showEditButton?: boolean
 }
 
-function Member({ teamId, showMembers, readOnly }: TeamProps) {
-  const [showList, setShowList] = useState(showMembers)
+Team.defaultProps = {
+  readOnly: true,
+}
 
-  const { result: result, isFetching } = useRxData<TeamDocType>(
-    'teams',
-    (collection) =>
+function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
+  const [showList, setShowList] = useState(showMembers)
+  const [locked, setLocked] = useState(readOnly)
+  const { result: members, isFetching } = useRxData<MemberDocType>(
+    'members',
+    (collection: MemberCollection) =>
       collection.find({
         selector: {
-          id: teamId,
+          id: { $in: team.members },
         },
       })
   )
 
-  function updateName(team: TeamDocument, name: string) {
+  function updateName(name: string) {
     team.incrementalPatch({
       name: name,
     })
   }
 
-  let content
-  let title
+  return (
+    <div className='flex flex-col rounded-3xl bg-blue-100 text-blue-800'>
+      <div className='h-10 rounded-3xl bg-blue-300 p-1'>
+        <div className='flex h-full items-center justify-between space-x-1'>
+          {locked ? (
+            <span className='truncate rounded-3xl p-2 font-bold'>
+              {team.name}
+            </span>
+          ) : (
+            <TextInput
+              value={team.name}
+              onChange={updateName}
+              className='h-full font-bold'
+            />
+          )}
 
-  if (isFetching) {
-    // Fetching
-    title = <TextLoading className='h-full' />
-  } else if (result?.length == 0) {
-    // No records
-    title = <TextMissing className='h-full' />
-  } else {
-    // Render
-    const team = result[0]
-    title = (
-      <div className='flex h-full items-center justify-between space-x-1 pl-2'>
-        {readOnly ? (
-          <span className='truncate font-bold'>{team.name}</span>
-        ) : (
-          <TextInput
-            value={team.name}
-            onChange={(name) => updateName(team, name)}
-            className='h-full'
-          />
-        )}
-        <button
-          className='aspect-square h-full rounded-3xl bg-white bg-opacity-50 p-1 shadow'
-          onClick={() => setShowList(!showList)}
-        >
-          <ChevronDownIcon
-            className={`transition-all duration-300 ease-in-out ${
-              showList ? 'rotate-180' : 'rotate-0'
-            }`}
-          />
-        </button>
+          <div className='flex h-full space-x-1 self-end'>
+            {showEditButton && (
+              <div className='relative'>
+                {!locked && (
+                  <span className='absolute left-1 top-1 h-6 w-6 animate-ping rounded-full bg-blue-100' />
+                )}
+                <button
+                  title='Toggle edit mode'
+                  className='relative z-10 h-full w-8 rounded-3xl bg-blue-100 p-2 shadow'
+                  onClick={() => setLocked(!locked)}
+                >
+                  {locked ? <PencilIcon /> : <CheckIcon />}
+                </button>
+              </div>
+            )}
+            <button
+              title='Toggle members view'
+              className='h-full w-8 rounded-3xl bg-blue-100 p-2 shadow'
+              onClick={() => setShowList(!showList)}
+            >
+              <ChevronDownIcon
+                className={`transition-all duration-300 ease-in-out ${
+                  showList ? 'rotate-180' : 'rotate-0'
+                }`}
+              />
+            </button>
+          </div>
+        </div>
       </div>
-    )
-    content = (
       <div
         className={`overflow-hidden transition-all duration-300 ease-in-out ${
           showList ? 'max-h-96' : 'max-h-0'
         }`}
       >
-        <MemberList members={team.members} readOnly={readOnly} />
+        <div className='p-2 pt-1'>
+          {isFetching ? (
+            <TextLoading className='h-6' />
+          ) : (
+            <MemberList members={members} readOnly={locked} className='' />
+          )}
+        </div>
       </div>
-    )
-  }
-
-  return (
-    <div className='flex w-40 flex-col rounded-3xl bg-blue-200 text-blue-800'>
-      <div className='h-10 rounded-3xl bg-blue-300 p-1'>{title}</div>
-      {content}
     </div>
   )
 }
 
-export default Member
+export default Team

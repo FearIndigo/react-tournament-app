@@ -4,6 +4,10 @@ type TextLoadingProps = {
   className?: string
 }
 
+TextLoading.defaultProps = {
+  className: '',
+}
+
 function TextLoading({ className }: TextLoadingProps) {
   return (
     <div className={`flex animate-pulse items-center space-x-1 ${className}`}>

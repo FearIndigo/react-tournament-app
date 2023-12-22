@@ -4,6 +4,10 @@ type TextLoadingProps = {
   className?: string
 }
 
+TextMissing.defaultProps = {
+  className: '',
+}
+
 function TextMissing({ className }: TextLoadingProps) {
   return (
     <div
