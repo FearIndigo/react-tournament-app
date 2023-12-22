@@ -21,10 +21,10 @@ function Member({ memberId, readOnly }: MemberProps) {
   let content
   if (isFetching) {
     // Fetching
-    content = <TextLoading className='h-6 py-1' />
+    content = <TextLoading className='h-6' />
   } else if (result?.length == 0) {
     // No records
-    content = <span className='text-red-500'>missing!</span>
+    content = <span className='animate-pulse text-red-500'>missing!</span>
   } else {
     // Render
     const member = result[0]

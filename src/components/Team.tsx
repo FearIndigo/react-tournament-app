@@ -37,7 +37,7 @@ function Member({ teamId, showMembers, readOnly }: TeamProps) {
     const team = result[0]
     content = (
       <>
-        <div className='flex h-8 items-center justify-between rounded-2xl bg-blue-300 p-1'>
+        <div className='flex h-8 items-center justify-between space-x-1 rounded-2xl bg-blue-300 p-1 pl-2'>
           <span className='grow truncate text-center text-lg font-bold'>
             {team.name}
           </span>
