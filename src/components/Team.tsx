@@ -7,8 +7,8 @@ import { useState } from 'react'
 
 type TeamProps = {
   teamId: string
-  showMembers: boolean
-  readOnly: boolean
+  showMembers?: boolean
+  readOnly?: boolean
 }
 
 function Member({ teamId, showMembers, readOnly }: TeamProps) {
@@ -28,7 +28,7 @@ function Member({ teamId, showMembers, readOnly }: TeamProps) {
 
   if (isFetching) {
     // Fetching
-    content = <TextLoading className='h-8 p-1' />
+    content = <TextLoading className='h-8 rounded-2xl bg-blue-300 p-1' />
   } else if (result?.length == 0) {
     // No records
     content = <span className='text-red-500'>missing!</span>
@@ -37,18 +37,26 @@ function Member({ teamId, showMembers, readOnly }: TeamProps) {
     const team = result[0]
     content = (
       <>
-        <div className='flex h-8 items-center justify-between space-x-1 rounded-2xl bg-blue-300 p-1 pl-2'>
-          <span className='grow truncate text-center text-lg font-bold'>
-            {team.name}
-          </span>
+        <div className='flex h-8 items-center justify-between space-x-1 rounded-2xl bg-blue-300 p-1 pl-3'>
+          <span className='grow truncate font-bold'>{team.name}</span>
           <button
-            className='aspect-square h-full rounded-2xl bg-blue-200 p-1'
+            className='aspect-square h-full rounded-2xl bg-blue-200 p-1 shadow'
             onClick={() => setShowList(!showList)}
           >
-            <ChevronDownIcon />
+            <ChevronDownIcon
+              className={`transition-all duration-300 ease-in-out ${
+                showList ? 'rotate-180' : 'rotate-0'
+              }`}
+            />
           </button>
         </div>
-        {showList && <MemberList members={team.members} readOnly={readOnly} />}
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out ${
+            showList ? 'max-h-96' : 'max-h-0'
+          }`}
+        >
+          <MemberList members={team.members} readOnly={readOnly} />
+        </div>
       </>
     )
   }

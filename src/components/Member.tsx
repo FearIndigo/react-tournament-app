@@ -4,7 +4,7 @@ import TextLoading from './TextLoading.tsx'
 
 type MemberProps = {
   memberId: string
-  readOnly: boolean
+  readOnly?: boolean
 }
 
 function Member({ memberId, readOnly }: MemberProps) {
@@ -29,7 +29,7 @@ function Member({ memberId, readOnly }: MemberProps) {
     // Render
     const member = result[0]
     content = (
-      <span>
+      <span className='truncate'>
         {member.fistName} {member.secondName}
       </span>
     )
