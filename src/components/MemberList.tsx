@@ -1,4 +1,4 @@
-import Member from '../element/Member.tsx'
+import Member from './Member.tsx'
 
 type MemberListProps = {
   members: string[]
@@ -7,7 +7,7 @@ type MemberListProps = {
 
 function MemberList({ members, readOnly }: MemberListProps) {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col p-2'>
       {members.map((memberId) => (
         <Member key={memberId} memberId={memberId} readOnly={readOnly} />
       ))}

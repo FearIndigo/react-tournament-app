@@ -1,5 +1,6 @@
 import { useRxData } from 'rxdb-hooks'
-import { MemberDocType } from '../../db/types/member'
+import { MemberDocType } from '../db/types/member'
+import TextLoading from './TextLoading.tsx'
 
 type MemberProps = {
   memberId: string
@@ -17,23 +18,24 @@ function Member({ memberId, readOnly }: MemberProps) {
       })
   )
 
+  let content
   if (isFetching) {
-    return <span className='animate-pulse'>loading...</span>
-  }
-
-  if (result?.length == 0) {
-    return <span className='text-red-500'>missing!</span>
-  }
-
-  const member = result[0]
-
-  return (
-    member && (
+    // Fetching
+    content = <TextLoading className='h-6 py-1' />
+  } else if (result?.length == 0) {
+    // No records
+    content = <span className='text-red-500'>missing!</span>
+  } else {
+    // Render
+    const member = result[0]
+    content = (
       <span>
         {member.fistName} {member.secondName}
       </span>
     )
-  )
+  }
+
+  return content
 }
 
 export default Member
