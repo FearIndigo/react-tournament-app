@@ -7,7 +7,7 @@ type MemberListProps = {
 
 function MemberList({ members, readOnly }: MemberListProps) {
   return (
-    <div className='flex flex-col space-y-1 p-2 px-3'>
+    <div className='flex flex-col space-y-1 p-3'>
       {members.map((memberId) => (
         <Member key={memberId} memberId={memberId} readOnly={readOnly} />
       ))}

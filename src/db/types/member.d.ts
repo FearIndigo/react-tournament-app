@@ -7,7 +7,6 @@
 
 export interface MemberDocType {
   id: string;
-  fistName: string;
-  secondName: string;
+  name: string;
   [k: string]: unknown;
 }

@@ -1,6 +1,9 @@
 import { useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
 import TextLoading from './TextLoading.tsx'
+import TextInput from './TextInput.tsx'
+import { MemberDocument } from '../db/types/types'
+import TextMissing from './TextMissing.tsx'
 
 type MemberProps = {
   memberId: string
@@ -18,21 +21,34 @@ function Member({ memberId, readOnly }: MemberProps) {
       })
   )
 
+  function updateName(member: MemberDocument, name: string) {
+    member.incrementalPatch({
+      name: name,
+    })
+  }
+
   let content
   if (isFetching) {
     // Fetching
     content = <TextLoading className='h-6' />
   } else if (result?.length == 0) {
     // No records
-    content = <span className='animate-pulse text-red-500'>missing!</span>
+    content = <TextMissing className='h-6' />
   } else {
     // Render
     const member = result[0]
-    content = (
-      <span className='truncate'>
-        {member.fistName} {member.secondName}
-      </span>
-    )
+    if (readOnly) {
+      content = <span className='h-6 truncate'>{member.name}</span>
+    } else {
+      content = (
+        <TextInput
+          value={member.name}
+          placeholder='Name...'
+          onChange={(name) => updateName(member, name)}
+          className='h-8'
+        />
+      )
+    }
   }
 
   return content

@@ -9,12 +9,9 @@
       "type": "string",
       "maxLength": 100
     },
-    "fistName": {
-      "type": "string"
-    },
-    "secondName": {
+    "name": {
       "type": "string"
     }
   },
-  "required": ["id", "fistName", "secondName"]
+  "required": ["id", "name"]
 }

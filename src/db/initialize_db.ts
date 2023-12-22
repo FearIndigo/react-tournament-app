@@ -73,21 +73,19 @@ async function initialize() {
   // ...
 
   // TODO add way to customise data in UI this is just for debugging
-  db.members.insert({
+  /*await db.members.insert({
     id: '0',
-    fistName: 'Firstname',
-    secondName: 'Lastname',
+    name: 'Name0',
   })
-  db.members.insert({
+  await db.members.insert({
     id: '1',
-    fistName: 'Lorem',
-    secondName: 'Ipsum',
+    name: 'Name1',
   })
-  db.teams.insert({
+  await db.teams.insert({
     id: '0',
     name: 'Test Team',
     members: ['0', '1', '2'],
-  })
+  })*/
 
   return db
 }

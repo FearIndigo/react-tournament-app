@@ -1,9 +1,12 @@
 import MemberList from './MemberList.tsx'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from '../db/types/team'
-import { ChevronDownIcon } from '@heroicons/react/24/solid'
+import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import TextLoading from './TextLoading.tsx'
 import { useState } from 'react'
+import TextMissing from './TextMissing.tsx'
+import TextInput from './TextInput.tsx'
+import { TeamDocument } from '../db/types/types'
 
 type TeamProps = {
   teamId: string
@@ -24,45 +27,61 @@ function Member({ teamId, showMembers, readOnly }: TeamProps) {
       })
   )
 
+  function updateName(team: TeamDocument, name: string) {
+    team.incrementalPatch({
+      name: name,
+    })
+  }
+
   let content
+  let title
 
   if (isFetching) {
     // Fetching
-    content = <TextLoading className='h-8 rounded-2xl bg-blue-300 p-1' />
+    title = <TextLoading className='h-full' />
   } else if (result?.length == 0) {
     // No records
-    content = <span className='text-red-500'>missing!</span>
+    title = <TextMissing className='h-full' />
   } else {
     // Render
     const team = result[0]
-    content = (
-      <>
-        <div className='flex h-8 items-center justify-between space-x-1 rounded-2xl bg-blue-300 p-1 pl-3'>
-          <span className='grow truncate font-bold'>{team.name}</span>
-          <button
-            className='aspect-square h-full rounded-2xl bg-blue-200 p-1 shadow'
-            onClick={() => setShowList(!showList)}
-          >
-            <ChevronDownIcon
-              className={`transition-all duration-300 ease-in-out ${
-                showList ? 'rotate-180' : 'rotate-0'
-              }`}
-            />
-          </button>
-        </div>
-        <div
-          className={`overflow-hidden transition-all duration-300 ease-in-out ${
-            showList ? 'max-h-96' : 'max-h-0'
-          }`}
+    title = (
+      <div className='flex h-full items-center justify-between space-x-1 pl-2'>
+        {readOnly ? (
+          <span className='truncate font-bold'>{team.name}</span>
+        ) : (
+          <TextInput
+            value={team.name}
+            onChange={(name) => updateName(team, name)}
+            className='h-full'
+          />
+        )}
+        <button
+          className='aspect-square h-full rounded-3xl bg-white bg-opacity-50 p-1 shadow'
+          onClick={() => setShowList(!showList)}
         >
-          <MemberList members={team.members} readOnly={readOnly} />
-        </div>
-      </>
+          <ChevronDownIcon
+            className={`transition-all duration-300 ease-in-out ${
+              showList ? 'rotate-180' : 'rotate-0'
+            }`}
+          />
+        </button>
+      </div>
+    )
+    content = (
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          showList ? 'max-h-96' : 'max-h-0'
+        }`}
+      >
+        <MemberList members={team.members} readOnly={readOnly} />
+      </div>
     )
   }
 
   return (
-    <div className='flex w-40 flex-col rounded-2xl bg-blue-200 text-blue-900'>
+    <div className='flex w-40 flex-col rounded-3xl bg-blue-200 text-blue-800'>
+      <div className='h-10 rounded-3xl bg-blue-300 p-1'>{title}</div>
       {content}
     </div>
   )

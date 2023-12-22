@@ -6,8 +6,8 @@ type TextLoadingProps = {
 
 function TextLoading({ className }: TextLoadingProps) {
   return (
-    <div className={`flex animate-pulse items-center ${className}`}>
-      <div className='mr-1 aspect-square h-full'>
+    <div className={`flex animate-pulse items-center space-x-1 ${className}`}>
+      <div className='aspect-square h-full'>
         <SpinnerIcon className='animate-spin' />
       </div>
       <span>loading...</span>
