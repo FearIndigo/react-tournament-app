@@ -14,8 +14,9 @@
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "default": []
     }
   },
-  "required": ["id", "scores"]
+  "required": ["id"]
 }

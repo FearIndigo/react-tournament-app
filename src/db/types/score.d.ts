@@ -7,7 +7,7 @@
 
 export interface ScoreDocType {
   id: string;
-  score: number;
+  score?: number;
   team: string;
   [k: string]: unknown;
 }

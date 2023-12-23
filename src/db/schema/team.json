@@ -10,14 +10,16 @@
       "maxLength": 100
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "members": {
       "ref": "members",
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "default": []
     }
   },
   "required": ["id", "name", "members"]

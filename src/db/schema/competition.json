@@ -10,15 +10,17 @@
       "maxLength": 100
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "rounds": {
       "ref": "rounds",
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "default": []
     }
   },
-  "required": ["id", "name", "rounds"]
+  "required": ["id"]
 }

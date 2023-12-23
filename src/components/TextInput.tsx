@@ -3,8 +3,8 @@ import { ChangeEvent, useEffect, useState } from 'react'
 type TextInputProps = {
   value: string
   placeholder?: string
-  onChange: (newValue: string) => void
   className?: string
+  onChange: (newValue: string) => void
 }
 
 TextInput.defaultProps = {
@@ -14,8 +14,8 @@ TextInput.defaultProps = {
 function TextInput({
   value,
   placeholder,
-  onChange,
   className,
+  onChange,
 }: TextInputProps) {
   const [inputValue, setInputValue] = useState(value)
 
@@ -33,7 +33,7 @@ function TextInput({
       value={inputValue}
       placeholder={placeholder}
       onChange={handleOnChange}
-      className={`w-full truncate rounded-3xl bg-white bg-opacity-50 p-2 shadow-inner ring-1 ring-current ${className}`}
+      className={`w-full truncate rounded-3xl bg-white/50 p-2 shadow-inner ring-1 ring-current ${className}`}
     />
   )
 }

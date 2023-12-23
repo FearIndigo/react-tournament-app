@@ -10,19 +10,22 @@
       "maxLength": 100
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
     "roundType": {
       "type": "string",
-      "enum": ["knockout", "roundRobin"]
+      "enum": ["knockout", "roundRobin"],
+      "default": "knockout"
     },
     "games": {
       "ref": "games",
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "default": []
     }
   },
-  "required": ["id", "name", "roundType", "games"]
+  "required": ["id"]
 }

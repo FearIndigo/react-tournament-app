@@ -7,8 +7,8 @@
 
 export interface RoundDocType {
   id: string;
-  name: string;
-  roundType: "knockout" | "roundRobin";
-  games: string[];
+  name?: string;
+  roundType?: "knockout" | "roundRobin";
+  games?: string[];
   [k: string]: unknown;
 }

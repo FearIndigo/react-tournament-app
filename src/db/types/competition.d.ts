@@ -7,7 +7,7 @@
 
 export interface CompetitionDocType {
   id: string;
-  name: string;
-  rounds: string[];
+  name?: string;
+  rounds?: string[];
   [k: string]: unknown;
 }

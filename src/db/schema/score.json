@@ -10,12 +10,13 @@
       "maxLength": 100
     },
     "score": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "team": {
       "ref": "teams",
       "type": "string"
     }
   },
-  "required": ["id", "score", "team"]
+  "required": ["id", "team"]
 }

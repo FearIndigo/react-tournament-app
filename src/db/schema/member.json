@@ -10,7 +10,8 @@
       "maxLength": 100
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     }
   },
   "required": ["id", "name"]

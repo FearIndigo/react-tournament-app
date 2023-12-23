@@ -7,6 +7,6 @@
 
 export interface GameDocType {
   id: string;
-  scores: string[];
+  scores?: string[];
   [k: string]: unknown;
 }
