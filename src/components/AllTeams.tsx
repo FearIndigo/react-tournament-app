@@ -28,7 +28,7 @@ function AllTeams() {
       </div>
       <div className='p-3 pt-2'>
         {isFetching ? (
-          <TextLoading className='h-8' />
+          <TextLoading className='h-6' />
         ) : (
           <TeamList
             teams={teams}

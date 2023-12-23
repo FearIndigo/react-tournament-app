@@ -20,7 +20,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
   const memberCollection = useRxCollection<MemberDocType>('members')
 
   if (isFetching) {
-    return <TextLoading className='h-8' />
+    return <TextLoading className='h-6' />
   }
 
   const options: [id: string, name: string][] = members
