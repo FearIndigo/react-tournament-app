@@ -1,5 +1,5 @@
 import MemberList from './MemberList.tsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TextInput from './TextInput.tsx'
 import { MemberCollection, TeamDocument } from '../db/types/types'
 import { useRxData } from 'rxdb-hooks'
@@ -8,6 +8,7 @@ import TextLoading from './TextLoading.tsx'
 import EditModeToggle from './EditModeToggle.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import AddTeamMember from './AddTeamMember.tsx'
+import RemoveTeamButton from './RemoveTeamButton.tsx'
 
 type TeamProps = {
   team: TeamDocument
@@ -33,11 +34,24 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
       })
   )
 
+  useEffect(() => {
+    setMembersVisible(showMembers)
+  }, [showMembers])
+
   function updateName(name: string) {
     team.incrementalPatch({
       name: name,
     })
   }
+
+  const teamName =
+    team.name != ''
+      ? team.name
+      : isFetching
+        ? '...'
+        : members.length > 0
+          ? members.map((member) => member.name).join(' + ')
+          : 'New Team'
 
   return (
     <div className='flex flex-col rounded-3xl bg-blue-100 text-blue-800'>
@@ -45,23 +59,30 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
         <div className='flex h-full items-center justify-between space-x-1'>
           {editModeOff ? (
             <span className='truncate rounded-3xl p-2 font-bold'>
-              {team.name}
+              {teamName}
             </span>
           ) : (
             <TextInput
               value={team.name}
+              placeholder={teamName == '' ? 'Team name...' : teamName}
               onChange={updateName}
-              className='h-full font-bold'
+              className='font-bold'
             />
           )}
 
           <div className='flex h-full space-x-1'>
+            {!editModeOff && <RemoveTeamButton team={team} />}
             {showEditButton && (
-              <EditModeToggle readOnly={readOnly} onChange={setEditModeOff} />
+              <EditModeToggle
+                readOnly={readOnly}
+                onChange={setEditModeOff}
+                title='Toggle team edit mode'
+              />
             )}
             <AccordionOpenToggle
               open={membersVisible}
               onChange={setMembersVisible}
+              title='Toggle show team members'
             />
           </div>
         </div>
@@ -75,7 +96,7 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
           {isFetching ? (
             <TextLoading className='h-6' />
           ) : (
-            <MemberList members={members} readOnly={editModeOff} className='' />
+            <MemberList members={members} readOnly={editModeOff} team={team} />
           )}
         </div>
         {!editModeOff && (

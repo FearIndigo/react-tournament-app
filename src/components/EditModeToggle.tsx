@@ -27,11 +27,13 @@ function EditModeToggle({ readOnly, title, onChange }: EditModeToggleProps) {
   return (
     <div className='relative'>
       {!editModeOff && (
-        <span className='absolute left-1 top-1 h-6 w-6 animate-ping rounded-full bg-blue-100' />
+        <span className='absolute left-1 top-1 h-6 w-6 animate-ping rounded-full bg-green-300' />
       )}
       <button
         title={title}
-        className='relative z-10 h-8 w-8 rounded-3xl bg-blue-100 p-2 shadow'
+        className={`relative z-10 h-8 w-8 rounded-3xl  p-2 shadow ${
+          editModeOff ? 'bg-blue-100' : 'bg-green-300 text-green-800'
+        }`}
         onClick={toggleEditMode}
       >
         {editModeOff ? <PencilIcon /> : <CheckIcon />}

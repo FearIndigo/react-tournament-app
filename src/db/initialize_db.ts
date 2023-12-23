@@ -72,26 +72,6 @@ async function initialize() {
   // maybe sync collection to a remote
   // ...
 
-  // TODO add way to customise data in UI this is just for debugging
-  /*await db.members.insert({
-    id: '0',
-    name: 'Name0',
-  })
-  await db.members.insert({
-    id: '1',
-    name: 'Name1',
-  })
-  await db.teams.insert({
-    id: '0',
-    name: 'Test Team',
-    members: ['0', '1', '2'],
-  })
-  await db.teams.insert({
-    id: '1',
-    name: 'Test Team 2',
-    members: ['0', '2', '3', '4'],
-  })*/
-
   return db
 }
 

@@ -33,7 +33,7 @@ function TextInput({
       value={inputValue}
       placeholder={placeholder}
       onChange={handleOnChange}
-      className={`w-full truncate rounded-3xl bg-white/50 p-2 shadow-inner ring-1 ring-current ${className}`}
+      className={`h-8 grow truncate rounded-3xl bg-white/50 p-2 shadow-inner ring-1 ring-current ${className}`}
     />
   )
 }

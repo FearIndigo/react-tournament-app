@@ -6,6 +6,7 @@ type TeamListProps = {
   className?: string
   readOnly?: boolean
   showEditButton?: boolean
+  showMembers?: boolean
 }
 
 TeamList.defaultProps = {
@@ -18,6 +19,7 @@ function TeamList({
   className,
   readOnly,
   showEditButton,
+  showMembers,
 }: TeamListProps) {
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
@@ -27,6 +29,7 @@ function TeamList({
           team={team}
           readOnly={readOnly}
           showEditButton={showEditButton}
+          showMembers={showMembers}
         />
       ))}
     </div>

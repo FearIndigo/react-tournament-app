@@ -1,7 +1,7 @@
 import DatalistInput from './DatalistInput.tsx'
 import AddNewButton from './AddNewButton.tsx'
 import { MemberCollection, TeamDocument } from '../db/types/types'
-import { useRxData } from 'rxdb-hooks'
+import { useRxCollection, useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
 import { useState } from 'react'
 import TextLoading from './TextLoading.tsx'
@@ -11,51 +11,63 @@ type AddTeamMemberProps = {
 }
 
 function AddTeamMember({ team }: AddTeamMemberProps) {
-  const [member, setMember] = useState<MemberDocType>()
+  const [selectedOption, setSelectedOption] =
+    useState<[memberId: string, memberName: string]>()
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
-    (collection: MemberCollection) =>
-      collection.find({
-        selector: {
-          id: { $nin: team.members },
-        },
-      })
+    (collection: MemberCollection) => collection.find()
   )
+  const memberCollection = useRxCollection<MemberDocType>('members')
 
   if (isFetching) {
-    return <TextLoading />
+    return <TextLoading className='h-8' />
   }
 
-  //const collection = useRxCollection<MemberDocType>('members')
-  const options: [id: string, name: string][] = members?.map((member) => [
-    member.id,
-    member.name,
-  ])
+  const options: [id: string, name: string][] = members
+    .filter((member) => !team.members.includes(member.id))
+    .map((member) => [member.id, member.name])
 
-  function addTeamMember() {
-    if (member == undefined) return
-    if (team.members.includes(member.id)) return
+  function updateSelectedOption(
+    newOption: [memberId: string, memberName: string]
+  ) {
+    setSelectedOption(newOption)
+  }
+
+  async function addTeamMember() {
+    if (selectedOption == undefined) return
+    // NOTE: cannot add members with the same name to the same team when selecting via name
+    let memberToAdd = members.find(
+      (member) =>
+        member.id == selectedOption[0] || member.name == selectedOption[1]
+    )
+    if (memberToAdd == undefined) {
+      if (memberCollection == undefined) return
+      memberToAdd = await memberCollection.insert({
+        id: crypto.randomUUID(),
+        name: selectedOption[1],
+      })
+    }
+    if (team.members.includes(memberToAdd.id)) return
 
     team.incrementalPatch({
-      members: [...team.members, member.id],
+      members: [...team.members, memberToAdd.id],
     })
-  }
 
-  function updateMemberToAdd(memberId: string) {
-    const memberToAdd = members?.find((member) => member.id == memberId)
-    if (memberToAdd == undefined) return
-    setMember(memberToAdd)
+    setSelectedOption(undefined)
   }
 
   return (
     <div className='flex h-8 items-center space-x-1'>
       <DatalistInput
-        onChange={updateMemberToAdd}
+        onChange={updateSelectedOption}
+        placeholder='New member...'
         options={options}
-        value=''
+        value={selectedOption ? selectedOption[1] : ''}
         className='h-full'
       />
-      <AddNewButton title='Add member to team' onClick={addTeamMember} />
+      <div className='flex h-full items-center'>
+        <AddNewButton title='Add member to team' onClick={addTeamMember} />
+      </div>
     </div>
   )
 }

@@ -13,7 +13,7 @@ function AddNewButton({ title, onClick }: AddNewButtonProps) {
   return (
     <button
       title={title}
-      className='h-8 w-8 rounded-3xl bg-blue-100 p-2 shadow'
+      className='h-8 w-8 rounded-3xl bg-green-300 p-2 text-green-800 shadow'
       onClick={onClick}
     >
       <PlusIcon />

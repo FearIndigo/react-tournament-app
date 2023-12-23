@@ -5,7 +5,7 @@ type DatalistInputProps = {
   options: [value: string, label: string][]
   placeholder?: string
   className?: string
-  onChange: (newValue: string) => void
+  onChange: (newOption: [value: string, label: string]) => void
 }
 
 DatalistInput.defaultProps = {
@@ -21,15 +21,21 @@ function DatalistInput({
 }: DatalistInputProps) {
   const [inputValue, setInputValue] = useState(value)
 
-  const id = crypto.randomUUID()
+  const datalistId = crypto.randomUUID()
 
   useEffect(() => {
     setInputValue(value)
   }, [value])
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value)
-    onChange(e.target.value)
+    // NOTE: When multiple options have the same label only the first one can be chosen when selecting via label
+    const selectedOption = options.find(
+      (option) => option[0] == e.target.value || option[1] == e.target.value
+    )
+    const selectedValue = selectedOption ? selectedOption[0] : ''
+    const selectedLabel = selectedOption ? selectedOption[1] : e.target.value
+    setInputValue(selectedLabel)
+    onChange([selectedValue, selectedLabel])
   }
 
   return (
@@ -38,10 +44,10 @@ function DatalistInput({
         value={inputValue}
         placeholder={placeholder}
         onChange={handleOnChange}
-        className={`w-full truncate rounded-3xl bg-white/50 p-2 shadow-inner ring-1 ring-current ${className}`}
-        list={id}
+        className={`h-8 grow truncate rounded-3xl bg-white/50 p-2 shadow-inner ring-1 ring-current ${className}`}
+        list={datalistId}
       />
-      <datalist id={id}>
+      <datalist id={datalistId}>
         {options.map((option, index) => (
           <option key={`${index}-${option[0]}`} value={option[0]}>
             {option[1]}

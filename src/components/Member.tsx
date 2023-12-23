@@ -1,19 +1,22 @@
 import TextInput from './TextInput.tsx'
-import { MemberDocument } from '../db/types/types'
+import { MemberDocument, TeamDocument } from '../db/types/types'
 import { useEffect, useState } from 'react'
 import EditModeToggle from './EditModeToggle.tsx'
+import RemoveTeamMemberButton from './RemoveTeamMemberButton.tsx'
+import RemoveMemberButton from './RemoveMemberButton.tsx'
 
 type MemberProps = {
   member: MemberDocument
   readOnly?: boolean
   showEditButton?: boolean
+  team?: TeamDocument
 }
 
 Member.defaultProps = {
   readOnly: true,
 }
 
-function Member({ member, readOnly, showEditButton }: MemberProps) {
+function Member({ member, readOnly, showEditButton, team }: MemberProps) {
   const [editModeOff, setEditModeOff] = useState(readOnly)
 
   useEffect(() => {
@@ -37,12 +40,23 @@ function Member({ member, readOnly, showEditButton }: MemberProps) {
           value={member.name}
           placeholder='Name...'
           onChange={updateName}
-          className='h-full'
         />
       )}
-      {showEditButton && (
-        <EditModeToggle readOnly={readOnly} onChange={setEditModeOff} />
-      )}
+      <div className='flex h-full flex-row items-center space-x-1'>
+        {!editModeOff &&
+          (team ? (
+            <RemoveTeamMemberButton team={team} member={member} />
+          ) : (
+            <RemoveMemberButton member={member} />
+          ))}
+        {showEditButton && (
+          <EditModeToggle
+            readOnly={readOnly}
+            onChange={setEditModeOff}
+            title='Toggle member edit mode'
+          />
+        )}
+      </div>
     </div>
   )
 }

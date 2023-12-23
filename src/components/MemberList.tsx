@@ -1,10 +1,11 @@
 import Member from './Member.tsx'
-import { MemberDocument } from '../db/types/types'
+import { MemberDocument, TeamDocument } from '../db/types/types'
 
 type MemberListProps = {
   members: MemberDocument[]
   className?: string
   readOnly?: boolean
+  team?: TeamDocument
   showEditButton?: boolean
 }
 
@@ -17,6 +18,7 @@ function MemberList({
   members,
   className,
   readOnly,
+  team,
   showEditButton,
 }: MemberListProps) {
   return (
@@ -27,6 +29,7 @@ function MemberList({
           member={member}
           readOnly={readOnly}
           showEditButton={showEditButton}
+          team={team}
         />
       ))}
     </div>
