@@ -38,6 +38,10 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
     setMembersVisible(showMembers)
   }, [showMembers])
 
+  useEffect(() => {
+    setEditModeOff(readOnly)
+  }, [readOnly])
+
   function updateName(name: string) {
     team.incrementalPatch({
       name: name,

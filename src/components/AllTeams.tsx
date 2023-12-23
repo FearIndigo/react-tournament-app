@@ -5,8 +5,10 @@ import TeamList from './TeamList.tsx'
 import AddNewTeamButton from './AddNewTeamButton.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import { useState } from 'react'
+import EditModeToggle from './EditModeToggle.tsx'
 
 function AllTeams() {
+  const [editModeOff, setEditModeOff] = useState(true)
   const [membersVisible, setMembersVisible] = useState(false)
   const { result: teams, isFetching } = useRxData<TeamDocType>(
     'teams',
@@ -18,12 +20,16 @@ function AllTeams() {
       <div className='flex h-10 w-full items-center justify-between space-x-1 rounded-3xl bg-blue-300 p-1'>
         <span className='grow p-2 font-bold'>Teams</span>
         <div className='flex h-full flex-row items-center space-x-1'>
-          <AddNewTeamButton />
+          <EditModeToggle
+            onChange={setEditModeOff}
+            title='Toggle edit mode all teams'
+          />
           <AccordionOpenToggle
             open={membersVisible}
             onChange={setMembersVisible}
             title='Toggle show all team members'
           />
+          <AddNewTeamButton />
         </div>
       </div>
       <div className='p-3 pt-2'>
@@ -34,6 +40,7 @@ function AllTeams() {
             teams={teams}
             showEditButton={true}
             showMembers={membersVisible}
+            readOnly={editModeOff}
           />
         )}
       </div>

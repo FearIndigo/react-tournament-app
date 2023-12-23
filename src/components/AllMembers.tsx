@@ -3,8 +3,11 @@ import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading.tsx'
 import { MemberDocType } from '../db/types/member'
 import AddNewMemberButton from './AddNewMemberButton.tsx'
+import EditModeToggle from './EditModeToggle.tsx'
+import { useState } from 'react'
 
 function AllMembers() {
+  const [editModeOff, setEditModeOff] = useState(true)
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
     (collection) => collection.find()
@@ -15,6 +18,10 @@ function AllMembers() {
       <div className='flex h-10 w-full items-center justify-between rounded-3xl bg-blue-300 p-1'>
         <span className='grow p-2 font-bold'>Members</span>
         <div className='flex h-full flex-row items-center space-x-1'>
+          <EditModeToggle
+            onChange={setEditModeOff}
+            title='Toggle edit mode all members'
+          />
           <AddNewMemberButton />
         </div>
       </div>
@@ -25,6 +32,7 @@ function AllMembers() {
           <MemberList
             members={members}
             showEditButton={true}
+            readOnly={editModeOff}
             className='space-y-2'
           />
         )}
