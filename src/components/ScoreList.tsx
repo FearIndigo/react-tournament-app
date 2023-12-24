@@ -3,10 +3,9 @@ import Score from './Score.tsx'
 
 type ScoreListProps = {
   scores: ScoreDocument[]
+  game?: GameDocument
   className?: string
   readOnly?: boolean
-  game?: GameDocument
-  showEditButton?: boolean
 }
 
 ScoreList.defaultProps = {
@@ -14,21 +13,11 @@ ScoreList.defaultProps = {
   className: '',
 }
 
-function ScoreList({
-  scores,
-  className,
-  readOnly,
-  showEditButton,
-}: ScoreListProps) {
+function ScoreList({ scores, game, className, readOnly }: ScoreListProps) {
   return (
     <div className={`flex flex-col space-y-1 ${className}`}>
       {scores.map((score) => (
-        <Score
-          key={score.id}
-          score={score}
-          readOnly={readOnly}
-          showEditButton={showEditButton}
-        />
+        <Score key={score.id} score={score} game={game} readOnly={readOnly} />
       ))}
     </div>
   )
