@@ -8,5 +8,7 @@
 export interface MemberDocType {
   id: string;
   name: string;
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }

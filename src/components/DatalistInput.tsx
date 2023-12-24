@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 type DatalistInputProps = {
   value: string
@@ -21,7 +22,7 @@ function DatalistInput({
 }: DatalistInputProps) {
   const [inputValue, setInputValue] = useState(value)
 
-  const datalistId = crypto.randomUUID()
+  const datalistId = uuidv4()
 
   useEffect(() => {
     setInputValue(value)

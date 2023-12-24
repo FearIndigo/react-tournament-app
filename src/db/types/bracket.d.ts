@@ -11,5 +11,7 @@ export interface BracketDocType {
   type: "elimination" | "doubleElimination" | "roundRobin" | "finals";
   rounds: string[];
   previous: string;
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }

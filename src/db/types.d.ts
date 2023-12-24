@@ -1,11 +1,17 @@
 import { RxDatabase, RxCollection, RxDocument } from 'rxdb'
-import { BracketDocType } from './bracket'
-import { GameDocType } from './game'
-import { MemberDocType } from './member'
-import { RoundDocType } from './round'
-import { ScoreDocType } from './score'
-import { TeamDocType } from './team'
-import { TournamentDocType } from './tournament'
+import { BracketDocType } from './types/bracket'
+import { GameDocType } from './types/game'
+import { MemberDocType } from './types/member'
+import { RoundDocType } from './types/round'
+import { ScoreDocType } from './types/score'
+import { TeamDocType } from './types/team'
+import { TournamentDocType } from './types/tournament'
+
+// Helper
+export type DocTypeWithTimestamps = {
+  createdAt?: string
+  updatedAt?: string
+}
 
 // Collections
 export type BracketCollection = RxCollection<BracketDocType>
@@ -25,7 +31,7 @@ export type RoundDocument = RxDocument<RoundDocType>
 export type ScoreDocument = RxDocument<ScoreDocType>
 export type TeamDocument = RxDocument<TeamDocType>
 
-// Helper
+// All collections
 export type AppDatabaseCollections = {
   brackets: BracketCollection
   games: GameCollection
@@ -37,4 +43,4 @@ export type AppDatabaseCollections = {
 }
 
 // Database
-export type AppDatabase = RxDatabase<DatabaseCollections>
+export type AppDatabase = RxDatabase<AppDatabaseCollections>

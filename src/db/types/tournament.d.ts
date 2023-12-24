@@ -9,5 +9,7 @@ export interface TournamentDocType {
   id: string;
   name: string;
   brackets: string[];
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }

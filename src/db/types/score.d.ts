@@ -9,5 +9,7 @@ export interface ScoreDocType {
   id: string;
   score: number;
   team: string;
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }

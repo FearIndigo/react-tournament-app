@@ -12,7 +12,10 @@ function AllTeams() {
   const [membersVisible, setMembersVisible] = useState(false)
   const { result: teams, isFetching } = useRxData<TeamDocType>(
     'teams',
-    (collection) => collection.find()
+    (collection) =>
+      collection.find({
+        index: ['createdAt'],
+      })
   )
 
   return (

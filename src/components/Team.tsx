@@ -1,7 +1,7 @@
 import MemberList from './MemberList.tsx'
 import { useEffect, useState } from 'react'
 import TextInput from './TextInput.tsx'
-import { MemberCollection, TeamDocument } from '../db/types/types'
+import { MemberCollection, TeamDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
 import TextLoading from './TextLoading.tsx'
@@ -31,6 +31,7 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
         selector: {
           id: { $in: team.members },
         },
+        index: ['createdAt'],
       })
   )
 
@@ -92,22 +93,28 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
         </div>
       </div>
       <div
-        className={`flex flex-col overflow-hidden transition-all duration-300 ease-in-out ${
-          membersVisible ? 'max-h-96' : 'max-h-0'
+        className={`collapsible-wrapper flex-col rounded-b-3xl ${
+          membersVisible ? '' : 'collapsed'
         }`}
       >
-        <div className='flex flex-col space-y-2 p-2 pt-1'>
-          {isFetching ? (
-            <TextLoading className='h-6' />
-          ) : (
-            <MemberList members={members} readOnly={editModeOff} team={team} />
+        <div className='collapsible'>
+          <div className='flex flex-col space-y-2 p-2 pt-1'>
+            {isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <MemberList
+                members={members}
+                readOnly={editModeOff}
+                team={team}
+              />
+            )}
+          </div>
+          {!editModeOff && (
+            <div className='p-2 pt-0'>
+              <AddTeamMember team={team} />
+            </div>
           )}
         </div>
-        {!editModeOff && (
-          <div className='p-2 pt-0'>
-            <AddTeamMember team={team} />
-          </div>
-        )}
       </div>
     </div>
   )

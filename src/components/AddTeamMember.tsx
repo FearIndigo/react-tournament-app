@@ -1,10 +1,11 @@
 import DatalistInput from './DatalistInput.tsx'
 import AddNewButton from './AddNewButton.tsx'
-import { MemberCollection, TeamDocument } from '../db/types/types'
+import { MemberCollection, TeamDocument } from '../db/types'
 import { useRxCollection, useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
 import { useState } from 'react'
 import TextLoading from './TextLoading.tsx'
+import { v4 as uuidv4 } from 'uuid'
 
 type AddTeamMemberProps = {
   team: TeamDocument
@@ -15,7 +16,10 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
     useState<[memberId: string, memberName: string]>()
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
-    (collection: MemberCollection) => collection.find()
+    (collection: MemberCollection) =>
+      collection.find({
+        index: ['createdAt'],
+      })
   )
   const memberCollection = useRxCollection<MemberDocType>('members')
 
@@ -43,7 +47,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
     if (memberToAdd == undefined) {
       if (memberCollection == undefined) return
       memberToAdd = await memberCollection.insert({
-        id: crypto.randomUUID(),
+        id: uuidv4(),
         name: selectedOption[1],
       })
     }

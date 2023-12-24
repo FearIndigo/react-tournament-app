@@ -10,7 +10,10 @@ function AllMembers() {
   const [editModeOff, setEditModeOff] = useState(true)
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
-    (collection) => collection.find()
+    (collection) =>
+      collection.find({
+        index: ['createdAt'],
+      })
   )
 
   return (

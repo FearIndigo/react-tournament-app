@@ -1,5 +1,5 @@
 import Member from './Member.tsx'
-import { MemberDocument, TeamDocument } from '../db/types/types'
+import { MemberDocument, TeamDocument } from '../db/types'
 
 type MemberListProps = {
   members: MemberDocument[]

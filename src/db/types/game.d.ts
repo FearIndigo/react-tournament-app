@@ -8,5 +8,7 @@
 export interface GameDocType {
   id: string;
   scores: string[];
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }

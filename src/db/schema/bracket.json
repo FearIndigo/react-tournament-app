@@ -30,7 +30,17 @@
       "ref": "brackets",
       "type": "string",
       "default": ""
+    },
+    "createdAt": {
+      "type": "string",
+      "maxLength": 100,
+      "default": ""
+    },
+    "updatedAt": {
+      "type": "string",
+      "default": ""
     }
   },
-  "required": ["id", "name", "type", "rounds", "previous"]
+  "required": ["id", "name", "type", "rounds", "previous"],
+  "indexes": ["createdAt"]
 }

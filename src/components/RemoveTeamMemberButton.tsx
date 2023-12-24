@@ -1,4 +1,4 @@
-import { MemberDocument, TeamDocument } from '../db/types/types'
+import { MemberDocument, TeamDocument } from '../db/types'
 import RemoveButton from './RemoveButton.tsx'
 
 type RemoveTeamMemberButtonProps = {

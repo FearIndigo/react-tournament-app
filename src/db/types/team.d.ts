@@ -9,5 +9,7 @@ export interface TeamDocType {
   id: string;
   name: string;
   members: string[];
+  createdAt?: string;
+  updatedAt?: string;
   [k: string]: unknown;
 }

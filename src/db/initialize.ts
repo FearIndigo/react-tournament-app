@@ -1,8 +1,18 @@
-import { createRxDatabase, RxJsonSchema, addRxPlugin } from 'rxdb'
+import {
+  createRxDatabase,
+  RxJsonSchema,
+  addRxPlugin,
+  RxCollection,
+  RxDocument,
+} from 'rxdb'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 
-import { AppDatabase, AppDatabaseCollections } from './types/types'
+import {
+  AppDatabase,
+  AppDatabaseCollections,
+  DocTypeWithTimestamps,
+} from './types'
 
 import { BracketDocType } from './types/bracket'
 import { GameDocType } from './types/game'
@@ -50,7 +60,7 @@ async function initialize() {
     tournamentsSchemaJson
 
   // Create collections
-  await db.addCollections({
+  const collections: AppDatabaseCollections = await db.addCollections({
     brackets: {
       schema: bracketsSchema,
     },
@@ -74,10 +84,35 @@ async function initialize() {
     },
   })
 
+  // Add collection hooks
+  addCollectionHooks<BracketDocType>(collections.brackets)
+  addCollectionHooks<GameDocType>(collections.games)
+  addCollectionHooks<MemberDocType>(collections.members)
+  addCollectionHooks<RoundDocType>(collections.rounds)
+  addCollectionHooks<ScoreDocType>(collections.scores)
+  addCollectionHooks<TeamDocType>(collections.teams)
+  addCollectionHooks<TournamentDocType>(collections.tournaments)
+
   // maybe sync collection to a remote
   // ...
 
   return db
+}
+
+function addCollectionHooks<T extends DocTypeWithTimestamps>(
+  collection: RxCollection<T>
+) {
+  // Pre-insert hook
+  collection.preInsert((plainData: T) => {
+    const isoDateTime = new Date().toISOString()
+    plainData.createdAt = isoDateTime
+    plainData.updatedAt = isoDateTime
+  }, false)
+
+  // Pre-save hook
+  collection.preSave((plainData: T, rxDocument: RxDocument<T>) => {
+    plainData.updatedAt = new Date().toISOString()
+  }, false)
 }
 
 export default initialize

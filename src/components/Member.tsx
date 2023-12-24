@@ -1,5 +1,5 @@
 import TextInput from './TextInput.tsx'
-import { MemberDocument, TeamDocument } from '../db/types/types'
+import { MemberDocument, TeamDocument } from '../db/types'
 import { useEffect, useState } from 'react'
 import EditModeToggle from './EditModeToggle.tsx'
 import RemoveTeamMemberButton from './RemoveTeamMemberButton.tsx'

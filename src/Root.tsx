@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Provider } from 'rxdb-hooks'
-import initialize from './db/initialize_db.ts'
+import initialize from './db/initialize.ts'
 import App from './App.tsx'
-import { TournamentDatabase } from './db/types/types'
+import { AppDatabase } from './db/types'
 
 let didInit = false
 
 const Root = () => {
-  const [db, setDb] = useState<TournamentDatabase>()
+  const [db, setDb] = useState<AppDatabase>()
 
   useEffect(() => {
     if (didInit) return

@@ -16,7 +16,17 @@
     "team": {
       "ref": "teams",
       "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "maxLength": 100,
+      "default": ""
+    },
+    "updatedAt": {
+      "type": "string",
+      "default": ""
     }
   },
-  "required": ["id", "score", "team"]
+  "required": ["id", "score", "team"],
+  "indexes": ["createdAt"]
 }

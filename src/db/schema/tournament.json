@@ -20,7 +20,17 @@
         "type": "string"
       },
       "default": []
+    },
+    "createdAt": {
+      "type": "string",
+      "maxLength": 100,
+      "default": ""
+    },
+    "updatedAt": {
+      "type": "string",
+      "default": ""
     }
   },
-  "required": ["id", "name", "brackets"]
+  "required": ["id", "name", "brackets"],
+  "indexes": ["createdAt"]
 }
