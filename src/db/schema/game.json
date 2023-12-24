@@ -18,5 +18,5 @@
       "default": []
     }
   },
-  "required": ["id"]
+  "required": ["id", "scores"]
 }

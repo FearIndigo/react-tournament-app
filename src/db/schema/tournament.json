@@ -1,5 +1,5 @@
 {
-  "title": "competitionDocType",
+  "title": "tournamentDocType",
   "version": 0,
   "keyCompression": true,
   "primaryKey": "id",
@@ -13,8 +13,8 @@
       "type": "string",
       "default": ""
     },
-    "rounds": {
-      "ref": "rounds",
+    "brackets": {
+      "ref": "brackets",
       "type": "array",
       "items": {
         "type": "string"
@@ -22,5 +22,5 @@
       "default": []
     }
   },
-  "required": ["id"]
+  "required": ["id", "name", "brackets"]
 }

@@ -5,9 +5,11 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface CompetitionDocType {
+export interface BracketDocType {
   id: string;
-  name?: string;
-  rounds?: string[];
+  name: string;
+  type: "elimination" | "doubleElimination" | "roundRobin" | "finals";
+  rounds: string[];
+  previous: string;
   [k: string]: unknown;
 }

@@ -5,8 +5,9 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export interface GameDocType {
+export interface TournamentDocType {
   id: string;
-  scores: string[];
+  name: string;
+  brackets: string[];
   [k: string]: unknown;
 }

@@ -13,11 +13,6 @@
       "type": "string",
       "default": ""
     },
-    "roundType": {
-      "type": "string",
-      "enum": ["knockout", "roundRobin"],
-      "default": "knockout"
-    },
     "games": {
       "ref": "games",
       "type": "array",
@@ -27,5 +22,5 @@
       "default": []
     }
   },
-  "required": ["id"]
+  "required": ["id", "name", "games"]
 }
