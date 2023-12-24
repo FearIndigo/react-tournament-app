@@ -47,18 +47,17 @@ function Score({ score, readOnly }: ScoreProps) {
     <div className='flex w-full items-center space-x-1'>
       {editModeOff ? (
         <>
-          <div className='grow truncate'>
-            <Team team={team} />
-          </div>
           <div className='self-start'>
-            <span className='flex h-10 w-14 items-center justify-center truncate rounded-3xl bg-blue-300 p-2'>
+            <span className='flex h-10 w-14 items-center justify-center truncate rounded-3xl bg-blue-300 p-2 font-bold'>
               {score.score}
             </span>
+          </div>
+          <div className='grow truncate'>
+            <Team team={team} />
           </div>
         </>
       ) : (
         <>
-          <span className='w-full truncate p-2 font-bold'>{team.name}</span>
           <NumberInput
             value={score.score}
             placeholder='Name...'
@@ -66,6 +65,7 @@ function Score({ score, readOnly }: ScoreProps) {
             className='w-24 text-center'
             min={0}
           />
+          <span className='w-full truncate p-2 font-bold'>{team.name}</span>
           <div>
             <RemoveScoreButton score={score} />
           </div>
