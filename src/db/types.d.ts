@@ -7,8 +7,8 @@ import { ScoreDocType } from './types/score'
 import { TeamDocType } from './types/team'
 import { TournamentDocType } from './types/tournament'
 
-// Helper
-export type DocTypeWithTimestamps = {
+// Interfaces
+export interface ITimestamps {
   createdAt?: string
   updatedAt?: string
 }

@@ -8,11 +8,7 @@ import {
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 
-import {
-  AppDatabase,
-  AppDatabaseCollections,
-  DocTypeWithTimestamps,
-} from './types'
+import { AppDatabase, AppDatabaseCollections, ITimestamps } from './types'
 
 import { BracketDocType } from './types/bracket'
 import { GameDocType } from './types/game'
@@ -99,7 +95,7 @@ async function initialize() {
   return db
 }
 
-function addCollectionHooks<T extends DocTypeWithTimestamps>(
+function addCollectionHooks<T extends ITimestamps>(
   collection: RxCollection<T>
 ) {
   // Pre-insert hook
