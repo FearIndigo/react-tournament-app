@@ -14,14 +14,22 @@ type TeamProps = {
   team: TeamDocument
   showMembers?: boolean
   readOnly?: boolean
+  className?: string
   showEditButton?: boolean
 }
 
 Team.defaultProps = {
   readOnly: true,
+  className: '',
 }
 
-function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
+function Team({
+  team,
+  showMembers,
+  readOnly,
+  className,
+  showEditButton,
+}: TeamProps) {
   const [membersVisible, setMembersVisible] = useState(showMembers)
   const [editModeOff, setEditModeOff] = useState(readOnly)
   const { result: members, isFetching } = useRxData<MemberDocType>(
@@ -59,7 +67,9 @@ function Team({ team, showMembers, readOnly, showEditButton }: TeamProps) {
           : 'New Team'
 
   return (
-    <div className='flex flex-col rounded-3xl bg-blue-100 text-blue-800'>
+    <div
+      className={`flex flex-col rounded-3xl bg-blue-100 text-blue-800 ${className}`}
+    >
       <div className='h-10 rounded-3xl bg-blue-300 p-1'>
         <div className='flex h-full items-center justify-between space-x-1'>
           {editModeOff ? (
