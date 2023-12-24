@@ -32,7 +32,7 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
   return (
     <div className='flex h-8 items-center space-x-1'>
       {editModeOff ? (
-        <div className='flex h-full grow items-center rounded-3xl bg-blue-100 p-2'>
+        <div className='flex h-full grow items-center truncate rounded-3xl bg-blue-100 p-2'>
           <span className='truncate'>{member.name}</span>
         </div>
       ) : (
