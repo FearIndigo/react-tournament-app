@@ -35,6 +35,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
         selector: {
           id: { $in: game?.scores },
         },
+        sort: [{ score: 'desc' }],
       })
     )
 
