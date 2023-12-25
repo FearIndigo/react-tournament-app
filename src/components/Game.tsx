@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { GameDocument, ScoreCollection } from '../db/types'
+import { GameDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
-import TextLoading from './TextLoading.tsx'
+import TextLoading from './TextLoading'
 import EditModeToggle from './EditModeToggle'
 import { ScoreDocType } from '../db/types/score'
 import AddScore from './AddScore'
@@ -22,7 +22,7 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
   const [editModeOff, setEditModeOff] = useState(readOnly)
   const { result: scores, isFetching } = useRxData<ScoreDocType>(
     'scores',
-    (collection: ScoreCollection) =>
+    (collection) =>
       collection.find({
         selector: {
           id: { $in: game.scores },

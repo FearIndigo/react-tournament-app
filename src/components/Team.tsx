@@ -1,14 +1,15 @@
 import MemberList from './MemberList.tsx'
 import { useEffect, useState } from 'react'
 import TextInput from './TextInput.tsx'
-import { MemberCollection, TeamDocument } from '../db/types'
+import { TeamDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
 import TextLoading from './TextLoading.tsx'
 import EditModeToggle from './EditModeToggle.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import AddTeamMember from './AddTeamMember.tsx'
-import RemoveTeamButton from './RemoveTeamButton.tsx'
+import RemoveTeamButton from './RemoveTeamButton'
+import { useTeamName } from '../db/hooks'
 
 type TeamProps = {
   team: TeamDocument
@@ -34,7 +35,7 @@ function Team({
   const [editModeOff, setEditModeOff] = useState(readOnly)
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
-    (collection: MemberCollection) =>
+    (collection) =>
       collection.find({
         selector: {
           id: { $in: team.members },
@@ -42,6 +43,7 @@ function Team({
         index: ['createdAt'],
       })
   )
+  const teamName = useTeamName(team)
 
   useEffect(() => {
     setMembersVisible(showMembers)
@@ -56,15 +58,6 @@ function Team({
       name: name,
     })
   }
-
-  const teamName =
-    team.name != ''
-      ? team.name
-      : isFetching
-        ? '...'
-        : members.length > 0
-          ? members.map((member) => member.name).join(' + ')
-          : 'New Team'
 
   return (
     <div

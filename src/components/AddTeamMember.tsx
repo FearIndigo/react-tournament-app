@@ -1,6 +1,6 @@
 import DatalistInput from './DatalistInput.tsx'
 import AddNewButton from './AddNewButton.tsx'
-import { MemberCollection, TeamDocument } from '../db/types'
+import { TeamDocument } from '../db/types'
 import { useRxCollection, useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
 import { useState } from 'react'
@@ -16,7 +16,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
     useState<[memberId: string, memberName: string]>()
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
-    (collection: MemberCollection) =>
+    (collection) =>
       collection.find({
         index: ['createdAt'],
       })

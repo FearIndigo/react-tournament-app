@@ -7,6 +7,7 @@ import Team from './Team.tsx'
 import TextLoading from './TextLoading'
 import NumberInput from './NumberInput'
 import { ScoreDocType } from '../db/types/score'
+import { useTeamName } from '../db/hooks'
 
 type ScoreProps = {
   score: ScoreDocument
@@ -38,6 +39,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
         sort: [{ score: 'desc' }],
       })
     )
+  const teamName = useTeamName(teams[0])
 
   useEffect(() => {
     setEditModeOff(readOnly)
@@ -85,7 +87,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
             />
           </div>
 
-          <span className='w-full truncate p-2 font-bold'>{team.name}</span>
+          <span className='w-full truncate p-2 font-bold'>{teamName}</span>
           <div>
             <RemoveScoreButton score={score} />
           </div>
