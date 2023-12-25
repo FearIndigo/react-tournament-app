@@ -55,8 +55,15 @@ function Score({ score, game, readOnly }: ScoreProps) {
   }
 
   const team = teams[0]
-  const bestScore = scores.length > 0 ? scores[0].score : -1
-  const isBestScore = bestScore == score.score
+  let isWinningScore = false
+  switch (game?.type) {
+    case 'highestScore':
+      isWinningScore = score.score == scores[0]?.score
+      break
+    case 'lowestScore':
+      isWinningScore = score.score == scores[scores.length - 1]?.score
+      break
+  }
 
   return (
     <div className='flex w-full items-center space-x-1'>
@@ -65,7 +72,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
           <div className='flex h-10 items-center self-start'>
             <span
               className={`flex h-8 w-14 items-center justify-center truncate rounded-3xl p-2 font-bold ${
-                isBestScore ? 'bg-green-300 text-green-800' : 'bg-blue-300'
+                isWinningScore ? 'bg-green-300 text-green-800' : 'bg-blue-300'
               }`}
             >
               {score.score}
@@ -83,7 +90,6 @@ function Score({ score, game, readOnly }: ScoreProps) {
               placeholder='Name...'
               onChange={updateScore}
               className='w-14 text-center'
-              min={0}
             />
           </div>
 

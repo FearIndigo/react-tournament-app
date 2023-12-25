@@ -9,6 +9,11 @@
       "type": "string",
       "maxLength": 100
     },
+    "type": {
+      "type": "string",
+      "enum": ["highestScore", "lowestScore"],
+      "default": "highestScore"
+    },
     "scores": {
       "ref": "scores",
       "type": "array",
@@ -27,6 +32,6 @@
       "default": ""
     }
   },
-  "required": ["id", "scores"],
+  "required": ["id", "type", "scores"],
   "indexes": ["createdAt"]
 }

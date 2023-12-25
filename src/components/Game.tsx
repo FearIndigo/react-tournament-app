@@ -7,6 +7,8 @@ import { ScoreDocType } from '../db/types/score'
 import AddScore from './AddScore'
 import ScoreList from './ScoreList'
 import RemoveGameButton from './RemoveGameButton'
+import { camel2Title } from '../helpers.tsx'
+import TextInput from './TextInput.tsx'
 
 type GameProps = {
   game: GameDocument
@@ -35,6 +37,9 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
     setEditModeOff(readOnly)
   }, [readOnly])
 
+  // TODO use select input
+  function updateGameType(newGameType: string) {}
+
   return (
     <div className='flex flex-col rounded-3xl bg-blue-100 text-blue-800'>
       {showEditButton && (
@@ -50,6 +55,11 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
               />
             </div>
           </div>
+        </div>
+      )}
+      {!editModeOff && (
+        <div className='flex items-center p-2 py-1'>
+          <TextInput onChange={updateGameType} value={camel2Title(game.type)} />
         </div>
       )}
       <div
