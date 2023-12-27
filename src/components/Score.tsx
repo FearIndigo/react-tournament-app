@@ -88,7 +88,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
           <div>
             <NumberInput
               value={score.score}
-              placeholder='Name...'
+              placeholder='Score...'
               onChange={updateScore}
               className='w-14 text-center'
             />
