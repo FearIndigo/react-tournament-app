@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import SelectInput from './SelectInput.tsx'
 
 type DatalistInputProps = {
   value: string
@@ -20,42 +20,65 @@ function DatalistInput({
   className,
   onChange,
 }: DatalistInputProps) {
-  const [inputValue, setInputValue] = useState(value)
+  const [selectedOption, setSelectedOption] = useState<
+    [value: string, label: string]
+  >([value, value])
 
-  const datalistId = uuidv4()
+  const getSelectedOption = useCallback(
+    (input: string): [value: string, label: string] => {
+      // NOTE: When multiple options have the same label only the first one can be chosen when selecting via label
+      // Find via value first
+      let option = options.find((option) => option[0] == input)
+      // Find via label second
+      if (option == undefined) {
+        option = options.find((option) => option[1] == input)
+      }
+
+      return option ? option : [input, input]
+    },
+    [options]
+  )
 
   useEffect(() => {
-    setInputValue(value)
-  }, [value])
+    setSelectedOption(getSelectedOption(value))
+  }, [getSelectedOption, value])
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    // NOTE: When multiple options have the same label only the first one can be chosen when selecting via label
-    const selectedOption = options.find(
-      (option) => option[0] == e.target.value || option[1] == e.target.value
-    )
-    const selectedValue = selectedOption ? selectedOption[0] : ''
-    const selectedLabel = selectedOption ? selectedOption[1] : e.target.value
-    setInputValue(selectedLabel)
-    onChange([selectedValue, selectedLabel])
+    const newOption = getSelectedOption(e.target.value)
+    setSelectedOption(newOption)
+    onChange(newOption)
   }
 
+  function handleSelectOnChange(newOption: [value: string, label: string]) {
+    if (!options.includes(newOption)) return
+    setSelectedOption(newOption)
+    onChange(newOption)
+  }
+
+  const filteredOptions =
+    selectedOption[1] == ''
+      ? options
+      : options.filter((option) =>
+          option[1].toLowerCase().includes(selectedOption[1].toLowerCase())
+        )
+
   return (
-    <>
+    <div className={`relative flex h-8 w-full ${className}`}>
       <input
-        value={inputValue}
+        value={selectedOption[1]}
         placeholder={placeholder}
         onChange={handleOnChange}
-        className={`h-8 grow truncate rounded-3xl bg-white/50 p-2 shadow-inner ring-1 ring-current ${className}`}
-        list={datalistId}
+        className='h-full w-full truncate rounded-3xl bg-white/50 px-2 shadow-inner ring-1 ring-current'
       />
-      <datalist id={datalistId}>
-        {options.map((option, index) => (
-          <option key={`${index}-${option[0]}`} value={option[0]}>
-            {option[1]}
-          </option>
-        ))}
-      </datalist>
-    </>
+      {filteredOptions.length > 0 && (
+        <SelectInput
+          onChange={handleSelectOnChange}
+          options={filteredOptions}
+          value={selectedOption[0]}
+          className='absolute left-0 h-full w-full'
+        />
+      )}
+    </div>
   )
 }
 
