@@ -21,19 +21,18 @@ function NumberInput({
   className,
   onChange,
 }: NumberInputProps) {
-  const [inputValue, setInputValue] = useState(value)
+  const [inputValue, setInputValue] = useState<string>(value.toString())
 
   useEffect(() => {
-    setInputValue(value)
+    setInputValue(value.toString())
   }, [value])
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    let inputValue = e.target.value
-    if (e.target.value == '') inputValue = '0'
-    const newValue = parseInt(inputValue)
-    if (isNaN(newValue)) return
+    const newValue = e.target.value
     setInputValue(newValue)
-    onChange(newValue)
+    let newIntValue = parseInt(newValue)
+    if (isNaN(newIntValue)) newIntValue = 0
+    onChange(newIntValue)
   }
 
   return (
