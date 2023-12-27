@@ -43,20 +43,21 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
   }
 
   async function addTeamMember() {
+    let option = selectedOption
+    if (option[0] == '') {
+      if (options.length == 0) return
+      option = options[0]
+    }
     // NOTE: cannot add members with the same name to the same team when selecting via name
     // Find member via id first
-    let memberToAdd = filteredMembers.find(
-      (member) => member.id == selectedOption[0]
-    )
+    let memberToAdd = filteredMembers.find((member) => member.id == option[0])
     // Find member via name second
     if (memberToAdd == undefined) {
-      memberToAdd = filteredMembers.find(
-        (member) => member.name == selectedOption[1]
-      )
+      memberToAdd = filteredMembers.find((member) => member.name == option[1])
     }
     // Add new member third
     if (memberToAdd == undefined) {
-      if (memberCollection == undefined || selectedOption[1] == '') return
+      if (memberCollection == undefined) return
       memberToAdd = await memberCollection.insert({
         id: uuidv4(),
         name: selectedOption[1],
@@ -74,7 +75,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
     <div className='flex h-8 items-center space-x-1'>
       <DatalistInput
         onChange={updateSelectedOption}
-        placeholder='New member...'
+        placeholder={options.length > 0 ? options[0][1] : 'New member...'}
         options={options}
         value={selectedOption[0]}
         className='h-full'
