@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { GameDocument } from '../db/types'
+import { GameDocument, GameTypes } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import EditModeToggle from './EditModeToggle'
@@ -8,7 +8,7 @@ import AddScore from './AddScore'
 import ScoreList from './ScoreList'
 import RemoveGameButton from './RemoveGameButton'
 import { camel2Title } from '../helpers.tsx'
-import TextInput from './TextInput.tsx'
+import SelectInput from './SelectInput'
 
 type GameProps = {
   game: GameDocument
@@ -37,8 +37,18 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
     setEditModeOff(readOnly)
   }, [readOnly])
 
-  // TODO use select input
-  function updateGameType(newGameType: string) {}
+  function updateGameType(selectedOption: [gameType: string, label: string]) {
+    const newGameType = selectedOption[0] as GameTypes
+    if (!Object.values(GameTypes).includes(newGameType)) return
+
+    game.incrementalPatch({
+      type: newGameType,
+    })
+  }
+
+  const options: [gameType: string, label: string][] = Object.values(
+    GameTypes
+  ).map((type) => [type, camel2Title(type)])
 
   return (
     <div className='flex flex-col rounded-3xl bg-blue-100 text-blue-800'>
@@ -59,7 +69,11 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
       )}
       {!editModeOff && (
         <div className='flex items-center p-2 py-1'>
-          <TextInput onChange={updateGameType} value={camel2Title(game.type)} />
+          <SelectInput
+            value={game.type}
+            options={options}
+            onChange={updateGameType}
+          />
         </div>
       )}
       <div

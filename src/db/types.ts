@@ -13,6 +13,12 @@ export interface ITimestamps {
   updatedAt?: string
 }
 
+// Enums
+export enum GameTypes {
+  HighestScore = 'highestScore',
+  LowestScore = 'lowestScore',
+}
+
 // Collections
 export type BracketCollection = RxCollection<BracketDocType>
 export type GameCollection = RxCollection<GameDocType>
@@ -20,16 +26,16 @@ export type MemberCollection = RxCollection<MemberDocType>
 export type RoundCollection = RxCollection<RoundDocType>
 export type ScoreCollection = RxCollection<ScoreDocType>
 export type TeamCollection = RxCollection<TeamDocType>
-export type TournamentCollection = RxCollection<CompetitionDocType>
+export type TournamentCollection = RxCollection<TournamentDocType>
 
 // Documents
 export type BracketDocument = RxDocument<BracketDocType>
-export type TournamentDocument = RxDocument<TournamentDocType>
 export type GameDocument = RxDocument<GameDocType>
 export type MemberDocument = RxDocument<MemberDocType>
 export type RoundDocument = RxDocument<RoundDocType>
 export type ScoreDocument = RxDocument<ScoreDocType>
 export type TeamDocument = RxDocument<TeamDocType>
+export type TournamentDocument = RxDocument<TournamentDocType>
 
 // All collections
 export type AppDatabaseCollections = {

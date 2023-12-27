@@ -12,8 +12,9 @@ type AddTeamMemberProps = {
 }
 
 function AddTeamMember({ team }: AddTeamMemberProps) {
-  const [selectedOption, setSelectedOption] =
-    useState<[memberId: string, memberName: string]>()
+  const [selectedOption, setSelectedOption] = useState<
+    [memberId: string, memberName: string]
+  >(['', ''])
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
     (collection) =>
@@ -27,9 +28,13 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
     return <TextLoading className='h-6' />
   }
 
-  const options: [id: string, name: string][] = members
-    .filter((member) => !team.members.includes(member.id))
-    .map((member) => [member.id, member.name])
+  const filteredMembers = members.filter(
+    (member) => !team.members.includes(member.id)
+  )
+
+  const options: [id: string, name: string][] = filteredMembers.map(
+    (member) => [member.id, member.name]
+  )
 
   function updateSelectedOption(
     newOption: [memberId: string, memberName: string]
@@ -38,26 +43,31 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
   }
 
   async function addTeamMember() {
-    if (selectedOption == undefined) return
     // NOTE: cannot add members with the same name to the same team when selecting via name
-    let memberToAdd = members.find(
-      (member) =>
-        member.id == selectedOption[0] || member.name == selectedOption[1]
+    // Find member via id first
+    let memberToAdd = filteredMembers.find(
+      (member) => member.id == selectedOption[0]
     )
+    // Find member via name second
     if (memberToAdd == undefined) {
-      if (memberCollection == undefined) return
+      memberToAdd = filteredMembers.find(
+        (member) => member.name == selectedOption[1]
+      )
+    }
+    // Add new member third
+    if (memberToAdd == undefined) {
+      if (memberCollection == undefined || selectedOption[1] == '') return
       memberToAdd = await memberCollection.insert({
         id: uuidv4(),
         name: selectedOption[1],
       })
     }
-    if (team.members.includes(memberToAdd.id)) return
 
     team.incrementalPatch({
       members: [...team.members, memberToAdd.id],
     })
 
-    setSelectedOption(undefined)
+    setSelectedOption(['', ''])
   }
 
   return (
@@ -66,7 +76,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
         onChange={updateSelectedOption}
         placeholder='New member...'
         options={options}
-        value={selectedOption ? selectedOption[1] : ''}
+        value={selectedOption[0]}
         className='h-full'
       />
       <div className='flex h-full items-center'>

@@ -39,7 +39,8 @@ function Score({ score, game, readOnly }: ScoreProps) {
         sort: [{ score: 'desc' }],
       })
     )
-  const teamName = useTeamName(teams[0])
+  const team = teams[0]
+  const teamName = useTeamName(team)
 
   useEffect(() => {
     setEditModeOff(readOnly)
@@ -54,7 +55,6 @@ function Score({ score, game, readOnly }: ScoreProps) {
     })
   }
 
-  const team = teams[0]
   let isWinningScore = false
   switch (game?.type) {
     case 'highestScore':
