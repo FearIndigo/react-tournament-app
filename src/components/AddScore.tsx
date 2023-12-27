@@ -15,8 +15,9 @@ type AddScoreProps = {
 }
 
 function AddScore({ game, currentScores }: AddScoreProps) {
-  const [selectedOption, setSelectedOption] =
-    useState<[teamId: string, teamName: string]>()
+  const [selectedOption, setSelectedOption] = useState<
+    [teamId: string, teamName: string]
+  >(['', ''])
   const [options, setOptions] = useState<[teamId: string, teamName: string][]>(
     []
   )
@@ -57,10 +58,14 @@ function AddScore({ game, currentScores }: AddScoreProps) {
   }
 
   async function addNewScore() {
-    if (selectedOption == undefined) return
+    let option = selectedOption
+    if (option[0] == '') {
+      if (options.length == 0) return
+      option = options[0]
+    }
     // NOTE: cannot add teams with the same name to the same game when selecting via name
     const teamToAdd = teams.find(
-      (team) => team.id == selectedOption[0] || team.name == selectedOption[1]
+      (team) => team.id == option[0] || team.name == option[1]
     )
     if (teamToAdd == undefined) return
     if (currentScores.find((score) => score.team == teamToAdd.id)) return
@@ -76,16 +81,16 @@ function AddScore({ game, currentScores }: AddScoreProps) {
       scores: [...game.scores, scoreToAdd.id],
     })
 
-    setSelectedOption(undefined)
+    setSelectedOption(['', ''])
   }
 
   return (
     <div className='flex h-8 items-center space-x-1'>
       <DatalistInput
         onChange={updateSelectedOption}
-        placeholder='New score...'
+        placeholder={options.length > 0 ? options[0][1] : 'New score...'}
         options={options}
-        value={selectedOption ? selectedOption[1] : ''}
+        value={selectedOption[0]}
         className='h-full'
       />
       <div className='flex h-full items-center'>
