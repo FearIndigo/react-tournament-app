@@ -32,7 +32,7 @@ function SelectInput({
   return (
     <select
       value={inputValue}
-      className={`h-8 grow truncate rounded-3xl bg-white/50 px-2 shadow-inner ring-1 ring-current ${className}`}
+      className={`h-8 grow truncate rounded-3xl bg-white/50 px-1 shadow-inner ring-1 ring-current ${className}`}
       onChange={handleOnChange}
     >
       {options.map((option, index) => (
