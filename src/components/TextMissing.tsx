@@ -16,7 +16,7 @@ function TextMissing({ className }: TextLoadingProps) {
       <div className='aspect-square h-full  rounded-full bg-red-500 p-1'>
         <XMarkIcon className='text-red-200' />
       </div>
-      <span>missing!</span>
+      <span className='truncate'>missing!</span>
     </div>
   )
 }
