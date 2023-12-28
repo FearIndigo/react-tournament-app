@@ -1,5 +1,6 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import SelectInput from './SelectInput.tsx'
+import TextInput from './TextInput.tsx'
 
 type DatalistInputProps = {
   value: string
@@ -43,13 +44,13 @@ function DatalistInput({
     setSelectedOption(getSelectedOption(value))
   }, [getSelectedOption, value])
 
-  function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    const newOption = getSelectedOption(e.target.value)
+  function textInputOnChange(newValue: string) {
+    const newOption = getSelectedOption(newValue)
     setSelectedOption(newOption)
     onChange(newOption)
   }
 
-  function handleSelectOnChange(newOption: [value: string, label: string]) {
+  function selectInputOnChange(newOption: [value: string, label: string]) {
     if (!options.includes(newOption)) return
     setSelectedOption(newOption)
     onChange(newOption)
@@ -64,20 +65,18 @@ function DatalistInput({
 
   return (
     <div className={`relative flex h-8 w-full ${className}`}>
-      <input
+      <TextInput
         value={selectedOption[1]}
         placeholder={placeholder}
-        onChange={handleOnChange}
-        className='pointer-events-none relative z-10 h-full w-full truncate rounded-3xl bg-white/50 px-2 shadow-inner ring-1 ring-current'
+        onChange={textInputOnChange}
+        className='relative z-10 mr-4 w-full bg-transparent shadow-none ring-0'
       />
-      {filteredOptions.length > 0 && (
-        <SelectInput
-          onChange={handleSelectOnChange}
-          options={filteredOptions}
-          value={selectedOption[0]}
-          className='absolute left-0 h-full w-full'
-        />
-      )}
+      <SelectInput
+        onChange={selectInputOnChange}
+        options={filteredOptions}
+        value={selectedOption[0]}
+        className='absolute left-0 w-full'
+      />
     </div>
   )
 }
