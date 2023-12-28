@@ -68,7 +68,7 @@ function DatalistInput({
         value={selectedOption[1]}
         placeholder={placeholder}
         onChange={handleOnChange}
-        className='h-full w-full truncate rounded-3xl bg-white/50 px-2 shadow-inner ring-1 ring-current'
+        className='pointer-events-none relative z-10 h-full w-full truncate rounded-3xl bg-white/50 px-2 shadow-inner ring-1 ring-current'
       />
       {filteredOptions.length > 0 && (
         <SelectInput
