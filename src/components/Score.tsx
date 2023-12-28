@@ -69,20 +69,21 @@ function Score({ score, game, readOnly }: ScoreProps) {
   return (
     <div className='flex w-full items-center space-x-1'>
       {editModeOff ? (
-        <>
-          <div className='flex h-10 items-center self-start'>
-            <span
-              className={`flex h-8 w-14 items-center justify-center truncate rounded-3xl p-2 font-bold ${
-                isWinningScore ? 'bg-green-300 text-green-800' : 'bg-blue-300'
-              }`}
-            >
-              {score.score}
-            </span>
-          </div>
-          <div className='grow truncate'>
-            {team ? <Team team={team} /> : <TextMissing className='h-8' />}
-          </div>
-        </>
+        <div className='grow truncate'>
+          {team ? (
+            <Team team={team}>
+              <span
+                className={`flex h-full w-12 items-center justify-center truncate rounded-3xl font-bold ${
+                  isWinningScore ? 'bg-green-300 text-green-800' : 'bg-blue-100'
+                }`}
+              >
+                {score.score}
+              </span>
+            </Team>
+          ) : (
+            <TextMissing className='h-8' />
+          )}
+        </div>
       ) : (
         <>
           <div>
@@ -90,7 +91,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
               value={score.score}
               placeholder='Score...'
               onChange={updateScore}
-              className='w-14 text-center'
+              className='w-16'
             />
           </div>
 
