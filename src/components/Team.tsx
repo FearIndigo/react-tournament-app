@@ -1,5 +1,5 @@
 import MemberList from './MemberList.tsx'
-import { useEffect, useState } from 'react'
+import { PropsWithChildren, useEffect, useState } from 'react'
 import TextInput from './TextInput.tsx'
 import { TeamDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
@@ -30,7 +30,8 @@ function Team({
   readOnly,
   className,
   showEditButton,
-}: TeamProps) {
+  children,
+}: PropsWithChildren<TeamProps>) {
   const [membersVisible, setMembersVisible] = useState(showMembers)
   const [editModeOff, setEditModeOff] = useState(readOnly)
   const { result: members, isFetching } = useRxData<MemberDocType>(
@@ -66,9 +67,12 @@ function Team({
       <div className='h-10 rounded-3xl bg-blue-300 p-1'>
         <div className='flex h-full items-center justify-between space-x-1'>
           {editModeOff ? (
-            <span className='truncate rounded-3xl p-2 font-bold'>
-              {teamName}
-            </span>
+            <div className='flex h-full items-center truncate'>
+              {children && <div className='h-full'>{children}</div>}
+              <span className='truncate rounded-3xl p-2 font-bold'>
+                {teamName}
+              </span>
+            </div>
           ) : (
             <TextInput
               value={team.name}
