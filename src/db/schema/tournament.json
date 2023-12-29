@@ -24,7 +24,8 @@
     "createdAt": {
       "type": "string",
       "maxLength": 100,
-      "default": ""
+      "default": "",
+      "final": true
     },
     "updatedAt": {
       "type": "string",

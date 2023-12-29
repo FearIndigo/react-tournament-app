@@ -10,6 +10,7 @@ function AddNewGameButton() {
       id: uuidv4(),
       type: 'highestScore',
       scores: [],
+      previous: '',
     })
   }
 

@@ -21,16 +21,22 @@
       },
       "default": []
     },
+    "previous": {
+      "ref": "rounds",
+      "type": "string",
+      "default": ""
+    },
     "createdAt": {
       "type": "string",
       "maxLength": 100,
-      "default": ""
+      "default": "",
+      "final": true
     },
     "updatedAt": {
       "type": "string",
       "default": ""
     }
   },
-  "required": ["id", "name", "games"],
+  "required": ["id", "name", "games", "previous"],
   "indexes": ["createdAt"]
 }
