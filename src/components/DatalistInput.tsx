@@ -69,7 +69,7 @@ function DatalistInput({
         value={selectedOption[1]}
         placeholder={placeholder}
         onChange={textInputOnChange}
-        className='relative z-10 mr-4 w-full bg-transparent shadow-none ring-0'
+        className='relative z-10 mr-4 w-full ring-0'
       />
       <SelectInput
         onChange={selectInputOnChange}
