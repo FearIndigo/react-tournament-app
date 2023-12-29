@@ -74,6 +74,7 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
             value={game.type}
             options={options}
             onChange={updateGameType}
+            className='w-full'
           />
         </div>
       )}

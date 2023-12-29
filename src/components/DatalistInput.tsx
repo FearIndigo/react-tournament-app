@@ -64,7 +64,7 @@ function DatalistInput({
         )
 
   return (
-    <div className={`relative flex h-8 w-full ${className}`}>
+    <div className={`relative flex h-8 ${className}`}>
       <TextInput
         value={selectedOption[1]}
         placeholder={placeholder}

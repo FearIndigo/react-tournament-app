@@ -50,13 +50,14 @@ function AddTournamentBracket({ tournament }: AddTournamentBracketProps) {
   )
 
   return (
-    <div className='flex h-8 items-center space-x-1'>
+    <div className='flex h-8  items-center space-x-1'>
       <SelectInput
         onChange={setSelectedBracketType}
         options={options}
         value={bracketType}
-        className='h-full'
+        className='w-full'
       />
+
       <div className='flex h-full items-center'>
         <AddNewButton
           title='Add bracket to tournament'
