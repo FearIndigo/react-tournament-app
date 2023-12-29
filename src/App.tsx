@@ -13,7 +13,7 @@ function App() {
       />
 
       <div className='relative flex flex-col items-center justify-center space-y-2 px-8 py-16 text-center text-blue-100'>
-        <Trophy className='h-16 w-16 select-none' />
+        <Trophy className='h-16 w-16' />
         <h1 className='text-5xl font-bold'>Tournament App</h1>
         <span>
           {'By '}
