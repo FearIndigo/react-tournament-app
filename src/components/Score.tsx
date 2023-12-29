@@ -74,7 +74,9 @@ function Score({ score, game, readOnly }: ScoreProps) {
             <Team team={team}>
               <span
                 className={`flex h-full w-12 items-center justify-center truncate rounded-3xl font-bold ${
-                  isWinningScore ? 'bg-green-300 text-green-800' : 'bg-blue-100'
+                  isWinningScore
+                    ? 'bg-green-300 text-green-800'
+                    : 'bg-red-100 text-red-800'
                 }`}
               >
                 {score.score}
