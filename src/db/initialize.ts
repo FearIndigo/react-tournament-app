@@ -1,9 +1,9 @@
 import {
-  createRxDatabase,
-  RxJsonSchema,
   addRxPlugin,
+  createRxDatabase,
   RxCollection,
   RxDocument,
+  RxJsonSchema,
 } from 'rxdb'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
@@ -25,6 +25,8 @@ import roundsSchemaJson from './schema/round.json'
 import scoresSchemaJson from './schema/score.json'
 import teamsSchemaJson from './schema/team.json'
 import tournamentsSchemaJson from './schema/tournament.json'
+import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup'
+import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election'
 
 async function initialize() {
   // Enable dev mode
@@ -33,6 +35,10 @@ async function initialize() {
       addRxPlugin(module.RxDBDevModePlugin)
     )
   }
+
+  // Add plugins
+  addRxPlugin(RxDBLeaderElectionPlugin)
+  addRxPlugin(RxDBCleanupPlugin)
 
   // Storage
   const storageWithKeyCompression = wrappedKeyCompressionStorage({
@@ -43,6 +49,7 @@ async function initialize() {
   const db: AppDatabase = await createRxDatabase<AppDatabaseCollections>({
     name: 'react-tournament-app',
     storage: storageWithKeyCompression,
+    eventReduce: true,
   })
 
   // Schemas
