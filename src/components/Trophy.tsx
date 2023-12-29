@@ -29,6 +29,7 @@ function Trophy({ className }: TrophyProps) {
       src='/trophy.lottie'
       className={`${className}`}
       onClick={tryPlay}
+      autoplay
     />
   )
 }
