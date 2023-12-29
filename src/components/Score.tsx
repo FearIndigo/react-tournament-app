@@ -8,7 +8,7 @@ import TextLoading from './TextLoading'
 import NumberInput from './NumberInput'
 import { ScoreDocType } from '../db/types/score'
 import { useTeamName } from '../db/hooks'
-import TextMissing from './TextMissing.tsx'
+import TextError from './TextError'
 
 type ScoreProps = {
   score: ScoreDocument
@@ -81,7 +81,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
               </span>
             </Team>
           ) : (
-            <TextMissing className='h-8' />
+            <TextError text='missing team!' className='h-8' />
           )}
         </div>
       ) : (
@@ -94,17 +94,15 @@ function Score({ score, game, readOnly }: ScoreProps) {
               className='w-16'
             />
           </div>
-
           <div className='grow truncate'>
             {team ? (
               <span className='w-full truncate px-2 font-bold'>{teamName}</span>
             ) : (
-              <TextMissing className='h-8' />
+              <TextError text='missing!' className='h-8' />
             )}
           </div>
-
           <div>
-            <RemoveScoreButton score={score} />
+            <RemoveScoreButton title='Remove team from game' score={score} />
           </div>
         </>
       )}

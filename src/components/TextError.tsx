@@ -1,16 +1,16 @@
 import { XMarkIcon } from '@heroicons/react/24/outline'
 
-type TextMissingProps = {
+type TextErrorProps = {
   text?: string
   className?: string
 }
 
-TextMissing.defaultProps = {
-  text: 'missing!',
+TextError.defaultProps = {
+  text: 'error!',
   className: '',
 }
 
-function TextMissing({ text, className }: TextMissingProps) {
+function TextError({ text, className }: TextErrorProps) {
   return (
     <div
       className={`flex animate-pulse items-center space-x-1 text-red-500 ${className}`}
@@ -23,4 +23,4 @@ function TextMissing({ text, className }: TextMissingProps) {
   )
 }
 
-export default TextMissing
+export default TextError
