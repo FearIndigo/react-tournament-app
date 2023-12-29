@@ -4,7 +4,7 @@ import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import EditModeToggle from './EditModeToggle'
 import { ScoreDocType } from '../db/types/score'
-import AddScore from './AddScore'
+import AddGameScore from './AddGameScore'
 import ScoreList from './ScoreList'
 import RemoveGameButton from './RemoveGameButton'
 import { camel2Title } from '../helpers.tsx'
@@ -91,7 +91,7 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
       </div>
       {!editModeOff && (
         <div className='p-2 pt-0'>
-          <AddScore game={game} currentScores={scores} />
+          <AddGameScore game={game} currentScores={scores} />
         </div>
       )}
     </div>

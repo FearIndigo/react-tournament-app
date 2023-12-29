@@ -2,26 +2,26 @@ import DatalistInput from './DatalistInput'
 import AddNewButton from './AddNewButton'
 import { GameDocument, ScoreDocument } from '../db/types'
 import { useRxCollection, useRxData } from 'rxdb-hooks'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import TextLoading from './TextLoading.tsx'
 import { v4 as uuidv4 } from 'uuid'
 import { TeamDocType } from '../db/types/team'
 import { ScoreDocType } from '../db/types/score'
 import { getTeamName } from '../db/helpers'
 
-type AddScoreProps = {
+type AddGameScoreProps = {
   game: GameDocument
   currentScores: ScoreDocument[]
 }
 
-function AddScore({ game, currentScores }: AddScoreProps) {
+function AddGameScore({ game, currentScores }: AddGameScoreProps) {
   const [selectedOption, setSelectedOption] = useState<
     [teamId: string, teamName: string]
   >(['', ''])
   const [options, setOptions] = useState<[teamId: string, teamName: string][]>(
     []
   )
-  const { result: teams, isFetching: fetchingTeams } = useRxData<TeamDocType>(
+  const { result: teams, isFetching } = useRxData<TeamDocType>(
     'teams',
     (collection) =>
       collection.find({
@@ -29,11 +29,16 @@ function AddScore({ game, currentScores }: AddScoreProps) {
       })
   )
 
+  const filteredTeams = useMemo(
+    () =>
+      teams.filter(
+        (team) => !currentScores.map((score) => score.team).includes(team.id)
+      ),
+    [currentScores, teams]
+  )
+
   useEffect(() => {
     const getOptions = async (): Promise<[id: string, name: string][]> => {
-      const filteredTeams = teams.filter(
-        (team) => !currentScores.map((score) => score.team).includes(team.id)
-      )
       const mappedTeams: [id: string, name: string][] = []
       for (const team of filteredTeams) {
         const teamName = await getTeamName(team)
@@ -43,18 +48,13 @@ function AddScore({ game, currentScores }: AddScoreProps) {
     }
 
     getOptions().then(setOptions)
-  }, [teams, currentScores])
+  }, [filteredTeams])
 
   const scoreCollection = useRxCollection<ScoreDocType>('scores')
+  const teamCollection = useRxCollection<TeamDocType>('teams')
 
-  if (fetchingTeams) {
+  if (isFetching) {
     return <TextLoading className='h-6' />
-  }
-
-  function updateSelectedOption(
-    newOption: [memberId: string, memberName: string]
-  ) {
-    setSelectedOption(newOption)
   }
 
   async function addNewScore() {
@@ -64,11 +64,23 @@ function AddScore({ game, currentScores }: AddScoreProps) {
       option = options[0]
     }
     // NOTE: cannot add teams with the same name to the same game when selecting via name
-    const teamToAdd = teams.find(
-      (team) => team.id == option[0] || team.name == option[1]
-    )
-    if (teamToAdd == undefined) return
-    if (currentScores.find((score) => score.team == teamToAdd.id)) return
+    // Find team via id first
+    let teamToAdd = filteredTeams.find((team) => team.id == option[0])
+    // Find team via name second
+    if (teamToAdd == undefined) {
+      teamToAdd = filteredTeams.find((team) => team.name == option[1])
+    }
+    // Add new team third
+    if (teamToAdd == undefined) {
+      if (teamCollection == undefined) return
+      teamToAdd = await teamCollection.insert({
+        id: uuidv4(),
+        name: option[1],
+        members: [],
+      })
+    }
+
+    // Add new score
     if (scoreCollection == undefined) return
     const scoreToAdd = await scoreCollection.insert({
       id: uuidv4(),
@@ -77,6 +89,7 @@ function AddScore({ game, currentScores }: AddScoreProps) {
       score: 0,
     })
 
+    // Assign score to game
     game.incrementalPatch({
       scores: [...game.scores, scoreToAdd.id],
     })
@@ -87,17 +100,17 @@ function AddScore({ game, currentScores }: AddScoreProps) {
   return (
     <div className='flex h-8 items-center space-x-1'>
       <DatalistInput
-        onChange={updateSelectedOption}
-        placeholder={options.length > 0 ? options[0][1] : 'New score...'}
+        onChange={setSelectedOption}
+        placeholder={options.length > 0 ? options[0][1] : 'Team name...'}
         options={options}
         value={selectedOption[0]}
         className='h-full'
       />
       <div className='flex h-full items-center'>
-        <AddNewButton title='Add score to game' onClick={addNewScore} />
+        <AddNewButton title='Add team to game' onClick={addNewScore} />
       </div>
     </div>
   )
 }
 
-export default AddScore
+export default AddGameScore
