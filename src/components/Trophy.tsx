@@ -27,7 +27,7 @@ function Trophy({ className }: TrophyProps) {
     <DotLottiePlayer
       ref={lottieRef}
       src='/trophy.lottie'
-      className={`cursor-pointer select-none ${className}`}
+      className={`tap-none cursor-pointer select-none ${className}`}
       onClick={tryPlay}
       autoplay
     />
