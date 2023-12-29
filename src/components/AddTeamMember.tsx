@@ -3,7 +3,7 @@ import AddNewButton from './AddNewButton.tsx'
 import { TeamDocument } from '../db/types'
 import { useRxCollection, useRxData } from 'rxdb-hooks'
 import { MemberDocType } from '../db/types/member'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import TextLoading from './TextLoading.tsx'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -22,27 +22,24 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
         index: ['createdAt'],
       })
   )
+
+  const filteredMembers = useMemo(
+    () => members.filter((member) => !team.members.includes(member.id)),
+    [members, team]
+  )
+
+  const options: [id: string, name: string][] = useMemo(
+    () => filteredMembers.map((member) => [member.id, member.name]),
+    [filteredMembers]
+  )
+
   const memberCollection = useRxCollection<MemberDocType>('members')
 
   if (isFetching) {
     return <TextLoading className='h-6' />
   }
 
-  const filteredMembers = members.filter(
-    (member) => !team.members.includes(member.id)
-  )
-
-  const options: [id: string, name: string][] = filteredMembers.map(
-    (member) => [member.id, member.name]
-  )
-
-  function updateSelectedOption(
-    newOption: [memberId: string, memberName: string]
-  ) {
-    setSelectedOption(newOption)
-  }
-
-  async function addTeamMember() {
+  async function addNewTeamMember() {
     let option = selectedOption
     if (option[0] == '') {
       if (options.length == 0) return
@@ -60,10 +57,11 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
       if (memberCollection == undefined) return
       memberToAdd = await memberCollection.insert({
         id: uuidv4(),
-        name: selectedOption[1],
+        name: option[1],
       })
     }
 
+    // Assign member to team
     team.incrementalPatch({
       members: [...team.members, memberToAdd.id],
     })
@@ -74,14 +72,14 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
   return (
     <div className='flex h-8 items-center space-x-1'>
       <DatalistInput
-        onChange={updateSelectedOption}
-        placeholder={options.length > 0 ? options[0][1] : 'New member...'}
+        onChange={setSelectedOption}
+        placeholder={options.length > 0 ? options[0][1] : 'Member name...'}
         options={options}
         value={selectedOption[0]}
         className='h-full'
       />
       <div className='flex h-full items-center'>
-        <AddNewButton title='Add member to team' onClick={addTeamMember} />
+        <AddNewButton title='Add member to team' onClick={addNewTeamMember} />
       </div>
     </div>
   )
