@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { GameDocument, GameTypes } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
@@ -46,9 +46,10 @@ function Game({ game, readOnly, showEditButton }: GameProps) {
     })
   }
 
-  const options: [gameType: string, label: string][] = Object.values(
-    GameTypes
-  ).map((type) => [type, camel2Title(type)])
+  const options: [gameType: string, label: string][] = useMemo(
+    () => Object.values(GameTypes).map((type) => [type, camel2Title(type)]),
+    []
+  )
 
   return (
     <div className='flex flex-col rounded-3xl bg-blue-100 text-blue-800'>

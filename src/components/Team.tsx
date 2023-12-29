@@ -76,7 +76,7 @@ function Team({
           ) : (
             <TextInput
               value={team.name}
-              placeholder={teamName == '' ? 'Team name...' : teamName}
+              placeholder={teamName == '' ? 'Name...' : teamName}
               onChange={updateName}
               className='font-bold'
             />

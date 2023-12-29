@@ -18,6 +18,12 @@ export enum GameTypes {
   HighestScore = 'highestScore',
   LowestScore = 'lowestScore',
 }
+export enum BracketTypes {
+  Elimination = 'elimination',
+  DoubleElimination = 'doubleElimination',
+  RoundRobin = 'roundRobin',
+  Finals = 'finals',
+}
 
 // Collections
 export type BracketCollection = RxCollection<BracketDocType>
