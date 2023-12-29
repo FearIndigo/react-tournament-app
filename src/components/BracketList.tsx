@@ -1,4 +1,5 @@
 import { BracketDocument, TournamentDocument } from '../db/types'
+import { camel2Title } from '../helpers.tsx'
 
 type BracketListProps = {
   brackets: BracketDocument[]
@@ -30,7 +31,12 @@ function BracketList({
           showEditButton={showEditButton}
           tournament={tournament}
         />*/
-        <span key={bracket.id}>{bracket.type}</span>
+        <span
+          key={bracket.id}
+          className='flex h-10 items-center rounded-3xl bg-blue-300 px-3'
+        >
+          {camel2Title(bracket.type)}
+        </span>
       ))}
     </div>
   )

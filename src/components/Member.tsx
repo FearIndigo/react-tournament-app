@@ -30,9 +30,9 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
   }
 
   return (
-    <div className='flex h-8 items-center space-x-1'>
+    <div className='flex h-10 items-center space-x-1 rounded-3xl bg-blue-300 p-1'>
       {editModeOff ? (
-        <div className='flex h-full grow items-center truncate rounded-3xl bg-blue-100 p-2'>
+        <div className='flex h-full grow items-center truncate p-2'>
           <span className='truncate'>{member.name}</span>
         </div>
       ) : (
@@ -42,21 +42,23 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
           onChange={updateName}
         />
       )}
-      <div className='flex h-full flex-row items-center space-x-1'>
-        {!editModeOff &&
-          (team ? (
-            <RemoveTeamMemberButton team={team} member={member} />
-          ) : (
-            <RemoveMemberButton member={member} />
-          ))}
-        {showEditButton && (
-          <EditModeToggle
-            readOnly={readOnly}
-            onChange={setEditModeOff}
-            title='Toggle member edit mode'
-          />
-        )}
-      </div>
+      {(!editModeOff || showEditButton) && (
+        <div className='flex h-full flex-row items-center space-x-1'>
+          {!editModeOff &&
+            (team ? (
+              <RemoveTeamMemberButton team={team} member={member} />
+            ) : (
+              <RemoveMemberButton member={member} />
+            ))}
+          {showEditButton && (
+            <EditModeToggle
+              readOnly={readOnly}
+              onChange={setEditModeOff}
+              title='Toggle member edit mode'
+            />
+          )}
+        </div>
+      )}
     </div>
   )
 }

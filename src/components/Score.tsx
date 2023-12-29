@@ -67,7 +67,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
   }
 
   return (
-    <div className='flex w-full items-center space-x-1'>
+    <div className='flex w-full items-center'>
       {editModeOff ? (
         <div className='grow truncate'>
           {team ? (
@@ -87,7 +87,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
           )}
         </div>
       ) : (
-        <>
+        <div className='flex w-full items-center space-x-1 rounded-3xl bg-blue-300 p-1'>
           <div>
             <NumberInput
               value={score.score}
@@ -106,7 +106,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
           <div>
             <RemoveScoreButton title='Remove team from game' score={score} />
           </div>
-        </>
+        </div>
       )}
     </div>
   )
