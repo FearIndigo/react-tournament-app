@@ -8,6 +8,7 @@ function AddNewGameButton() {
   function addNewGame() {
     collection?.insert({
       id: uuidv4(),
+      name: '',
       type: 'highestScore',
       scores: [],
       previous: '',
