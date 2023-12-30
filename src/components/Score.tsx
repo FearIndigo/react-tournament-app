@@ -1,5 +1,5 @@
 import { GameDocument, ScoreDocument } from '../db/types'
-import { useEffect, useState } from 'react'
+import { KeyboardEvent, useEffect, useState } from 'react'
 import RemoveScoreButton from './RemoveScoreButton'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from '../db/types/team'
@@ -56,6 +56,16 @@ function Score({ score, game, readOnly }: ScoreProps) {
     })
   }
 
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key != 'Enter') return
+    handleSubmit()
+  }
+
+  function handleSubmit() {
+    if (!readOnly) return
+    setEditModeOff(true)
+  }
+
   let isWinningScore = false
   switch (game?.type) {
     case 'highestScore':
@@ -69,11 +79,12 @@ function Score({ score, game, readOnly }: ScoreProps) {
   return (
     <div className='flex w-full items-center'>
       {editModeOff ? (
-        <div className='grow truncate'>
+        <div className='w-full'>
           {team ? (
             <Team team={team}>
               <span
-                className={`flex h-full w-12 items-center justify-center truncate rounded-3xl font-bold ${
+                onClick={() => setEditModeOff(!editModeOff)}
+                className={`flex h-full w-12 cursor-pointer items-center justify-center truncate rounded-3xl font-bold shadow ${
                   isWinningScore
                     ? 'bg-green-300 text-green-800'
                     : 'bg-red-100 text-red-800'
@@ -94,6 +105,8 @@ function Score({ score, game, readOnly }: ScoreProps) {
               placeholder='Score...'
               onChange={updateScore}
               className='w-16'
+              onKeyDown={handleKeyDown}
+              onBlur={handleSubmit}
             />
           </div>
           <div className='grow truncate'>
