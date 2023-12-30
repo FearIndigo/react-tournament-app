@@ -1,4 +1,10 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import {
+  ChangeEvent,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from 'react'
 
 type NumberInputProps = {
   value: number
@@ -7,6 +13,8 @@ type NumberInputProps = {
   placeholder?: string
   className?: string
   onChange: (newValue: number) => void
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement>
+  onBlur?: FocusEventHandler<HTMLInputElement>
 }
 
 NumberInput.defaultProps = {
@@ -20,6 +28,8 @@ function NumberInput({
   placeholder,
   className,
   onChange,
+  onKeyDown,
+  onBlur,
 }: NumberInputProps) {
   const [inputValue, setInputValue] = useState<string>(value.toString())
 
@@ -44,6 +54,8 @@ function NumberInput({
       type='number'
       min={min}
       max={max}
+      onKeyDown={onKeyDown}
+      onBlur={onBlur}
     />
   )
 }
