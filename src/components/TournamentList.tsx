@@ -6,6 +6,7 @@ type TournamentListProps = {
   className?: string
   readOnly?: boolean
   showEditButton?: boolean
+  showBrackets?: boolean
 }
 
 TournamentList.defaultProps = {
@@ -18,6 +19,7 @@ function TournamentList({
   className,
   readOnly,
   showEditButton,
+  showBrackets,
 }: TournamentListProps) {
   return (
     <div className={`flex flex-col space-y-1 ${className}`}>
@@ -27,6 +29,7 @@ function TournamentList({
           tournament={tournament}
           readOnly={readOnly}
           showEditButton={showEditButton}
+          showBrackets={showBrackets}
         />
       ))}
     </div>

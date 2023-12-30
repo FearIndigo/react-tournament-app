@@ -5,9 +5,11 @@ import EditModeToggle from './EditModeToggle'
 import { TournamentDocType } from '../db/types/tournament'
 import TournamentList from './TournamentList'
 import AddNewTournamentButton from './AddNewTournamentButton'
+import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 
 function AllTournaments() {
   const [editModeOff, setEditModeOff] = useState(true)
+  const [bracketsVisible, setBracketsVisible] = useState(false)
   const { result: tournaments, isFetching } = useRxData<TournamentDocType>(
     'tournaments',
     (collection) =>
@@ -25,6 +27,11 @@ function AllTournaments() {
             onChange={setEditModeOff}
             title='Toggle edit mode all tournaments'
           />
+          <AccordionOpenToggle
+            open={bracketsVisible}
+            onChange={setBracketsVisible}
+            title='Toggle show all tournament brackets'
+          />
           <AddNewTournamentButton />
         </div>
       </div>
@@ -36,6 +43,7 @@ function AllTournaments() {
             tournaments={tournaments}
             showEditButton={true}
             readOnly={editModeOff}
+            showBrackets={bracketsVisible}
           />
         )}
       </div>
