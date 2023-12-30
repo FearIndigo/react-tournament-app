@@ -104,7 +104,7 @@ function AddGameScore({ game, currentScores }: AddGameScoreProps) {
         placeholder={options.length > 0 ? options[0][1] : 'Team name...'}
         options={options}
         value={selectedOption[0]}
-        className='h-full'
+        className='h-full w-full'
       />
       <div className='flex h-full items-center'>
         <AddNewButton title='Add team to game' onClick={addNewScore} />

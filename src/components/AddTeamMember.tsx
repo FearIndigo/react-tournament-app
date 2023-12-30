@@ -76,7 +76,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
         placeholder={options.length > 0 ? options[0][1] : 'Member name...'}
         options={options}
         value={selectedOption[0]}
-        className='h-full'
+        className='h-full w-full'
       />
       <div className='flex h-full items-center'>
         <AddNewButton title='Add member to team' onClick={addNewTeamMember} />
