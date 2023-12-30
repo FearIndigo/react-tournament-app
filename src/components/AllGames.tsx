@@ -5,9 +5,11 @@ import EditModeToggle from './EditModeToggle'
 import { GameDocType } from '../db/types/game'
 import AddNewGameButton from './AddNewGameButton'
 import GameList from './GameList'
+import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 
 function AllGames() {
   const [editModeOff, setEditModeOff] = useState(true)
+  const [scoresVisible, setScoresVisible] = useState(false)
   const { result: games, isFetching } = useRxData<GameDocType>(
     'games',
     (collection) =>
@@ -25,6 +27,10 @@ function AllGames() {
             onChange={setEditModeOff}
             title='Toggle edit mode all games'
           />
+          <AccordionOpenToggle
+            onChange={setScoresVisible}
+            title='Toggle show all game teams'
+          />
           <AddNewGameButton />
         </div>
       </div>
@@ -36,6 +42,7 @@ function AllGames() {
             games={games}
             showEditButton={true}
             readOnly={editModeOff}
+            showScores={scoresVisible}
           />
         )}
       </div>

@@ -6,6 +6,7 @@ type GameListProps = {
   className?: string
   readOnly?: boolean
   showEditButton?: boolean
+  showScores?: boolean
 }
 
 GameList.defaultProps = {
@@ -18,6 +19,7 @@ function GameList({
   className,
   readOnly,
   showEditButton,
+  showScores,
 }: GameListProps) {
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
@@ -27,6 +29,7 @@ function GameList({
           game={game}
           readOnly={readOnly}
           showEditButton={showEditButton}
+          showScores={showScores}
         />
       ))}
     </div>
