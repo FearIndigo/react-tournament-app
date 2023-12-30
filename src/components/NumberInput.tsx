@@ -3,6 +3,7 @@ import {
   FocusEventHandler,
   KeyboardEventHandler,
   useEffect,
+  useRef,
   useState,
 } from 'react'
 
@@ -15,6 +16,7 @@ type NumberInputProps = {
   onChange: (newValue: number) => void
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
   onBlur?: FocusEventHandler<HTMLInputElement>
+  focusOnRender?: boolean
 }
 
 NumberInput.defaultProps = {
@@ -30,7 +32,9 @@ function NumberInput({
   onChange,
   onKeyDown,
   onBlur,
+  focusOnRender,
 }: NumberInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [inputValue, setInputValue] = useState<string>(value.toString())
 
   useEffect(() => {
@@ -45,8 +49,14 @@ function NumberInput({
     onChange(newIntValue)
   }
 
+  useEffect(() => {
+    if (!focusOnRender) return
+    inputRef.current?.focus()
+  }, [focusOnRender, inputRef])
+
   return (
     <input
+      ref={inputRef}
       value={inputValue}
       placeholder={placeholder}
       onChange={handleOnChange}

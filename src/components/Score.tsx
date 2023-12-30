@@ -83,7 +83,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
           {team ? (
             <Team team={team}>
               <span
-                onClick={() => setEditModeOff(!editModeOff)}
+                onClick={() => setEditModeOff(false)}
                 className={`flex h-full w-12 cursor-pointer items-center justify-center truncate rounded-3xl font-bold shadow ${
                   isWinningScore
                     ? 'bg-green-300 text-green-800'
@@ -107,6 +107,7 @@ function Score({ score, game, readOnly }: ScoreProps) {
               className='w-16'
               onKeyDown={handleKeyDown}
               onBlur={handleSubmit}
+              focusOnRender={readOnly}
             />
           </div>
           <div className='grow truncate'>
