@@ -28,7 +28,6 @@ function AllTournaments() {
             title='Toggle edit mode all tournaments'
           />
           <AccordionOpenToggle
-            open={bracketsVisible}
             onChange={setBracketsVisible}
             title='Toggle show all tournament brackets'
           />

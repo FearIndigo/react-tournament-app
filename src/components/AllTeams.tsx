@@ -28,7 +28,6 @@ function AllTeams() {
             title='Toggle edit mode all teams'
           />
           <AccordionOpenToggle
-            open={membersVisible}
             onChange={setMembersVisible}
             title='Toggle show all team members'
           />
