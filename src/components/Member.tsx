@@ -40,6 +40,7 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
           value={member.name}
           placeholder='Name...'
           onChange={updateName}
+          className='w-full'
         />
       )}
       {(!editModeOff || showEditButton) && (
