@@ -946,6 +946,18 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
+"@rive-app/canvas-lite@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@rive-app/canvas-lite/-/canvas-lite-2.9.0.tgz#c441952b4eb5a3cef3708d130dd73b5a84799ff2"
+  integrity sha512-4SMRUyAq7DccnBFk4GihAZjHSVBxxl/9QAQ5Z96jXoXrwg2mkeqAqL1yqo+yqPxIhGLGkDRw50kb6G4eZ9kBFA==
+
+"@rive-app/react-canvas-lite@^4.7.0":
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/@rive-app/react-canvas-lite/-/react-canvas-lite-4.7.0.tgz#72ad6894f77a4401e7b5a633317a9bae5ed18c5a"
+  integrity sha512-NPExmw8pUnM3RJTYe1X4DLqfssEh+rwu8DlZO4JYdNmUGUz/oR2zfL+6srJuVFrgl6oKJepvjuLyh9hDvORPzA==
+  dependencies:
+    "@rive-app/canvas-lite" "2.9.0"
+
 "@rollup/rollup-android-arm-eabi@4.9.1":
   version "4.9.1"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-android-arm-eabi/-/rollup-android-arm-eabi-4.9.1.tgz#beaf518ee45a196448e294ad3f823d2d4576cf35"
