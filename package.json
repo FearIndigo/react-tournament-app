@@ -11,7 +11,6 @@
     "generate-schema-types": "rxdb-schema-types -i ./src/db/schema -o ./src/db/types"
   },
   "dependencies": {
-    "@dotlottie/react-player": "^1.6.12",
     "@heroicons/react": "^2.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
