@@ -15,9 +15,6 @@ function Trophy({ className }: TrophyProps) {
   })
 
   function tryPlay() {
-    if (rive?.isPlaying) return
-
-    console.log(rive)
     rive?.play('wobble')
   }
 
