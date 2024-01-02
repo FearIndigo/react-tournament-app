@@ -5,9 +5,9 @@ import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { RoundDocType } from '../db/types/round'
-import RemoveBracketButton from './RemoveBracketButton.tsx'
-import { getBracketName } from '../db/helpers.tsx'
-import AddBracketRoundButton from './AddBracketRoundButton.tsx'
+import RemoveBracketButton from './RemoveBracketButton'
+import { getBracketName } from '../db/helpers'
+import AddBracketRoundButton from './AddBracketRoundButton'
 
 type BracketProps = {
   bracket: BracketDocument

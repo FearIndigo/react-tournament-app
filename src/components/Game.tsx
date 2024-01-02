@@ -7,11 +7,11 @@ import { ScoreDocType } from '../db/types/score'
 import AddGameScore from './AddGameScore'
 import ScoreList from './ScoreList'
 import RemoveGameButton from './RemoveGameButton'
-import { camel2Title } from '../helpers.tsx'
+import { camel2Title } from '../helpers'
 import SelectInput from './SelectInput'
-import AccordionOpenToggle from './AccordionOpenToggle.tsx'
-import { useGameName } from '../db/hooks.tsx'
-import TextInput from './TextInput.tsx'
+import AccordionOpenToggle from './AccordionOpenToggle'
+import { useGameName } from '../db/hooks'
+import TextInput from './TextInput'
 
 type GameProps = {
   game: GameDocument

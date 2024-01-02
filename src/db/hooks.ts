@@ -1,6 +1,6 @@
 import { GameDocument, TeamDocument } from './types'
 import { useEffect, useState } from 'react'
-import { getGameName, getTeamName } from './helpers.tsx'
+import { getGameName, getTeamName } from './helpers'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from './types/team'
 import { ScoreDocType } from './types/score'
