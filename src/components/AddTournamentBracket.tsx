@@ -29,13 +29,18 @@ function AddTournamentBracket({ tournament }: AddTournamentBracketProps) {
   async function addNewTournamentBracket() {
     if (bracketCollection == undefined) return
 
+    const previousBracket =
+      tournament.brackets.length > 0
+        ? tournament.brackets[tournament.brackets.length - 1]
+        : ''
+
     // Create new bracket
     const bracketToAdd = await bracketCollection.insert({
       id: uuidv4(),
       name: '',
       type: bracketType,
       rounds: [],
-      previous: '',
+      previous: previousBracket,
     })
 
     // Assign bracket to tournament

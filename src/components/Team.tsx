@@ -110,7 +110,7 @@ function Team({
         }`}
       >
         <div className='collapsible'>
-          <div className='flex flex-col space-y-2 p-2 pt-1'>
+          <div className='p-2 pt-1'>
             {isFetching ? (
               <TextLoading className='h-6' />
             ) : (

@@ -118,7 +118,7 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
               />
             </div>
           )}
-          <div className='flex flex-col space-y-2 p-2 pt-1'>
+          <div className='p-2 pt-1'>
             {isFetching ? (
               <TextLoading className='h-6' />
             ) : (

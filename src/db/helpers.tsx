@@ -1,9 +1,11 @@
 import {
+  BracketDocument,
   GameDocument,
   MemberDocument,
   ScoreDocument,
   TeamDocument,
 } from './types'
+import { camel2Title } from '../helpers.tsx'
 
 export async function getTeamName(team: TeamDocument) {
   if (!team) return ''
@@ -32,4 +34,12 @@ export async function getGameName(game: GameDocument) {
   }
 
   return teamNames.length > 0 ? teamNames.join(' vs ') : 'New Game'
+}
+
+export function getBracketName(bracket: BracketDocument) {
+  if (!bracket) return ''
+
+  if (bracket.name != '') return bracket.name
+
+  return `${camel2Title(bracket.type)} Bracket`
 }
