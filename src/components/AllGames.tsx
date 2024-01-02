@@ -43,6 +43,7 @@ function AllGames() {
             showEditButton={true}
             readOnly={editModeOff}
             showScores={scoresVisible}
+            className='space-y-2'
           />
         )}
       </div>

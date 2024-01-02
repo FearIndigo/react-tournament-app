@@ -1,56 +1,57 @@
 import { useEffect, useState } from 'react'
 import TextInput from './TextInput'
-import { BracketDocument } from '../db/types'
+import { BracketDocument, RoundDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
-import { RoundDocType } from '../db/types/round'
-import RemoveBracketButton from './RemoveBracketButton'
-import { getBracketName } from '../db/helpers'
-import AddBracketRoundButton from './AddBracketRoundButton'
-import RoundList from './RoundList.tsx'
+import { GameDocType } from '../db/types/game'
+import GameList from './GameList'
+import RemoveRoundButton from './RemoveRoundButton.tsx'
+import AddRoundGameButton from './AddRoundGameButton.tsx'
+import { getRoundName } from '../db/helpers.ts'
 
-type BracketProps = {
-  bracket: BracketDocument
-  showRounds?: boolean
+type RoundProps = {
+  round: RoundDocument
+  showGames?: boolean
   readOnly?: boolean
   className?: string
+  bracket?: BracketDocument
 }
 
-Bracket.defaultProps = {
+Round.defaultProps = {
   readOnly: true,
   className: '',
 }
 
-function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
+function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
   const [editModeOff, setEditModeOff] = useState(readOnly)
-  const [roundsVisible, setRoundsVisible] = useState(showRounds)
-  const { result: rounds, isFetching } = useRxData<RoundDocType>(
-    'rounds',
+  const [gamesVisible, setGamesVisible] = useState(showGames)
+  const { result: games, isFetching } = useRxData<GameDocType>(
+    'games',
     (collection) =>
       collection.find({
         selector: {
-          id: { $in: bracket.rounds },
+          id: { $in: round.games },
         },
         index: ['createdAt'],
       })
   )
 
   useEffect(() => {
-    setRoundsVisible(showRounds)
-  }, [showRounds])
+    setGamesVisible(showGames)
+  }, [showGames])
 
   useEffect(() => {
     setEditModeOff(readOnly)
   }, [readOnly])
 
-  const bracketName = getBracketName(bracket)
-
   function updateName(name: string) {
-    bracket.incrementalPatch({
+    round.incrementalPatch({
       name: name,
     })
   }
+
+  const roundName = getRoundName(round, bracket)
 
   return (
     <div
@@ -60,12 +61,12 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
         <div className='flex h-full items-center justify-between space-x-1'>
           {editModeOff ? (
             <span className='truncate rounded-3xl p-2 font-bold'>
-              {bracketName}
+              {roundName}
             </span>
           ) : (
             <TextInput
-              value={bracket.name}
-              placeholder={bracketName ?? 'Name...'}
+              value={round.name}
+              placeholder={roundName ?? 'Name...'}
               onChange={updateName}
               className='font-bold'
             />
@@ -74,21 +75,21 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
           <div className='flex h-full space-x-1'>
             {!editModeOff && (
               <>
-                <RemoveBracketButton bracket={bracket} />
-                <AddBracketRoundButton bracket={bracket} />
+                <RemoveRoundButton round={round} />
+                <AddRoundGameButton round={round} />
               </>
             )}
             <AccordionOpenToggle
-              open={roundsVisible}
-              onChange={setRoundsVisible}
-              title='Toggle show bracket rounds'
+              open={gamesVisible}
+              onChange={setGamesVisible}
+              title='Toggle show round games'
             />
           </div>
         </div>
       </div>
       <div
         className={`collapsible-wrapper flex-col rounded-b-3xl ${
-          roundsVisible ? '' : 'collapsed'
+          gamesVisible ? '' : 'collapsed'
         }`}
       >
         <div className='collapsible'>
@@ -96,11 +97,7 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
             {isFetching ? (
               <TextLoading className='h-6' />
             ) : (
-              <RoundList
-                rounds={rounds}
-                readOnly={editModeOff}
-                bracket={bracket}
-              />
+              <GameList games={games} readOnly={editModeOff} />
             )}
           </div>
         </div>
@@ -109,4 +106,4 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
   )
 }
 
-export default Bracket
+export default Round

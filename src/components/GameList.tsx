@@ -22,7 +22,7 @@ function GameList({
   showScores,
 }: GameListProps) {
   return (
-    <div className={`flex flex-col space-y-2 ${className}`}>
+    <div className={`flex flex-col space-y-1 ${className}`}>
       {games.map((game) => (
         <Game
           key={game.id}

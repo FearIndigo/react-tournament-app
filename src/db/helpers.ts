@@ -2,6 +2,7 @@ import {
   BracketDocument,
   GameDocument,
   MemberDocument,
+  RoundDocument,
   ScoreDocument,
   TeamDocument,
 } from './types'
@@ -42,4 +43,19 @@ export function getBracketName(bracket: BracketDocument) {
   if (bracket.name != '') return bracket.name
 
   return `${camel2Title(bracket.type)} Bracket`
+}
+
+export function getRoundName(
+  round: RoundDocument,
+  bracket: BracketDocument | undefined
+) {
+  if (!round) return ''
+
+  if (round.name != '') return round.name
+
+  if (!bracket) return 'New Round'
+
+  const roundIndex = bracket.rounds.indexOf(round.id)
+
+  return roundIndex != -1 ? `Round ${roundIndex + 1}` : 'New Round'
 }

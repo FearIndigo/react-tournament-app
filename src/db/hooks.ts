@@ -6,7 +6,7 @@ import { TeamDocType } from './types/team'
 import { ScoreDocType } from './types/score'
 
 export function useTeamName(team: TeamDocument) {
-  const [teamName, setTeamName] = useState('...')
+  const [teamName, setTeamName] = useState('')
 
   useEffect(() => {
     getTeamName(team).then(setTeamName)
@@ -16,7 +16,7 @@ export function useTeamName(team: TeamDocument) {
 }
 
 export function useGameName(game: GameDocument) {
-  const [gameName, setGameName] = useState('...')
+  const [gameName, setGameName] = useState('')
   const { result: scores } = useRxData<ScoreDocType>('scores', (collection) =>
     collection.find({
       selector: {
