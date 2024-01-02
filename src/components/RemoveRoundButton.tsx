@@ -1,16 +1,16 @@
 import { RoundDocument } from '../db/types'
 import RemoveButton from './RemoveButton'
 
-type RemoveBracketButtonProps = {
+type RemoveRoundButtonProps = {
   round: RoundDocument
   title?: string
 }
 
-RemoveBracketButton.defaultProps = {
+RemoveRoundButton.defaultProps = {
   title: 'Remove round',
 }
 
-function RemoveBracketButton({ round, title }: RemoveBracketButtonProps) {
+function RemoveRoundButton({ round, title }: RemoveRoundButtonProps) {
   function removeRound() {
     round.remove()
   }
@@ -18,4 +18,4 @@ function RemoveBracketButton({ round, title }: RemoveBracketButtonProps) {
   return <RemoveButton title={title} onClick={removeRound} />
 }
 
-export default RemoveBracketButton
+export default RemoveRoundButton

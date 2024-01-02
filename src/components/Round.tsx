@@ -6,8 +6,8 @@ import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { GameDocType } from '../db/types/game'
 import GameList from './GameList'
-import RemoveRoundButton from './RemoveRoundButton.tsx'
-import AddRoundGameButton from './AddRoundGameButton.tsx'
+import RemoveRoundButton from './RemoveRoundButton'
+import AddRoundGameButton from './AddRoundGameButton'
 import { getRoundName } from '../db/helpers.ts'
 
 type RoundProps = {
