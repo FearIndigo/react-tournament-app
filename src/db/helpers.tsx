@@ -6,7 +6,7 @@ import {
 } from './types'
 
 export async function getTeamName(team: TeamDocument) {
-  if (!team) return '...'
+  if (!team) return ''
 
   if (team.name != '') return team.name
 
@@ -18,7 +18,7 @@ export async function getTeamName(team: TeamDocument) {
 }
 
 export async function getGameName(game: GameDocument) {
-  if (!game) return '...'
+  if (!game) return ''
 
   if (game.name != '') return game.name
 

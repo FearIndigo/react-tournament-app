@@ -79,7 +79,7 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
           ) : (
             <TextInput
               value={game.name}
-              placeholder={gameName == '' ? 'Name...' : gameName}
+              placeholder={gameName ?? 'Name...'}
               onChange={updateGameName}
               className='font-bold'
             />
