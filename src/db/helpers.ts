@@ -5,7 +5,7 @@ import {
   ScoreDocument,
   TeamDocument,
 } from './types'
-import { camel2Title } from '../helpers.tsx'
+import { camel2Title } from '../helpers'
 
 export async function getTeamName(team: TeamDocument) {
   if (!team) return ''

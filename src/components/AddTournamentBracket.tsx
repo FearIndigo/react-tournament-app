@@ -1,11 +1,11 @@
-import AddNewButton from './AddNewButton.tsx'
+import AddNewButton from './AddNewButton'
 import { BracketTypes, TournamentDocument } from '../db/types'
 import { useRxCollection } from 'rxdb-hooks'
 import { useMemo, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { BracketDocType } from '../db/types/bracket'
-import SelectInput from './SelectInput.tsx'
-import { camel2Title } from '../helpers.tsx'
+import SelectInput from './SelectInput'
+import { camel2Title } from '../helpers'
 
 type AddTournamentBracketProps = {
   tournament: TournamentDocument
