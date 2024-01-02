@@ -6,12 +6,13 @@ import EditModeToggle from './EditModeToggle'
 import { ScoreDocType } from '../db/types/score'
 import AddGameScore from './AddGameScore'
 import ScoreList from './ScoreList'
-import RemoveGameButton from './RemoveGameButton'
 import { camel2Title } from '../helpers'
 import SelectInput from './SelectInput'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { useGameName } from '../db/hooks'
 import TextInput from './TextInput'
+import RemoveDocumentButton from './RemoveDocumentButton.tsx'
+import { GameDocType } from '../db/types/game'
 
 type GameProps = {
   game: GameDocument
@@ -86,7 +87,12 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
           )}
 
           <div className='flex h-full space-x-1'>
-            {!editModeOff && <RemoveGameButton game={game} />}
+            {!editModeOff && (
+              <RemoveDocumentButton<GameDocType>
+                document={game}
+                title='Remove game'
+              />
+            )}
             {showEditButton && (
               <EditModeToggle
                 readOnly={readOnly}

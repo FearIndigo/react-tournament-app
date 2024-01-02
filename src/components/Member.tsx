@@ -3,7 +3,8 @@ import { MemberDocument, TeamDocument } from '../db/types'
 import { useEffect, useState } from 'react'
 import EditModeToggle from './EditModeToggle.tsx'
 import RemoveTeamMemberButton from './RemoveTeamMemberButton.tsx'
-import RemoveMemberButton from './RemoveMemberButton.tsx'
+import RemoveDocumentButton from './RemoveDocumentButton.tsx'
+import { MemberDocType } from '../db/types/member'
 
 type MemberProps = {
   member: MemberDocument
@@ -49,7 +50,10 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
             (team ? (
               <RemoveTeamMemberButton team={team} member={member} />
             ) : (
-              <RemoveMemberButton member={member} />
+              <RemoveDocumentButton<MemberDocType>
+                document={member}
+                title='Remove member'
+              />
             ))}
           {showEditButton && (
             <EditModeToggle

@@ -6,9 +6,10 @@ import TextLoading from './TextLoading'
 import EditModeToggle from './EditModeToggle'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { BracketDocType } from '../db/types/bracket'
-import RemoveTournamentButton from './RemoveTournamentButton'
 import BracketList from './BracketList.tsx'
 import AddTournamentBracket from './AddTournamentBracket'
+import RemoveDocumentButton from './RemoveDocumentButton.tsx'
+import { TournamentDocType } from '../db/types/tournament'
 
 type TournamentProps = {
   tournament: TournamentDocument
@@ -77,7 +78,12 @@ function Tournament({
           )}
 
           <div className='flex h-full space-x-1'>
-            {!editModeOff && <RemoveTournamentButton tournament={tournament} />}
+            {!editModeOff && (
+              <RemoveDocumentButton<TournamentDocType>
+                document={tournament}
+                title='Remove tournament'
+              />
+            )}
             {showEditButton && (
               <EditModeToggle
                 readOnly={readOnly}

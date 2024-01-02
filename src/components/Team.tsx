@@ -8,9 +8,10 @@ import TextLoading from './TextLoading.tsx'
 import EditModeToggle from './EditModeToggle.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import AddTeamMember from './AddTeamMember.tsx'
-import RemoveTeamButton from './RemoveTeamButton'
 import { useTeamName } from '../db/hooks'
 import { useSlots } from '../hooks.tsx'
+import RemoveDocumentButton from './RemoveDocumentButton.tsx'
+import { TeamDocType } from '../db/types/team'
 
 type TeamProps = {
   team: TeamDocument
@@ -88,7 +89,12 @@ function Team({
           )}
           <div className='flex h-full space-x-1'>
             {slots.postHeader}
-            {!editModeOff && <RemoveTeamButton team={team} />}
+            {!editModeOff && (
+              <RemoveDocumentButton<TeamDocType>
+                document={team}
+                title='Remove team'
+              />
+            )}
             {showEditButton && (
               <EditModeToggle
                 readOnly={readOnly}

@@ -5,10 +5,11 @@ import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { RoundDocType } from '../db/types/round'
-import RemoveBracketButton from './RemoveBracketButton'
 import { getBracketName } from '../db/helpers'
 import AddBracketRoundButton from './AddBracketRoundButton'
 import RoundList from './RoundList.tsx'
+import RemoveDocumentButton from './RemoveDocumentButton.tsx'
+import { BracketDocType } from '../db/types/bracket'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -74,7 +75,10 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
           <div className='flex h-full space-x-1'>
             {!editModeOff && (
               <>
-                <RemoveBracketButton bracket={bracket} />
+                <RemoveDocumentButton<BracketDocType>
+                  document={bracket}
+                  title='Remove bracket'
+                />
                 <AddBracketRoundButton bracket={bracket} />
               </>
             )}

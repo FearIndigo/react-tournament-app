@@ -1,6 +1,5 @@
 import { GameDocument, ScoreDocument } from '../db/types'
 import { KeyboardEvent, useEffect, useState } from 'react'
-import RemoveScoreButton from './RemoveScoreButton'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from '../db/types/team'
 import Team from './Team.tsx'
@@ -9,6 +8,7 @@ import NumberInput from './NumberInput'
 import { ScoreDocType } from '../db/types/score'
 import TextError from './TextError'
 import Slot from './Slot.tsx'
+import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 
 type ScoreProps = {
   score: ScoreDocument
@@ -107,9 +107,9 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
             </Slot>
             <Slot name='postHeader'>
               {!editModeOff && showRemoveButton && (
-                <RemoveScoreButton
+                <RemoveDocumentButton<ScoreDocType>
                   title='Remove team from game'
-                  score={score}
+                  document={score}
                 />
               )}
             </Slot>
@@ -117,7 +117,10 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
         ) : (
           <div className='flex h-10 items-center rounded-3xl bg-blue-300 p-1'>
             <TextError text='missing team!' className='h-full w-full' />
-            <RemoveScoreButton score={score} />
+            <RemoveDocumentButton<ScoreDocType>
+              title='Remove team from game'
+              document={score}
+            />
           </div>
         )}
       </div>
