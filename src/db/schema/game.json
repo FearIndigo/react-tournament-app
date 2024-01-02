@@ -26,11 +26,6 @@
       },
       "default": []
     },
-    "previous": {
-      "ref": "games",
-      "type": "string",
-      "default": ""
-    },
     "createdAt": {
       "type": "string",
       "maxLength": 100,
@@ -42,6 +37,6 @@
       "default": ""
     }
   },
-  "required": ["id", "name", "type", "scores", "previous"],
+  "required": ["id", "name", "type", "scores"],
   "indexes": ["createdAt"]
 }

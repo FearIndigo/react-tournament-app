@@ -14,15 +14,11 @@ function AddBracketRoundButton({ bracket }: AddBracketRoundButtonProps) {
   async function addNewBracketRound() {
     if (roundCollection == undefined) return
 
-    const previousRound =
-      bracket.rounds.length > 0 ? bracket.rounds[bracket.rounds.length - 1] : ''
-
     // Create new round
     const roundToAdd = await roundCollection.insert({
       id: uuidv4(),
       name: '',
       games: [],
-      previous: previousRound,
     })
 
     // Assign round to bracket

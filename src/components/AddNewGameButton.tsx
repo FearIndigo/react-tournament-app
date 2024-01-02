@@ -11,7 +11,6 @@ function AddNewGameButton() {
       name: '',
       type: 'highestScore',
       scores: [],
-      previous: '',
     })
   }
 

@@ -15,7 +15,13 @@
     },
     "type": {
       "type": "string",
-      "enum": ["elimination", "doubleElimination", "roundRobin", "finals"],
+      "enum": [
+        "elimination",
+        "doubleElimination",
+        "roundRobin",
+        "finals",
+        "custom"
+      ],
       "default": "elimination"
     },
     "rounds": {
@@ -25,11 +31,6 @@
         "type": "string"
       },
       "default": []
-    },
-    "previous": {
-      "ref": "brackets",
-      "type": "string",
-      "default": ""
     },
     "createdAt": {
       "type": "string",
@@ -42,6 +43,6 @@
       "default": ""
     }
   },
-  "required": ["id", "name", "type", "rounds", "previous"],
+  "required": ["id", "name", "type", "rounds"],
   "indexes": ["createdAt"]
 }

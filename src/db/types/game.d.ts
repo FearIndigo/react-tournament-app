@@ -10,7 +10,6 @@ export interface GameDocType {
   name: string;
   type: "highestScore" | "lowestScore";
   scores: string[];
-  previous: string;
   createdAt?: string;
   updatedAt?: string;
   [k: string]: unknown;

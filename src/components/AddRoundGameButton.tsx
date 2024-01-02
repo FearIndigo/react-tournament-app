@@ -20,7 +20,6 @@ function AddRoundGameButton({ round }: AddRoundGameButtonProps) {
       name: '',
       type: 'highestScore',
       scores: [],
-      previous: '',
     })
 
     // Assign game to round

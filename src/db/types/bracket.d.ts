@@ -8,9 +8,8 @@
 export interface BracketDocType {
   id: string;
   name: string;
-  type: "elimination" | "doubleElimination" | "roundRobin" | "finals";
+  type: "elimination" | "doubleElimination" | "roundRobin" | "finals" | "custom";
   rounds: string[];
-  previous: string;
   createdAt?: string;
   updatedAt?: string;
   [k: string]: unknown;

@@ -23,6 +23,7 @@ export enum BracketTypes {
   DoubleElimination = 'doubleElimination',
   RoundRobin = 'roundRobin',
   Finals = 'finals',
+  Custom = 'custom',
 }
 
 // Collections

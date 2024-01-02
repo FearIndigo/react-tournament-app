@@ -117,7 +117,7 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
         ) : (
           <div className='flex h-10 items-center rounded-3xl bg-blue-300 p-1'>
             <TextError text='missing team!' className='h-full w-full' />
-            <RemoveScoreButton title='Remove team from game' score={score} />
+            <RemoveScoreButton score={score} />
           </div>
         )}
       </div>

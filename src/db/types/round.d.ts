@@ -9,7 +9,6 @@ export interface RoundDocType {
   id: string;
   name: string;
   games: string[];
-  previous: string;
   createdAt?: string;
   updatedAt?: string;
   [k: string]: unknown;
