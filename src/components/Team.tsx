@@ -1,5 +1,5 @@
 import MemberList from './MemberList.tsx'
-import { PropsWithChildren, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import TextInput from './TextInput.tsx'
 import { TeamDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
@@ -10,6 +10,7 @@ import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import AddTeamMember from './AddTeamMember.tsx'
 import RemoveTeamButton from './RemoveTeamButton'
 import { useTeamName } from '../db/hooks'
+import { useSlots } from '../hooks.tsx'
 
 type TeamProps = {
   team: TeamDocument
@@ -17,6 +18,7 @@ type TeamProps = {
   readOnly?: boolean
   className?: string
   showEditButton?: boolean
+  children?: ReactNode
 }
 
 Team.defaultProps = {
@@ -31,7 +33,8 @@ function Team({
   className,
   showEditButton,
   children,
-}: PropsWithChildren<TeamProps>) {
+}: TeamProps) {
+  const slots = useSlots(children)
   const [membersVisible, setMembersVisible] = useState(showMembers)
   const [editModeOff, setEditModeOff] = useState(readOnly)
   const { result: members, isFetching } = useRxData<MemberDocType>(
@@ -68,7 +71,9 @@ function Team({
         <div className='flex h-full items-center justify-between space-x-1'>
           {editModeOff ? (
             <>
-              {children && <div className='h-full'>{children}</div>}
+              {slots.preHeader && (
+                <div className='h-full'>{slots.preHeader}</div>
+              )}
               <span className='w-full truncate rounded-3xl p-2 font-bold'>
                 {teamName}
               </span>
@@ -81,8 +86,8 @@ function Team({
               className='font-bold'
             />
           )}
-
           <div className='flex h-full space-x-1'>
+            {slots.postHeader}
             {!editModeOff && <RemoveTeamButton team={team} />}
             {showEditButton && (
               <EditModeToggle

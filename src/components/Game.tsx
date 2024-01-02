@@ -122,7 +122,12 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
             {isFetching ? (
               <TextLoading className='h-6' />
             ) : (
-              <ScoreList scores={scores} readOnly={editModeOff} game={game} />
+              <ScoreList
+                scores={scores}
+                readOnly={editModeOff}
+                game={game}
+                showRemoveButton={!editModeOff}
+              />
             )}
           </div>
           {!editModeOff && (

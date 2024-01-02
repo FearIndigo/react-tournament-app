@@ -7,20 +7,21 @@ import Team from './Team.tsx'
 import TextLoading from './TextLoading'
 import NumberInput from './NumberInput'
 import { ScoreDocType } from '../db/types/score'
-import { useTeamName } from '../db/hooks'
 import TextError from './TextError'
+import Slot from './Slot.tsx'
 
 type ScoreProps = {
   score: ScoreDocument
   game?: GameDocument
   readOnly?: boolean
+  showRemoveButton?: boolean
 }
 
 Score.defaultProps = {
   readOnly: true,
 }
 
-function Score({ score, game, readOnly }: ScoreProps) {
+function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
   const [editModeOff, setEditModeOff] = useState(readOnly)
   const { result: teams, isFetching: fetchingTeams } = useRxData<TeamDocType>(
     'teams',
@@ -41,7 +42,6 @@ function Score({ score, game, readOnly }: ScoreProps) {
       })
     )
   const team = teams[0]
-  const teamName = useTeamName(team)
 
   useEffect(() => {
     setEditModeOff(readOnly)
@@ -69,59 +69,58 @@ function Score({ score, game, readOnly }: ScoreProps) {
   let isWinningScore = false
   switch (game?.type) {
     case 'highestScore':
-      isWinningScore = score.score == scores[0]?.score
+      isWinningScore = score.score == scores[0].score
       break
     case 'lowestScore':
-      isWinningScore = score.score == scores[scores.length - 1]?.score
+      isWinningScore = score.score == scores[scores.length - 1].score
       break
   }
 
   return (
     <div className='flex w-full items-center'>
-      {editModeOff ? (
-        <div className='w-full'>
-          {team ? (
-            <Team team={team}>
-              <span
-                onClick={() => setEditModeOff(false)}
-                className={`flex h-full w-12 cursor-pointer items-center justify-center truncate rounded-3xl font-bold shadow ${
-                  isWinningScore
-                    ? 'bg-green-300 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                }`}
-              >
-                {score.score}
-              </span>
-            </Team>
-          ) : (
-            <TextError text='missing team!' className='h-8' />
-          )}
-        </div>
-      ) : (
-        <div className='flex w-full items-center space-x-1 rounded-3xl bg-blue-300 p-1'>
-          <div>
-            <NumberInput
-              value={score.score}
-              placeholder='Score...'
-              onChange={updateScore}
-              className='w-16'
-              onKeyDown={handleKeyDown}
-              onBlur={handleSubmit}
-              focusOnRender={readOnly}
-            />
-          </div>
-          <div className='grow truncate'>
-            {team ? (
-              <span className='w-full truncate px-2 font-bold'>{teamName}</span>
-            ) : (
-              <TextError text='missing!' className='h-8' />
-            )}
-          </div>
-          <div>
+      <div className='w-full'>
+        {team ? (
+          <Team team={team}>
+            <Slot name='preHeader'>
+              {editModeOff ? (
+                <span
+                  onClick={() => setEditModeOff(false)}
+                  className={`flex h-full w-12 cursor-pointer items-center justify-center truncate rounded-3xl font-bold shadow ${
+                    isWinningScore
+                      ? 'bg-green-300 text-green-800'
+                      : 'bg-red-100 text-red-800'
+                  }`}
+                >
+                  {score.score}
+                </span>
+              ) : (
+                <NumberInput
+                  value={score.score}
+                  placeholder='Score...'
+                  onChange={updateScore}
+                  className='w-16'
+                  onKeyDown={handleKeyDown}
+                  onBlur={handleSubmit}
+                  focusOnRender={readOnly}
+                />
+              )}
+            </Slot>
+            <Slot name='postHeader'>
+              {!editModeOff && showRemoveButton && (
+                <RemoveScoreButton
+                  title='Remove team from game'
+                  score={score}
+                />
+              )}
+            </Slot>
+          </Team>
+        ) : (
+          <div className='flex h-10 items-center rounded-3xl bg-blue-300 p-1'>
+            <TextError text='missing team!' className='h-full w-full' />
             <RemoveScoreButton title='Remove team from game' score={score} />
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
