@@ -16,7 +16,7 @@ function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
 
   return (
     <div className='rounded-full bg-blue-300 p-1 text-blue-800'>
-      <div className='relative flex items-center justify-center '>
+      <div className='relative flex h-10 items-center justify-center'>
         {tabs.map((tab, index) => (
           <Fragment key={index}>
             <input
@@ -28,7 +28,7 @@ function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
             />
             <label
               htmlFor={`tab-button-${index}`}
-              className={`relative z-10 flex h-full w-32 cursor-pointer items-center justify-center p-2 text-center font-bold leading-none transition-colors ${
+              className={`tap-none relative z-10 flex h-full w-24 cursor-pointer items-center justify-center p-2 text-center font-bold leading-none transition-colors ${
                 index == tabIndex ? '' : ''
               }`}
             >
@@ -37,7 +37,7 @@ function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
           </Fragment>
         ))}
         <span
-          className='absolute left-0 h-full w-32 rounded-full bg-blue-100 shadow transition-transform'
+          className='absolute left-0 h-full w-24 rounded-full bg-blue-100 shadow transition-transform'
           style={{ transform: `translateX(${tabIndex * 100}%)` }}
         ></span>
       </div>

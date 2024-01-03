@@ -31,12 +31,12 @@ function App() {
         </div>
 
         <TabButtons
-          tabs={['Data View', 'Tournament Creator']}
+          tabs={['Creator', 'Data', 'Layout']}
           defaultTabIndex={tabIndex}
           onChanged={updateTabIndex}
         />
 
-        {tabIndex == 0 && <GridScreen />}
+        {tabIndex == 1 && <GridScreen />}
       </main>
     </div>
   )
