@@ -32,7 +32,7 @@ function EditModeToggle({ readOnly, title, onChange }: EditModeToggleProps) {
       <button
         title={title}
         className={`relative z-10 h-8 w-8 rounded-3xl  p-2 shadow ${
-          editModeOff ? 'bg-blue-100' : 'bg-blue-400'
+          editModeOff ? 'bg-100' : 'bg-blue-400'
         }`}
         onClick={toggleEditMode}
       >

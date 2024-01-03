@@ -21,7 +21,7 @@ function TabButtons({
   }
 
   return (
-    <div className={`rounded-full bg-blue-300 p-1 text-blue-800 ${className}`}>
+    <div className={`bg-300 rounded-full p-1 text-blue-800 ${className}`}>
       <div className='relative flex h-10 items-center justify-center'>
         {tabs.map((tab, index) => (
           <Fragment key={index}>

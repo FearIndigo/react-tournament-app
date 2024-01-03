@@ -7,14 +7,14 @@ function App() {
   const [tabIndex, updateTabIndex] = useState(0)
 
   return (
-    <div className='relative min-h-screen bg-gradient-to-br from-violet-500 to-fuchsia-500'>
+    <div className='bg-500 relative min-h-screen'>
       <div
         className='absolute left-0 top-0 h-full w-full bg-repeat opacity-[0.05]'
         style={{ backgroundImage: 'url(/topography.svg)' }}
       />
 
       <main className='relative flex flex-col items-center'>
-        <div className='flex flex-col items-center justify-center space-y-2 px-8 py-16 text-center text-blue-100'>
+        <div className='flex flex-col items-center justify-center space-y-2 px-8 py-16 text-center text-blue-50'>
           <Trophy className='h-16 w-16' />
           <h1 className='text-5xl font-bold'>Tournament App</h1>
           <span>
@@ -31,9 +31,10 @@ function App() {
         </div>
 
         <TabButtons
-          tabs={['Creator', 'Data', 'Layout']}
+          tabs={['Creator', 'Data', 'Layout', 'Stats']}
           defaultTabIndex={tabIndex}
           onChanged={updateTabIndex}
+          className='mb-8'
         />
 
         {tabIndex == 1 && <GridScreen />}

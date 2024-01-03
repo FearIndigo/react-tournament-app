@@ -66,9 +66,9 @@ function Team({
 
   return (
     <div
-      className={`flex flex-col rounded-3xl bg-blue-100 text-blue-800 ${className}`}
+      className={`bg-100 flex flex-col rounded-3xl text-blue-800 ${className}`}
     >
-      <div className='h-10 rounded-3xl bg-blue-300 p-1'>
+      <div className='bg-300 h-10 rounded-3xl p-1'>
         <div className='flex h-full items-center justify-between space-x-1'>
           {editModeOff ? (
             <>

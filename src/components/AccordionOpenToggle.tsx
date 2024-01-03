@@ -30,7 +30,7 @@ function AccordionOpenToggle({
   return (
     <button
       title={title}
-      className='h-8 w-8 rounded-3xl bg-blue-100 p-2 shadow'
+      className='bg-100 h-8 w-8 rounded-3xl p-2 shadow'
       onClick={toggleIsOpen}
     >
       <ChevronDownIcon

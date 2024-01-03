@@ -60,7 +60,7 @@ function NumberInput({
       value={inputValue}
       placeholder={placeholder}
       onChange={handleOnChange}
-      className={`h-8 truncate rounded-3xl bg-blue-100 px-2 shadow-inner ring-1 ring-current ${className}`}
+      className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
       type='number'
       min={min}
       max={max}

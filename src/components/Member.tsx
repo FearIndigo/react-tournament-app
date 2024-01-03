@@ -31,7 +31,7 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
   }
 
   return (
-    <div className='flex h-10 items-center space-x-1 rounded-3xl bg-blue-300 p-1'>
+    <div className='bg-300 flex h-10 items-center space-x-1 rounded-3xl p-1'>
       {editModeOff ? (
         <div className='flex h-full grow items-center truncate p-2'>
           <span className='truncate'>{member.name}</span>

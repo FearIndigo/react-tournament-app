@@ -35,7 +35,7 @@ function SelectInput({
   return (
     <select
       value={inputValue}
-      className={`h-8 truncate rounded-3xl bg-blue-100 px-1 shadow-inner ring-1 ring-current ${className}`}
+      className={`bg-100 h-8 truncate rounded-3xl px-1 shadow-inner ring-1 ring-current ${className}`}
       onChange={handleOnChange}
     >
       <option value='' disabled>
