@@ -4,9 +4,15 @@ type TabButtonsProps = {
   tabs: string[]
   defaultTabIndex?: number
   onChanged: (tabIndex: number) => void
+  className?: string
 }
 
-function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
+function TabButtons({
+  tabs,
+  defaultTabIndex,
+  onChanged,
+  className,
+}: TabButtonsProps) {
   const [tabIndex, setTabIndex] = useState(defaultTabIndex ?? 0)
 
   function updateTabIndex(index: number) {
@@ -15,7 +21,7 @@ function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
   }
 
   return (
-    <div className='rounded-full bg-blue-300 p-1 text-blue-800'>
+    <div className={`rounded-full bg-blue-300 p-1 text-blue-800 ${className}`}>
       <div className='relative flex h-10 items-center justify-center'>
         {tabs.map((tab, index) => (
           <Fragment key={index}>
@@ -28,7 +34,7 @@ function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
             />
             <label
               htmlFor={`tab-button-${index}`}
-              className={`tap-none relative z-10 flex h-full w-24 cursor-pointer items-center justify-center p-2 text-center font-bold leading-none transition-colors ${
+              className={`tap-none relative z-10 flex h-full w-20 cursor-pointer items-center justify-center p-2 text-center font-bold leading-none transition-colors ${
                 index == tabIndex ? '' : ''
               }`}
             >
@@ -37,7 +43,7 @@ function TabButtons({ tabs, defaultTabIndex, onChanged }: TabButtonsProps) {
           </Fragment>
         ))}
         <span
-          className='absolute left-0 h-full w-24 rounded-full bg-blue-100 shadow transition-transform'
+          className='bg-100 absolute left-0 h-full w-20 rounded-full shadow transition-transform'
           style={{ transform: `translateX(${tabIndex * 100}%)` }}
         ></span>
       </div>
