@@ -9,10 +9,11 @@ import { ScoreDocType } from '../db/types/score'
 import TextError from './TextError'
 import Slot from './Slot.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
+import { useWinningScore } from '../db/hooks.ts'
 
 type ScoreProps = {
   score: ScoreDocument
-  game?: GameDocument
+  game: GameDocument
   readOnly?: boolean
   showRemoveButton?: boolean
 }
@@ -23,7 +24,7 @@ Score.defaultProps = {
 
 function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
   const [editModeOff, setEditModeOff] = useState(readOnly)
-  const { result: teams, isFetching: fetchingTeams } = useRxData<TeamDocType>(
+  const { result: teams, isFetching } = useRxData<TeamDocType>(
     'teams',
     (collection) =>
       collection.find({
@@ -32,22 +33,14 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
         },
       })
   )
-  const { result: scores, isFetching: fetchingScores } =
-    useRxData<ScoreDocType>('scores', (collection) =>
-      collection.find({
-        selector: {
-          id: { $in: game?.scores },
-        },
-        sort: [{ score: 'desc' }],
-      })
-    )
   const team = teams[0]
+  const isWinningScore = useWinningScore(game) == score
 
   useEffect(() => {
     setEditModeOff(readOnly)
   }, [readOnly])
 
-  if (fetchingTeams || fetchingScores) {
+  if (isFetching) {
     return <TextLoading className='h-6' />
   }
   function updateScore(newScore: number) {
@@ -64,16 +57,6 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
   function handleSubmit() {
     if (!readOnly) return
     setEditModeOff(true)
-  }
-
-  let isWinningScore = false
-  switch (game?.type) {
-    case 'highestScore':
-      isWinningScore = score.score == scores[0].score
-      break
-    case 'lowestScore':
-      isWinningScore = score.score == scores[scores.length - 1].score
-      break
   }
 
   return (

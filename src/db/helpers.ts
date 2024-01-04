@@ -1,6 +1,7 @@
 import {
   BracketDocument,
   GameDocument,
+  GameTypes,
   MemberDocument,
   RoundDocument,
   ScoreDocument,
@@ -58,4 +59,18 @@ export function getRoundName(
   const roundIndex = bracket.rounds.indexOf(round.id)
 
   return roundIndex != -1 ? `Round ${roundIndex + 1}` : 'New Round'
+}
+
+export async function getWinningScore(
+  game: GameDocument,
+  scores: ScoreDocument[]
+) {
+  if (scores.length == 0) return undefined
+  switch (game.type) {
+    default:
+    case GameTypes.HighestScore:
+      return scores.sort((a, b) => b.score - a.score)[0]
+    case GameTypes.LowestScore:
+      return scores.sort((a, b) => a.score - b.score)[0]
+  }
 }

@@ -1,6 +1,6 @@
-import { GameDocument, TeamDocument } from './types'
+import { GameDocument, ScoreDocument, TeamDocument } from './types'
 import { useEffect, useState } from 'react'
-import { getGameName, getTeamName } from './helpers'
+import { getGameName, getTeamName, getWinningScore } from './helpers'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from './types/team'
 import { ScoreDocType } from './types/score'
@@ -37,4 +37,20 @@ export function useGameName(game: GameDocument) {
   }, [game, teams])
 
   return gameName
+}
+
+export function useWinningScore(game: GameDocument) {
+  const [winningScore, setWinningScore] = useState<ScoreDocument>()
+  const { result: scores } = useRxData<ScoreDocType>('scores', (collection) =>
+    collection.find({
+      selector: {
+        id: { $in: game.scores },
+      },
+    })
+  )
+  useEffect(() => {
+    getWinningScore(game, scores).then(setWinningScore)
+  }, [game, scores])
+
+  return winningScore
 }
