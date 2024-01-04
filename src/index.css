@@ -8,14 +8,14 @@
   }
   
   .bg-100 {
-    @apply bg-gradient-to-br from-violet-100 to-white;
+    @apply bg-gradient-to-tl from-violet-100 to-white;
   }
   
   .bg-300 {
-    @apply bg-gradient-to-br from-violet-300 to-violet-200;
+    @apply bg-gradient-to-tl from-violet-300 to-violet-200;
   }
 
   .bg-500 {
-    @apply bg-gradient-to-br from-violet-500 to-violet-400;
+    @apply bg-gradient-to-tl from-violet-500 to-violet-400;
   }
 }

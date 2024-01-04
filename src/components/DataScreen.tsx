@@ -5,7 +5,7 @@ import AllTournaments from './AllTournaments.tsx'
 
 function DataScreen() {
   return (
-    <div className='container grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
+    <div className='container m-4 grid grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
       <AllMembers />
       <AllTeams />
       <AllGames />

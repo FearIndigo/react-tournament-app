@@ -11,7 +11,7 @@ function CreatorTournament() {
   function updateTournamentNumBrackets(numBrackets: number) {}
 
   return (
-    <Card className='bg-blue-100/50 backdrop-blur-sm'>
+    <Card className='bg-white/20 backdrop-blur-sm'>
       <Slot name='header'>
         <span className='px-2 font-bold'>Tournament Data</span>
       </Slot>
