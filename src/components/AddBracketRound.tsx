@@ -3,12 +3,15 @@ import { BracketDocument } from '../db/types'
 import { useRxCollection } from 'rxdb-hooks'
 import { v4 as uuidv4 } from 'uuid'
 import { RoundDocType } from '../db/types/round'
+import TextInput from './TextInput.tsx'
+import { useState } from 'react'
 
-type AddBracketRoundButtonProps = {
+type AddBracketRoundProps = {
   bracket: BracketDocument
 }
 
-function AddBracketRoundButton({ bracket }: AddBracketRoundButtonProps) {
+function AddBracketRound({ bracket }: AddBracketRoundProps) {
+  const [roundName, setRoundName] = useState('')
   const roundCollection = useRxCollection<RoundDocType>('rounds')
 
   async function addNewBracketRound() {
@@ -28,8 +31,21 @@ function AddBracketRoundButton({ bracket }: AddBracketRoundButtonProps) {
   }
 
   return (
-    <AddNewButton title='Add round to bracket' onClick={addNewBracketRound} />
+    <div className='flex h-8 items-center space-x-1'>
+      <TextInput
+        onChange={setRoundName}
+        placeholder={`Round ${bracket.rounds.length + 1}`}
+        value={roundName}
+        className='h-full w-full'
+      />
+      <div className='flex h-full items-center'>
+        <AddNewButton
+          title='Add round to bracket'
+          onClick={addNewBracketRound}
+        />
+      </div>
+    </div>
   )
 }
 
-export default AddBracketRoundButton
+export default AddBracketRound

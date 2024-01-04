@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import TextInput from './TextInput'
-import { BracketDocument } from '../db/types'
+import { BracketDocument, BracketTypes } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { RoundDocType } from '../db/types/round'
 import { getBracketName } from '../db/helpers'
-import AddBracketRoundButton from './AddBracketRoundButton'
+import AddBracketRound from './AddBracketRound'
 import RoundList from './RoundList.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { BracketDocType } from '../db/types/bracket'
+import SelectInput from './SelectInput.tsx'
+import { camel2Title } from '../helpers.ts'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -53,6 +55,22 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
     })
   }
 
+  function updateBracketType(
+    selectedOption: [bracketType: string, label: string]
+  ) {
+    const newBracketType = selectedOption[0] as BracketTypes
+    if (!Object.values(BracketTypes).includes(newBracketType)) return
+
+    bracket.incrementalPatch({
+      type: newBracketType,
+    })
+  }
+
+  const options: [bracketType: string, label: string][] = useMemo(
+    () => Object.values(BracketTypes).map((type) => [type, camel2Title(type)]),
+    []
+  )
+
   return (
     <div
       className={`bg-100 flex flex-col rounded-3xl text-blue-800 ${className}`}
@@ -74,13 +92,10 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
 
           <div className='flex h-full space-x-1'>
             {!editModeOff && (
-              <>
-                <RemoveDocumentButton<BracketDocType>
-                  document={bracket}
-                  title='Remove bracket'
-                />
-                <AddBracketRoundButton bracket={bracket} />
-              </>
+              <RemoveDocumentButton<BracketDocType>
+                document={bracket}
+                title='Remove bracket'
+              />
             )}
             <AccordionOpenToggle
               open={roundsVisible}
@@ -96,6 +111,16 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
         }`}
       >
         <div className='collapsible'>
+          {!editModeOff && (
+            <div className='flex items-center p-2 py-1'>
+              <SelectInput
+                value={bracket.type}
+                options={options}
+                onChange={updateBracketType}
+                className='w-full'
+              />
+            </div>
+          )}
           <div className='p-2 pt-1'>
             {isFetching ? (
               <TextLoading className='h-6' />
@@ -107,6 +132,11 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
               />
             )}
           </div>
+          {!editModeOff && (
+            <div className='self-end p-2 pt-0'>
+              <AddBracketRound bracket={bracket} />
+            </div>
+          )}
         </div>
       </div>
     </div>
