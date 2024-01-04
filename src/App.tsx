@@ -1,7 +1,8 @@
-import Trophy from './components/Trophy.tsx'
-import TabButtons from './components/TabButtons.tsx'
-import GridScreen from './components/GridScreen.tsx'
 import { useState } from 'react'
+import Trophy from './components/Trophy.tsx'
+import TabButtons from './components/TabButtons'
+import CreatorScreen from './components/CreatorScreen'
+import DataScreen from './components/DataScreen'
 
 function App() {
   const [tabIndex, updateTabIndex] = useState(0)
@@ -37,7 +38,8 @@ function App() {
           className='mb-8'
         />
 
-        {tabIndex == 1 && <GridScreen />}
+        {tabIndex == 0 && <CreatorScreen />}
+        {tabIndex == 1 && <DataScreen />}
       </main>
     </div>
   )
