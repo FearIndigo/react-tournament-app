@@ -13,9 +13,7 @@ function CreatorTournament() {
   return (
     <Card className='bg-100'>
       <Slot name='header'>
-        <h2 className='bg-300 flex h-10 items-center justify-center rounded-3xl p-2 font-bold'>
-          Tournament Data
-        </h2>
+        <span className='px-2 font-bold'>Tournament Data</span>
       </Slot>
       <Slot name='content'>
         <div className='flex flex-col space-y-2 p-3'>
