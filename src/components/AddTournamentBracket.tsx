@@ -18,7 +18,7 @@ function AddTournamentBracket({ tournament }: AddTournamentBracketProps) {
   const bracketCollection = useRxCollection<BracketDocType>('brackets')
 
   function setSelectedBracketType(
-    selectedOption: [bracketType: string, label: string]
+    selectedOption: [type: string, label: string]
   ) {
     const selectedBracketType = selectedOption[0] as BracketTypes
     if (!Object.values(BracketTypes).includes(selectedBracketType)) return
@@ -43,7 +43,7 @@ function AddTournamentBracket({ tournament }: AddTournamentBracketProps) {
     })
   }
 
-  const options: [gameType: string, label: string][] = useMemo(
+  const options: [type: string, label: string][] = useMemo(
     () => Object.values(BracketTypes).map((type) => [type, camel2Title(type)]),
     []
   )

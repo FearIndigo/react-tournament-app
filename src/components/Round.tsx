@@ -6,7 +6,7 @@ import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
 import { GameDocType } from '../db/types/game'
 import GameList from './GameList'
-import AddRoundGameButton from './AddRoundGameButton'
+import AddRoundGame from './AddRoundGame'
 import { getRoundName } from '../db/helpers.ts'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { RoundDocType } from '../db/types/round'
@@ -75,13 +75,10 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
 
           <div className='flex h-full space-x-1'>
             {!editModeOff && (
-              <>
-                <RemoveDocumentButton<RoundDocType>
-                  document={round}
-                  title='Remove round'
-                />
-                <AddRoundGameButton round={round} />
-              </>
+              <RemoveDocumentButton<RoundDocType>
+                document={round}
+                title='Remove round'
+              />
             )}
             <AccordionOpenToggle
               open={gamesVisible}
@@ -104,6 +101,11 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
               <GameList games={games} readOnly={editModeOff} />
             )}
           </div>
+          {!editModeOff && (
+            <div className='self-end p-2 pt-0'>
+              <AddRoundGame round={round} />
+            </div>
+          )}
         </div>
       </div>
     </div>
