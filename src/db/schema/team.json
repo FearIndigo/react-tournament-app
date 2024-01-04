@@ -16,6 +16,7 @@
     "members": {
       "ref": "members",
       "type": "array",
+      "uniqueItems": true,
       "items": {
         "type": "string"
       },

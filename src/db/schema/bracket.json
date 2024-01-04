@@ -27,6 +27,7 @@
     "rounds": {
       "ref": "rounds",
       "type": "array",
+      "uniqueItems": true,
       "items": {
         "type": "string"
       },

@@ -16,6 +16,7 @@
     "games": {
       "ref": "games",
       "type": "array",
+      "uniqueItems": true,
       "items": {
         "type": "string"
       },
