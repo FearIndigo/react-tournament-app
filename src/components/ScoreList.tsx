@@ -3,7 +3,7 @@ import Score from './Score.tsx'
 
 type ScoreListProps = {
   scores: ScoreDocument[]
-  game?: GameDocument
+  game: GameDocument
   className?: string
   readOnly?: boolean
   showRemoveButton?: boolean
