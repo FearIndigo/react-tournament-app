@@ -46,6 +46,7 @@ export function useWinningScore(game: GameDocument) {
       selector: {
         id: { $in: game.scores },
       },
+      index: ['createdAt'],
     })
   )
   useEffect(() => {
