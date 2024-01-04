@@ -98,7 +98,7 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
             </Slot>
           </Team>
         ) : (
-          <div className='flex h-10 items-center rounded-3xl bg-blue-300 p-1'>
+          <div className='bg-300 flex h-10 items-center rounded-3xl p-1'>
             <TextError text='missing team!' className='h-full w-full' />
             <RemoveDocumentButton<ScoreDocType>
               title='Remove team from game'
