@@ -17,7 +17,7 @@ function AllMembers() {
   )
 
   return (
-    <div className='flex flex-col rounded-3xl bg-blue-100/50 text-blue-800 backdrop-blur-sm'>
+    <div className='flex flex-col rounded-3xl bg-blue-100/50 text-violet-800 backdrop-blur-sm'>
       <div className='bg-300 flex h-10 w-full items-center justify-between rounded-3xl p-1'>
         <span className='grow p-2 font-bold'>Members</span>
         <div className='flex h-full flex-row items-center space-x-1'>
