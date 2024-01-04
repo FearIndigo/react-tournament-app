@@ -12,11 +12,13 @@ TextLoading.defaultProps = {
 
 function TextLoading({ text, className }: TextLoadingProps) {
   return (
-    <div className={`flex animate-pulse items-center space-x-1 ${className}`}>
-      <div className='aspect-square h-full'>
-        <SpinnerIcon className='animate-spin' />
+    <div>
+      <div className={`flex animate-pulse items-center space-x-1 ${className}`}>
+        <div className='aspect-square h-full'>
+          <SpinnerIcon className='animate-spin' />
+        </div>
+        <span>{text}</span>
       </div>
-      <span>{text}</span>
     </div>
   )
 }
