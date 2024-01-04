@@ -3,15 +3,19 @@ import {
   FocusEventHandler,
   KeyboardEventHandler,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 type NumberInputProps = {
   value: number
   min?: number
   max?: number
+  step?: number
   placeholder?: string
+  label?: string
   className?: string
   onChange: (newValue: number) => void
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
@@ -27,7 +31,9 @@ function NumberInput({
   value,
   min,
   max,
+  step,
   placeholder,
+  label,
   className,
   onChange,
   onKeyDown,
@@ -54,19 +60,30 @@ function NumberInput({
     inputRef.current?.focus()
   }, [focusOnRender, inputRef])
 
+  const inputId = useMemo(() => uuidv4(), [])
+
   return (
-    <input
-      ref={inputRef}
-      value={inputValue}
-      placeholder={placeholder}
-      onChange={handleOnChange}
-      className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
-      type='number'
-      min={min}
-      max={max}
-      onKeyDown={onKeyDown}
-      onBlur={onBlur}
-    />
+    <>
+      {label && (
+        <label htmlFor={inputId} className='mx-2'>
+          {label}
+        </label>
+      )}
+      <input
+        id={inputId}
+        ref={inputRef}
+        value={inputValue}
+        placeholder={placeholder}
+        onChange={handleOnChange}
+        className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
+        type='number'
+        min={min}
+        max={max}
+        step={step}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+      />
+    </>
   )
 }
 
