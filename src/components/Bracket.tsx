@@ -86,7 +86,7 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
               value={bracket.name}
               placeholder={bracketName ?? 'Name...'}
               onChange={updateName}
-              className='font-bold'
+              className='w-full font-bold'
             />
           )}
 
