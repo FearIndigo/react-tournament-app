@@ -2,47 +2,76 @@ import TextInput from './TextInput'
 import NumberInput from './NumberInput'
 import Card from './Card'
 import Slot from './Slot'
+import {
+  defaultBracketData,
+  CreatorData,
+  recursiveUpdateTeamsInOut,
+  calculateNumRounds,
+} from '../creator.ts'
 
-function CreatorTournament() {
-  function updateTournamentName(name: string) {}
+type CreatorTournamentProps = {
+  data: CreatorData
+  onChange: (data: CreatorData) => void
+}
 
-  function updateTournamentNumTeams(numTeams: number) {}
+function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
+  function updateName(name: string) {
+    data.name = name
+    onChange(data)
+  }
 
-  function updateTournamentNumBrackets(numBrackets: number) {}
+  function updateNumTeams(numTeams: number) {
+    const int = Math.ceil(numTeams)
+    if (isNaN(int) || int < 1) return
+    data.numTeams = int
+
+    recursiveUpdateTeamsInOut(0, data)
+
+    onChange(data)
+  }
+
+  function updateNumBrackets(numBrackets: number) {
+    const int = Math.ceil(numBrackets)
+    if (isNaN(int) || int < 1) return
+    data.numBrackets = int
+    if (int != data.brackets.length) {
+      const oldLength = data.brackets.length
+      data.brackets.length = int
+      if (int > oldLength) {
+        data.brackets.fill({ ...defaultBracketData }, oldLength)
+        recursiveUpdateTeamsInOut(oldLength, data)
+        calculateNumRounds(oldLength, data)
+      }
+    }
+    onChange(data)
+  }
 
   return (
     <Card className='bg-white/20 backdrop-blur-sm'>
       <Slot name='header'>
-        <span className='px-2 font-bold'>Tournament Data</span>
+        <span className='px-3 font-bold'>Tournament Data</span>
       </Slot>
       <Slot name='content'>
-        <div className='flex flex-col space-y-2 p-3'>
-          <div className='flex flex-col text-center'>
-            <TextInput
-              onChange={updateTournamentName}
-              value={''}
-              label='Name'
-              className='text-center'
-            />
+        <div className='flex w-full flex-col space-y-2 p-3 pt-2'>
+          <div className='flex flex-col'>
+            <TextInput onChange={updateName} value={data.name} label='Name' />
           </div>
 
-          <div className='flex flex-col text-center'>
+          <div className='flex flex-col'>
             <NumberInput
-              onChange={updateTournamentNumTeams}
-              value={1}
+              onChange={updateNumTeams}
+              value={data.numTeams}
               label='Number of Teams'
-              min={1}
-              className='text-center'
+              min={2}
             />
           </div>
 
-          <div className='flex flex-col text-center'>
+          <div className='flex flex-col'>
             <NumberInput
-              onChange={updateTournamentNumBrackets}
-              value={1}
+              onChange={updateNumBrackets}
+              value={data.numBrackets}
               label='Number of Brackets'
               min={1}
-              className='text-center'
             />
           </div>
         </div>
