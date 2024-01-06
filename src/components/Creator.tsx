@@ -1,13 +1,13 @@
 import CreatorTournament from './CreatorTournament'
 import { useState } from 'react'
 import CreatorBrackets from './CreatorBrackets.tsx'
-import { defaultCreatorData, copyData, CreatorData } from '../creator.ts'
+import { defaultCreatorData, CreatorData, deepCopy } from '../creator.ts'
 
 function Creator() {
   const [data, setData] = useState<CreatorData>(defaultCreatorData)
 
   function updateCreatorData(newData: CreatorData) {
-    setData(copyData(newData))
+    setData(deepCopy(newData))
   }
 
   return (

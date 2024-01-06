@@ -5,6 +5,7 @@ type TextInputProps = {
   value: string
   placeholder?: string
   label?: string
+  disabled?: boolean
   className?: string
   onChange: (newValue: string) => void
 }
@@ -17,6 +18,7 @@ function TextInput({
   value,
   placeholder,
   label,
+  disabled,
   className,
   onChange,
 }: TextInputProps) {
@@ -40,13 +42,21 @@ function TextInput({
           {label}
         </label>
       )}
-      <input
-        id={inputId}
-        value={inputValue}
-        placeholder={placeholder}
-        onChange={handleOnChange}
-        className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
-      />
+      {disabled ? (
+        <span
+          className={`bg-300 flex h-8 items-center truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
+        >
+          {inputValue}
+        </span>
+      ) : (
+        <input
+          id={inputId}
+          value={inputValue}
+          placeholder={placeholder}
+          onChange={handleOnChange}
+          className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
+        />
+      )}
     </>
   )
 }
