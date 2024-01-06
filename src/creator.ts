@@ -49,13 +49,10 @@ export function calculateNumRounds(index: number, data: CreatorData) {
   switch (bracketData.type) {
     default:
     case BracketTypes.Elimination:
-      bracketData.numRounds = Math.max(
-        1,
-        Math.ceil(
-          Math.log2(2 * Math.ceil(bracketData.teamsIn / 2)) -
-            Math.log2(2 * Math.ceil(bracketData.teamsOut - 1 / 2) - 1)
-        )
+      bracketData.numRounds = Math.ceil(
+        Math.log2(bracketData.teamsIn) - Math.log2(bracketData.teamsOut)
       )
+
       break
     case BracketTypes.DoubleElimination:
       break

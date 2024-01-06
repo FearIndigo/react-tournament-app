@@ -108,7 +108,7 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
                   onChange={(value) => updateNumRounds(index, value)}
                   value={bracketData.numRounds}
                   label='Num Rounds'
-                  min={1}
+                  min={0}
                   disabled={disableNumRounds(bracketData)}
                 />
               </div>
