@@ -10,7 +10,7 @@ function App() {
   return (
     <div className='bg-500 relative min-h-screen'>
       <div
-        className='absolute left-0 top-0 h-full w-full bg-repeat opacity-[0.05]'
+        className='fixed left-0 top-0 h-screen w-full bg-repeat opacity-[0.1]'
         style={{ backgroundImage: 'url(/topography.svg)' }}
       />
 
