@@ -9,7 +9,7 @@ import { ScoreDocType } from '../db/types/score'
 import TextError from './TextError'
 import Slot from './Slot.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
-import { useWinningScore } from '../db/hooks.ts'
+import { useTeamPoints } from '../db/hooks.ts'
 import { usePropState } from '../hooks.tsx'
 
 type ScoreProps = {
@@ -31,7 +31,7 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
       })
   )
   const team = teams[0]
-  const isWinningScore = useWinningScore(game) == score
+  const teamPoints = useTeamPoints(game)[score.team]
 
   if (isFetching) {
     return <TextLoading className='h-6' />
@@ -62,9 +62,11 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
                 <span
                   onClick={() => setEditModeOff(false)}
                   className={`flex h-full w-12 cursor-pointer items-center justify-center truncate rounded-3xl font-bold shadow ${
-                    isWinningScore
+                    teamPoints == 3
                       ? 'bg-green-300 text-green-800'
-                      : 'bg-red-100 text-red-800'
+                      : teamPoints == 1
+                        ? 'bg-100'
+                        : 'bg-red-100 text-red-800'
                   }`}
                 >
                   {score.score}

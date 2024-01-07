@@ -1,6 +1,6 @@
-import { GameDocument, ScoreDocument, TeamDocument } from './types'
+import { GameDocument, TeamDocument } from './types'
 import { useEffect, useState } from 'react'
-import { getGameName, getTeamName, getWinningScore } from './helpers'
+import { getGameName, getTeamName, getTeamPoints } from './helpers'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from './types/team'
 import { ScoreDocType } from './types/score'
@@ -39,19 +39,20 @@ export function useGameName(game: GameDocument) {
   return gameName
 }
 
-export function useWinningScore(game: GameDocument) {
-  const [winningScore, setWinningScore] = useState<ScoreDocument>()
+export function useTeamPoints(game: GameDocument) {
+  const [teamPoints, setTeamPoints] = useState<Record<string, number>>({})
+  // Need to populate game.scores as the field that determines winner exists on score document
   const { result: scores } = useRxData<ScoreDocType>('scores', (collection) =>
     collection.find({
       selector: {
         id: { $in: game.scores },
       },
-      index: ['createdAt'],
     })
   )
+
   useEffect(() => {
-    getWinningScore(game, scores).then(setWinningScore)
+    getTeamPoints(game).then(setTeamPoints)
   }, [game, scores])
 
-  return winningScore
+  return teamPoints
 }

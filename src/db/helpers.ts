@@ -61,16 +61,45 @@ export function getRoundName(
   return roundIndex != -1 ? `Round ${roundIndex + 1}` : 'New Round'
 }
 
-export async function getWinningScore(
-  game: GameDocument,
-  scores: ScoreDocument[]
-) {
-  if (scores.length == 0) return undefined
+export async function getWinningTeamIds(game: GameDocument) {
+  if (!game) return []
+
+  const scores: ScoreDocument[] = await game.populate('scores')
+
+  if (scores.length == 0) return []
+
+  const scoreTeams = scores.reduce((dict: Record<number, string[]>, score) => {
+    if (!dict[score.score]) dict[score.score] = []
+    dict[score.score].push(score.team)
+    return dict
+  }, {})
+
+  const scoreValues = scores.map((score) => score.score)
+
   switch (game.type) {
     default:
     case GameTypes.HighestScore:
-      return scores.sort((a, b) => b.score - a.score)[0]
+      return scoreTeams[scoreValues.sort((a, b) => b - a)[0]]
     case GameTypes.LowestScore:
-      return scores.sort((a, b) => a.score - b.score)[0]
+      return scoreTeams[scoreValues.sort((a, b) => a - b)[0]]
   }
+}
+
+export async function getTeamPoints(game: GameDocument) {
+  if (!game) return {}
+
+  const winningTeamIds = await getWinningTeamIds(game)
+
+  const scores: ScoreDocument[] = await game.populate('scores')
+
+  if (scores.length == 0) return {}
+
+  return scores.reduce((dict: Record<string, number>, score) => {
+    dict[score.team] = winningTeamIds.includes(score.team)
+      ? winningTeamIds.length == 1
+        ? 3
+        : 1
+      : 0
+    return dict
+  }, {})
 }
