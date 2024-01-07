@@ -10,6 +10,16 @@ import { v4 as uuidv4 } from 'uuid'
 
 type NumberInputProps = {
   value: number
+  inputMode?:
+    | 'search'
+    | 'text'
+    | 'email'
+    | 'tel'
+    | 'url'
+    | 'numeric'
+    | 'none'
+    | 'decimal'
+    | undefined
   min?: number
   max?: number
   step?: number
@@ -24,11 +34,13 @@ type NumberInputProps = {
 }
 
 NumberInput.defaultProps = {
+  inputMode: 'numeric',
   className: '',
 }
 
 function NumberInput({
   value,
+  inputMode,
   min,
   max,
   step,
@@ -73,11 +85,12 @@ function NumberInput({
         <input
           id={inputId}
           ref={inputRef}
+          type='number'
+          inputMode={inputMode}
           value={value}
           placeholder={placeholder}
           onChange={handleOnChange}
           className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
-          type='number'
           min={min}
           max={max}
           step={step}

@@ -3,6 +3,16 @@ import { v4 as uuidv4 } from 'uuid'
 
 type TextInputProps = {
   value: string
+  inputMode?:
+    | 'search'
+    | 'text'
+    | 'email'
+    | 'tel'
+    | 'url'
+    | 'numeric'
+    | 'none'
+    | 'decimal'
+    | undefined
   placeholder?: string
   label?: string
   disabled?: boolean
@@ -11,11 +21,13 @@ type TextInputProps = {
 }
 
 TextInput.defaultProps = {
+  inputMode: 'text',
   className: '',
 }
 
 function TextInput({
   value,
+  inputMode,
   placeholder,
   label,
   disabled,
@@ -44,6 +56,8 @@ function TextInput({
       ) : (
         <input
           id={inputId}
+          type='text'
+          inputMode={inputMode}
           value={value}
           placeholder={placeholder}
           onChange={handleOnChange}
