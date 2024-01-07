@@ -1,10 +1,8 @@
 import { useMemo } from 'react'
 import TextInput from './TextInput'
 import { BracketDocument, BracketTypes } from '../db/types'
-import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
-import { RoundDocType } from '../db/types/round'
 import { getBracketName } from '../db/helpers'
 import AddBracketRound from './AddBracketRound'
 import RoundList from './RoundList.tsx'
@@ -14,6 +12,7 @@ import SelectInput from './SelectInput.tsx'
 import { camel2Title } from '../helpers.ts'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
+import { useRounds } from '../db/hooks.ts'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -29,16 +28,7 @@ Bracket.defaultProps = {
 function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
   const [editModeOff] = usePropState(readOnly)
   const [roundsVisible, setRoundsVisible] = usePropState(showRounds ?? false)
-  const { result: rounds, isFetching } = useRxData<RoundDocType>(
-    'rounds',
-    (collection) =>
-      collection.find({
-        selector: {
-          id: { $in: bracket.rounds },
-        },
-        index: ['createdAt'],
-      })
-  )
+  const [rounds, isFetching] = useRounds(bracket.rounds)
 
   const bracketName = getBracketName(bracket)
 

@@ -1,9 +1,7 @@
 import TextInput from './TextInput'
 import { BracketDocument, RoundDocument } from '../db/types'
-import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import AccordionOpenToggle from './AccordionOpenToggle'
-import { GameDocType } from '../db/types/game'
 import GameList from './GameList'
 import AddRoundGame from './AddRoundGame'
 import { getRoundName } from '../db/helpers.ts'
@@ -11,6 +9,7 @@ import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { RoundDocType } from '../db/types/round'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
+import { useGames } from '../db/hooks.ts'
 
 type RoundProps = {
   round: RoundDocument
@@ -27,16 +26,7 @@ Round.defaultProps = {
 function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
   const [editModeOff] = usePropState(readOnly)
   const [gamesVisible, setGamesVisible] = usePropState(showGames ?? false)
-  const { result: games, isFetching } = useRxData<GameDocType>(
-    'games',
-    (collection) =>
-      collection.find({
-        selector: {
-          id: { $in: round.games },
-        },
-        index: ['createdAt'],
-      })
-  )
+  const [games, isFetching] = useGames(round.games)
 
   function updateName(name: string) {
     round.incrementalPatch({

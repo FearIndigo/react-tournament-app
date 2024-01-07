@@ -1,15 +1,13 @@
 import { useMemo } from 'react'
 import { GameDocument, GameTypes } from '../db/types'
-import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import EditModeToggle from './EditModeToggle'
-import { ScoreDocType } from '../db/types/score'
 import AddGameScore from './AddGameScore'
 import ScoreList from './ScoreList'
 import { camel2Title } from '../helpers'
 import SelectInput from './SelectInput'
 import AccordionOpenToggle from './AccordionOpenToggle'
-import { useGameName } from '../db/hooks'
+import { useGameName, useScores } from '../db/hooks'
 import TextInput from './TextInput'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { GameDocType } from '../db/types/game'
@@ -26,16 +24,7 @@ type GameProps = {
 function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
   const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
   const [scoresVisible, setScoresVisible] = usePropState(showScores ?? false)
-  const { result: scores, isFetching } = useRxData<ScoreDocType>(
-    'scores',
-    (collection) =>
-      collection.find({
-        selector: {
-          id: { $in: game.scores },
-        },
-        index: ['createdAt'],
-      })
-  )
+  const [scores, isFetching] = useScores(game.scores)
 
   const gameName = useGameName(game)
 

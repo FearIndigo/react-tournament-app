@@ -3,6 +3,7 @@ import Trophy from './components/Trophy.tsx'
 import TabButtons from './components/TabButtons'
 import CreatorScreen from './components/CreatorScreen'
 import DataScreen from './components/DataScreen'
+import StatsScreen from './components/StatsScreen.tsx'
 
 function App() {
   const [tabIndex, updateTabIndex] = useState(0)
@@ -40,6 +41,8 @@ function App() {
 
         {tabIndex == 0 && <CreatorScreen />}
         {tabIndex == 1 && <DataScreen />}
+
+        {tabIndex == 3 && <StatsScreen />}
       </main>
     </div>
   )

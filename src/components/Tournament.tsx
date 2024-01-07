@@ -1,16 +1,15 @@
 import TextInput from './TextInput'
 import { TournamentDocument } from '../db/types'
-import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
 import EditModeToggle from './EditModeToggle'
 import AccordionOpenToggle from './AccordionOpenToggle'
-import { BracketDocType } from '../db/types/bracket'
 import BracketList from './BracketList.tsx'
 import AddTournamentBracket from './AddTournamentBracket'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TournamentDocType } from '../db/types/tournament'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
+import { useBrackets } from '../db/hooks.ts'
 
 type TournamentProps = {
   tournament: TournamentDocument
@@ -35,16 +34,7 @@ function Tournament({
   const [bracketsVisible, setBracketsVisible] = usePropState(
     showBrackets ?? false
   )
-  const { result: brackets, isFetching } = useRxData<BracketDocType>(
-    'brackets',
-    (collection) =>
-      collection.find({
-        selector: {
-          id: { $in: tournament.brackets },
-        },
-        index: ['createdAt'],
-      })
-  )
+  const [brackets, isFetching] = useBrackets(tournament.brackets)
 
   function updateName(name: string) {
     tournament.incrementalPatch({

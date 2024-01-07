@@ -2,13 +2,11 @@ import MemberList from './MemberList.tsx'
 import { ReactNode } from 'react'
 import TextInput from './TextInput.tsx'
 import { TeamDocument } from '../db/types'
-import { useRxData } from 'rxdb-hooks'
-import { MemberDocType } from '../db/types/member'
 import TextLoading from './TextLoading.tsx'
 import EditModeToggle from './EditModeToggle.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import AddTeamMember from './AddTeamMember.tsx'
-import { useTeamName } from '../db/hooks'
+import { useMembers, useTeamName } from '../db/hooks'
 import { usePropState, useSlots } from '../hooks.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TeamDocType } from '../db/types/team'
@@ -38,16 +36,7 @@ function Team({
   const slots = useSlots(children)
   const [membersVisible, setMembersVisible] = usePropState(showMembers ?? false)
   const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
-  const { result: members, isFetching } = useRxData<MemberDocType>(
-    'members',
-    (collection) =>
-      collection.find({
-        selector: {
-          id: { $in: team.members },
-        },
-        index: ['createdAt'],
-      })
-  )
+  const [members, isFetching] = useMembers(team.members)
   const teamName = useTeamName(team)
 
   function updateName(name: string) {
