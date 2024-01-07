@@ -10,6 +10,8 @@ import { TournamentDocType } from '../db/types/tournament'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
 import { useBrackets } from '../db/hooks.ts'
+import Slot from './Slot.tsx'
+import Card from './Card.tsx'
 
 type TournamentProps = {
   tournament: TournamentDocument
@@ -43,21 +45,17 @@ function Tournament({
   }
 
   return (
-    <div
-      className={`bg-100 flex flex-col rounded-3xl text-violet-800 ${className}`}
-    >
-      <div className='bg-300 h-10 rounded-3xl p-1'>
-        <div className='flex h-full items-center justify-between space-x-1'>
+    <Card className={`bg-100 ${className}`}>
+      <Slot name='header'>
+        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
           {editModeOff ? (
-            <span className='truncate rounded-3xl p-2 font-bold'>
-              {tournament.name}
-            </span>
+            <span className='truncate px-2 font-bold'>{tournament.name}</span>
           ) : (
             <TextInput
               value={tournament.name}
               placeholder='Name...'
               onChange={updateName}
-              className='font-bold'
+              className='w-full font-bold'
             />
           )}
 
@@ -82,30 +80,32 @@ function Tournament({
             />
           </div>
         </div>
-      </div>
-      <div
-        className={`collapsible-wrapper flex-col rounded-b-3xl ${
-          bracketsVisible ? '' : 'collapsed'
-        }`}
-      >
-        <div className='collapsible'>
-          <div className='p-2 pt-1'>
-            {brackets.length > 0 ? (
-              <BracketList brackets={brackets} readOnly={editModeOff} />
-            ) : isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
-              <TextInfo text='No brackets' className='h-6' />
+      </Slot>
+      <Slot name='content'>
+        <div
+          className={`collapsible-wrapper flex-col rounded-b-3xl ${
+            bracketsVisible ? '' : 'collapsed'
+          }`}
+        >
+          <div className='collapsible'>
+            <div className='p-2 pt-1'>
+              {brackets.length > 0 ? (
+                <BracketList brackets={brackets} readOnly={editModeOff} />
+              ) : isFetching ? (
+                <TextLoading className='h-6' />
+              ) : (
+                <TextInfo text='No brackets' className='h-6' />
+              )}
+            </div>
+            {!editModeOff && (
+              <div className='p-2 pt-0'>
+                <AddTournamentBracket tournament={tournament} />
+              </div>
             )}
           </div>
-          {!editModeOff && (
-            <div className='p-2 pt-0'>
-              <AddTournamentBracket tournament={tournament} />
-            </div>
-          )}
         </div>
-      </div>
-    </div>
+      </Slot>
+    </Card>
   )
 }
 

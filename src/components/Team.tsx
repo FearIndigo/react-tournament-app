@@ -11,6 +11,8 @@ import { usePropState, useSlots } from '../hooks.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TeamDocType } from '../db/types/team'
 import TextInfo from './TextInfo.tsx'
+import Slot from './Slot.tsx'
+import Card from './Card.tsx'
 
 type TeamProps = {
   team: TeamDocument
@@ -46,26 +48,22 @@ function Team({
   }
 
   return (
-    <div
-      className={`bg-100 flex flex-col rounded-3xl text-violet-800 ${className}`}
-    >
-      <div className='bg-300 h-10 rounded-3xl p-1'>
-        <div className='flex h-full items-center justify-between space-x-1'>
+    <Card className={`bg-100 ${className}`}>
+      <Slot name='header'>
+        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
           {editModeOff ? (
             <>
               {slots.preHeader && (
                 <div className='h-full'>{slots.preHeader}</div>
               )}
-              <span className='w-full truncate rounded-3xl p-2 font-bold'>
-                {teamName}
-              </span>
+              <span className='w-full truncate px-2 font-bold'>{teamName}</span>
             </>
           ) : (
             <TextInput
               value={team.name}
               placeholder={teamName ?? 'Name...'}
               onChange={updateName}
-              className='font-bold'
+              className='w-full font-bold'
             />
           )}
           <div className='flex h-full space-x-1'>
@@ -90,34 +88,36 @@ function Team({
             />
           </div>
         </div>
-      </div>
-      <div
-        className={`collapsible-wrapper flex-col rounded-b-3xl ${
-          membersVisible ? '' : 'collapsed'
-        }`}
-      >
-        <div className='collapsible'>
-          <div className='p-2 pt-1'>
-            {members.length > 0 ? (
-              <MemberList
-                members={members}
-                readOnly={editModeOff}
-                team={team}
-              />
-            ) : isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
-              <TextInfo text='No members' className='h-6' />
+      </Slot>
+      <Slot name='content'>
+        <div
+          className={`collapsible-wrapper flex-col rounded-b-3xl ${
+            membersVisible ? '' : 'collapsed'
+          }`}
+        >
+          <div className='collapsible'>
+            <div className='p-2 pt-1'>
+              {members.length > 0 ? (
+                <MemberList
+                  members={members}
+                  readOnly={editModeOff}
+                  team={team}
+                />
+              ) : isFetching ? (
+                <TextLoading className='h-6' />
+              ) : (
+                <TextInfo text='No members' className='h-6' />
+              )}
+            </div>
+            {!editModeOff && (
+              <div className='p-2 pt-0'>
+                <AddTeamMember team={team} />
+              </div>
             )}
           </div>
-          {!editModeOff && (
-            <div className='p-2 pt-0'>
-              <AddTeamMember team={team} />
-            </div>
-          )}
         </div>
-      </div>
-    </div>
+      </Slot>
+    </Card>
   )
 }
 

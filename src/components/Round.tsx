@@ -10,6 +10,8 @@ import { RoundDocType } from '../db/types/round'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
 import { useGames } from '../db/hooks.ts'
+import Slot from './Slot.tsx'
+import Card from './Card.tsx'
 
 type RoundProps = {
   round: RoundDocument
@@ -37,21 +39,17 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
   const roundName = getRoundName(round, bracket)
 
   return (
-    <div
-      className={`bg-100 flex flex-col rounded-3xl text-violet-800 ${className}`}
-    >
-      <div className='bg-300 h-10 rounded-3xl p-1'>
-        <div className='flex h-full items-center justify-between space-x-1'>
+    <Card className={`bg-100 ${className}`}>
+      <Slot name='header'>
+        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
           {editModeOff ? (
-            <span className='truncate rounded-3xl p-2 font-bold'>
-              {roundName}
-            </span>
+            <span className='truncate px-2 font-bold'>{roundName}</span>
           ) : (
             <TextInput
               value={round.name}
               placeholder={roundName ?? 'Name...'}
               onChange={updateName}
-              className='font-bold'
+              className='w-full font-bold'
             />
           )}
 
@@ -69,30 +67,32 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
             />
           </div>
         </div>
-      </div>
-      <div
-        className={`collapsible-wrapper flex-col rounded-b-3xl ${
-          gamesVisible ? '' : 'collapsed'
-        }`}
-      >
-        <div className='collapsible'>
-          <div className='p-2 pt-1'>
-            {games.length > 0 ? (
-              <GameList games={games} readOnly={editModeOff} />
-            ) : isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
-              <TextInfo text='No games' className='h-6' />
+      </Slot>
+      <Slot name='content'>
+        <div
+          className={`collapsible-wrapper flex-col rounded-b-3xl ${
+            gamesVisible ? '' : 'collapsed'
+          }`}
+        >
+          <div className='collapsible'>
+            <div className='p-2 pt-1'>
+              {games.length > 0 ? (
+                <GameList games={games} readOnly={editModeOff} />
+              ) : isFetching ? (
+                <TextLoading className='h-6' />
+              ) : (
+                <TextInfo text='No games' className='h-6' />
+              )}
+            </div>
+            {!editModeOff && (
+              <div className='self-end p-2 pt-0'>
+                <AddRoundGame round={round} />
+              </div>
             )}
           </div>
-          {!editModeOff && (
-            <div className='self-end p-2 pt-0'>
-              <AddRoundGame round={round} />
-            </div>
-          )}
         </div>
-      </div>
-    </div>
+      </Slot>
+    </Card>
   )
 }
 

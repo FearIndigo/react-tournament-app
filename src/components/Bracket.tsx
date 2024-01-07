@@ -13,6 +13,8 @@ import { camel2Title } from '../helpers.ts'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
 import { useRounds } from '../db/hooks.ts'
+import Slot from './Slot.tsx'
+import Card from './Card.tsx'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -55,15 +57,11 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
   )
 
   return (
-    <div
-      className={`bg-100 flex flex-col rounded-3xl text-violet-800 ${className}`}
-    >
-      <div className='bg-300 h-10 rounded-3xl p-1'>
-        <div className='flex h-full items-center justify-between space-x-1'>
+    <Card className={`bg-100 ${className}`}>
+      <Slot name='header'>
+        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
           {editModeOff ? (
-            <span className='truncate rounded-3xl p-2 font-bold'>
-              {bracketName}
-            </span>
+            <span className='truncate px-2 font-bold'>{bracketName}</span>
           ) : (
             <TextInput
               value={bracket.name}
@@ -87,44 +85,46 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
             />
           </div>
         </div>
-      </div>
-      <div
-        className={`collapsible-wrapper flex-col rounded-b-3xl ${
-          roundsVisible ? '' : 'collapsed'
-        }`}
-      >
-        <div className='collapsible'>
-          {!editModeOff && (
-            <div className='flex items-center p-2 py-1'>
-              <SelectInput
-                value={bracket.type}
-                options={options}
-                onChange={updateBracketType}
-                className='w-full'
-              />
+      </Slot>
+      <Slot name='content'>
+        <div
+          className={`collapsible-wrapper flex-col rounded-b-3xl ${
+            roundsVisible ? '' : 'collapsed'
+          }`}
+        >
+          <div className='collapsible'>
+            {!editModeOff && (
+              <div className='flex items-center p-2 py-1'>
+                <SelectInput
+                  value={bracket.type}
+                  options={options}
+                  onChange={updateBracketType}
+                  className='w-full'
+                />
+              </div>
+            )}
+            <div className='p-2 pt-1'>
+              {rounds.length > 0 ? (
+                <RoundList
+                  rounds={rounds}
+                  readOnly={editModeOff}
+                  bracket={bracket}
+                />
+              ) : isFetching ? (
+                <TextLoading className='h-6' />
+              ) : (
+                <TextInfo text='No rounds' className='h-6' />
+              )}
             </div>
-          )}
-          <div className='p-2 pt-1'>
-            {rounds.length > 0 ? (
-              <RoundList
-                rounds={rounds}
-                readOnly={editModeOff}
-                bracket={bracket}
-              />
-            ) : isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
-              <TextInfo text='No rounds' className='h-6' />
+            {!editModeOff && (
+              <div className='self-end p-2 pt-0'>
+                <AddBracketRound bracket={bracket} />
+              </div>
             )}
           </div>
-          {!editModeOff && (
-            <div className='self-end p-2 pt-0'>
-              <AddBracketRound bracket={bracket} />
-            </div>
-          )}
         </div>
-      </div>
-    </div>
+      </Slot>
+    </Card>
   )
 }
 

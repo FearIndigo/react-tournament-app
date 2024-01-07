@@ -7,6 +7,8 @@ import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import { useState } from 'react'
 import EditModeToggle from './EditModeToggle.tsx'
 import TextInfo from './TextInfo.tsx'
+import Slot from './Slot.tsx'
+import Card from './Card.tsx'
 
 function AllTeams() {
   const [editModeOff, setEditModeOff] = useState(true)
@@ -20,38 +22,42 @@ function AllTeams() {
   )
 
   return (
-    <div className='flex flex-col rounded-3xl bg-white/20 text-violet-800 backdrop-blur-sm'>
-      <div className='bg-300 flex h-10 w-full items-center justify-between space-x-1 rounded-3xl p-1'>
-        <span className='grow p-2 font-bold'>Teams</span>
-        <div className='flex h-full flex-row items-center space-x-1'>
-          <EditModeToggle
-            editModeOff={editModeOff}
-            onChange={setEditModeOff}
-            title='Toggle edit mode all teams'
-          />
-          <AccordionOpenToggle
-            open={membersVisible}
-            onChange={setMembersVisible}
-            title='Toggle show all team members'
-          />
-          <AddNewTeamButton />
+    <Card className='bg-white/20 backdrop-blur-sm'>
+      <Slot name='header'>
+        <div className='flex h-full w-full items-center justify-between p-1'>
+          <span className='px-2 font-bold'>Teams</span>
+          <div className='flex h-full flex-row items-center space-x-1'>
+            <EditModeToggle
+              editModeOff={editModeOff}
+              onChange={setEditModeOff}
+              title='Toggle edit mode all teams'
+            />
+            <AccordionOpenToggle
+              open={membersVisible}
+              onChange={setMembersVisible}
+              title='Toggle show all team members'
+            />
+            <AddNewTeamButton />
+          </div>
         </div>
-      </div>
-      <div className='p-3 pt-2'>
-        {teams.length > 0 ? (
-          <TeamList
-            teams={teams}
-            showEditButton={true}
-            showMembers={membersVisible}
-            readOnly={editModeOff}
-          />
-        ) : isFetching ? (
-          <TextLoading className='h-6' />
-        ) : (
-          <TextInfo text='No teams' className='h-6' />
-        )}
-      </div>
-    </div>
+      </Slot>
+      <Slot name='content'>
+        <div className='p-3 pt-2'>
+          {teams.length > 0 ? (
+            <TeamList
+              teams={teams}
+              showEditButton={true}
+              showMembers={membersVisible}
+              readOnly={editModeOff}
+            />
+          ) : isFetching ? (
+            <TextLoading className='h-6' />
+          ) : (
+            <TextInfo text='No teams' className='h-6' />
+          )}
+        </div>
+      </Slot>
+    </Card>
   )
 }
 

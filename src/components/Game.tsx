@@ -13,15 +13,28 @@ import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { GameDocType } from '../db/types/game'
 import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
+import Slot from './Slot.tsx'
+import Card from './Card.tsx'
 
 type GameProps = {
   game: GameDocument
   readOnly?: boolean
   showEditButton?: boolean
+  className?: string
   showScores?: boolean
 }
 
-function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
+Game.defaultProps = {
+  className: '',
+}
+
+function Game({
+  game,
+  readOnly,
+  showEditButton,
+  className,
+  showScores,
+}: GameProps) {
   const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
   const [scoresVisible, setScoresVisible] = usePropState(showScores ?? false)
   const [scores, isFetching] = useScores(game.scores)
@@ -49,19 +62,17 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
   )
 
   return (
-    <div className='bg-100 flex flex-col rounded-3xl text-violet-800'>
-      <div className='bg-300 h-10 rounded-3xl p-1'>
-        <div className='flex h-full items-center justify-between space-x-1'>
+    <Card className={`bg-100 ${className}`}>
+      <Slot name='header'>
+        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
           {editModeOff ? (
-            <span className='truncate rounded-3xl p-2 font-bold'>
-              {gameName}
-            </span>
+            <span className='truncate px-2 font-bold'>{gameName}</span>
           ) : (
             <TextInput
               value={game.name}
               placeholder={gameName ?? 'Name...'}
               onChange={updateGameName}
-              className='font-bold'
+              className='w-full font-bold'
             />
           )}
 
@@ -86,47 +97,49 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
             />
           </div>
         </div>
-      </div>
-      <div
-        className={`collapsible-wrapper flex-col rounded-b-3xl ${
-          scoresVisible ? '' : 'collapsed'
-        }`}
-      >
-        <div className='collapsible'>
-          {!editModeOff && (
-            <div className='flex items-center p-2 py-1'>
-              <SelectInput
-                value={game.type}
-                options={options}
-                onChange={updateGameType}
-                className='w-full'
-              />
-            </div>
-          )}
+      </Slot>
+      <Slot name='content'>
+        <div
+          className={`collapsible-wrapper flex-col rounded-b-3xl ${
+            scoresVisible ? '' : 'collapsed'
+          }`}
+        >
+          <div className='collapsible'>
+            {!editModeOff && (
+              <div className='flex items-center p-2 py-1'>
+                <SelectInput
+                  value={game.type}
+                  options={options}
+                  onChange={updateGameType}
+                  className='w-full'
+                />
+              </div>
+            )}
 
-          <div className='p-2 pt-1'>
-            {scores.length > 0 ? (
-              <ScoreList
-                scores={scores}
-                readOnly={editModeOff}
-                game={game}
-                showRemoveButton={!editModeOff}
-              />
-            ) : isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
-              <TextInfo text='No teams' className='h-6' />
+            <div className='p-2 pt-1'>
+              {scores.length > 0 ? (
+                <ScoreList
+                  scores={scores}
+                  readOnly={editModeOff}
+                  game={game}
+                  showRemoveButton={!editModeOff}
+                />
+              ) : isFetching ? (
+                <TextLoading className='h-6' />
+              ) : (
+                <TextInfo text='No teams' className='h-6' />
+              )}
+            </div>
+
+            {!editModeOff && (
+              <div className='p-2 pt-0'>
+                <AddGameScore game={game} currentScores={scores} />
+              </div>
             )}
           </div>
-
-          {!editModeOff && (
-            <div className='p-2 pt-0'>
-              <AddGameScore game={game} currentScores={scores} />
-            </div>
-          )}
         </div>
-      </div>
-    </div>
+      </Slot>
+    </Card>
   )
 }
 
