@@ -1,6 +1,11 @@
 import { GameDocument, TeamDocument } from './types'
 import { useEffect, useState } from 'react'
-import { getGameName, getGameTeamStats, getTeamName } from './helpers'
+import {
+  combineTeamStats,
+  getGameName,
+  getGameTeamStats,
+  getTeamName,
+} from './helpers'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from './types/team'
 import { ScoreDocType } from './types/score'
@@ -41,6 +46,25 @@ export function useGameTeamStats(game: GameDocument) {
   useEffect(() => {
     getGameTeamStats(game).then(setTeamStats)
   }, [game, scores])
+
+  return teamStats
+}
+
+export function useGamesTeamStats(games: GameDocument[]) {
+  const [teamStats, setTeamStats] = useState<Record<string, TeamStats>>({})
+  // Need to populate game.scores as the field that determines winner exists on score document
+  const [scores] = useScores(games.map((g) => g.scores).flat())
+
+  useEffect(() => {
+    async function getStats() {
+      let dict: Record<string, TeamStats> = {}
+      for (const game of games) {
+        dict = combineTeamStats(dict, await getGameTeamStats(game))
+      }
+      return dict
+    }
+    getStats().then(setTeamStats)
+  }, [games, scores])
 
   return teamStats
 }
