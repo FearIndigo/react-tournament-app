@@ -13,13 +13,15 @@ Card.defaultProps = {
 function Card({ className, children }: CardProps) {
   const slots = useSlots(children)
   return (
-    <div
-      className={`flex w-full flex-col items-center rounded-3xl text-violet-800 ${className}`}
-    >
-      <div className='bg-300 flex h-10 w-full items-center rounded-3xl'>
-        {slots.header}
+    <div className='w-full'>
+      <div
+        className={`mx-2 flex flex-col rounded-3xl text-violet-800 ${className}`}
+      >
+        <div className='bg-300 -mx-2 flex h-10 items-center rounded-3xl'>
+          {slots.header}
+        </div>
+        {slots.content}
       </div>
-      {slots.content}
     </div>
   )
 }
