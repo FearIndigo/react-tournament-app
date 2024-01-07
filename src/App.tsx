@@ -39,10 +39,10 @@ function App() {
           className='mb-8'
         />
 
-        {tabIndex == 0 && <CreatorScreen />}
-        {tabIndex == 1 && <DataScreen />}
+        <CreatorScreen className={tabIndex != 0 ? 'hidden' : ''} />
+        <DataScreen className={tabIndex != 1 ? 'hidden' : ''} />
 
-        {tabIndex == 3 && <StatsScreen />}
+        <StatsScreen className={tabIndex != 3 ? 'hidden' : ''} />
       </main>
     </div>
   )

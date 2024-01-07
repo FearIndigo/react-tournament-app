@@ -10,7 +10,15 @@ import {
 import SelectInput from './SelectInput.tsx'
 import { useMemo, useState } from 'react'
 
-function StatsScreen() {
+type StatsScreenProps = {
+  className?: string
+}
+
+StatsScreen.defaultProps = {
+  className: '',
+}
+
+function StatsScreen({ className }: StatsScreenProps) {
   const [selectedTournament, setSelectedTournament] = useState<
     [id: string, name: string]
   >(['', ''])
@@ -35,7 +43,9 @@ function StatsScreen() {
   )
 
   return (
-    <div className='container my-4 flex flex-col justify-center px-4'>
+    <div
+      className={`container my-4 flex flex-col justify-center px-4 ${className}`}
+    >
       <SelectInput
         onChange={setSelectedTournament}
         options={options}
