@@ -12,6 +12,7 @@ import { useTeamName } from '../db/hooks'
 import { useSlots } from '../hooks.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TeamDocType } from '../db/types/team'
+import TextInfo from './TextInfo.tsx'
 
 type TeamProps = {
   team: TeamDocument
@@ -117,14 +118,16 @@ function Team({
       >
         <div className='collapsible'>
           <div className='p-2 pt-1'>
-            {isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
+            {members.length > 0 ? (
               <MemberList
                 members={members}
                 readOnly={editModeOff}
                 team={team}
               />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No members' className='h-6' />
             )}
           </div>
           {!editModeOff && (

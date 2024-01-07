@@ -10,6 +10,7 @@ import BracketList from './BracketList.tsx'
 import AddTournamentBracket from './AddTournamentBracket'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TournamentDocType } from '../db/types/tournament'
+import TextInfo from './TextInfo.tsx'
 
 type TournamentProps = {
   tournament: TournamentDocument
@@ -106,10 +107,12 @@ function Tournament({
       >
         <div className='collapsible'>
           <div className='p-2 pt-1'>
-            {isFetching ? (
+            {brackets.length > 0 ? (
+              <BracketList brackets={brackets} readOnly={editModeOff} />
+            ) : isFetching ? (
               <TextLoading className='h-6' />
             ) : (
-              <BracketList brackets={brackets} readOnly={editModeOff} />
+              <TextInfo text='No brackets' className='h-6' />
             )}
           </div>
           {!editModeOff && (

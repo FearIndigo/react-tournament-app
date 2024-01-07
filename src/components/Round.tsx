@@ -10,6 +10,7 @@ import AddRoundGame from './AddRoundGame'
 import { getRoundName } from '../db/helpers.ts'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { RoundDocType } from '../db/types/round'
+import TextInfo from './TextInfo.tsx'
 
 type RoundProps = {
   round: RoundDocument
@@ -95,10 +96,12 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
       >
         <div className='collapsible'>
           <div className='p-2 pt-1'>
-            {isFetching ? (
+            {games.length > 0 ? (
+              <GameList games={games} readOnly={editModeOff} />
+            ) : isFetching ? (
               <TextLoading className='h-6' />
             ) : (
-              <GameList games={games} readOnly={editModeOff} />
+              <TextInfo text='No games' className='h-6' />
             )}
           </div>
           {!editModeOff && (

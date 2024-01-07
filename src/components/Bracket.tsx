@@ -12,6 +12,7 @@ import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { BracketDocType } from '../db/types/bracket'
 import SelectInput from './SelectInput.tsx'
 import { camel2Title } from '../helpers.ts'
+import TextInfo from './TextInfo.tsx'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -122,14 +123,16 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
             </div>
           )}
           <div className='p-2 pt-1'>
-            {isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
+            {rounds.length > 0 ? (
               <RoundList
                 rounds={rounds}
                 readOnly={editModeOff}
                 bracket={bracket}
               />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No rounds' className='h-6' />
             )}
           </div>
           {!editModeOff && (

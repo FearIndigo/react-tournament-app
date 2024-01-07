@@ -13,6 +13,7 @@ import { useGameName } from '../db/hooks'
 import TextInput from './TextInput'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { GameDocType } from '../db/types/game'
+import TextInfo from './TextInfo.tsx'
 
 type GameProps = {
   game: GameDocument
@@ -124,18 +125,22 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
               />
             </div>
           )}
+
           <div className='p-2 pt-1'>
-            {isFetching ? (
-              <TextLoading className='h-6' />
-            ) : (
+            {scores.length > 0 ? (
               <ScoreList
                 scores={scores}
                 readOnly={editModeOff}
                 game={game}
                 showRemoveButton={!editModeOff}
               />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No teams' className='h-6' />
             )}
           </div>
+
           {!editModeOff && (
             <div className='p-2 pt-0'>
               <AddGameScore game={game} currentScores={scores} />

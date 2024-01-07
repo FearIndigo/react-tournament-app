@@ -20,7 +20,7 @@ function AddBracketRound({ bracket }: AddBracketRoundProps) {
     // Create new round
     const roundToAdd = await roundCollection.insert({
       id: uuidv4(),
-      name: '',
+      name: roundName,
       games: [],
     })
 
