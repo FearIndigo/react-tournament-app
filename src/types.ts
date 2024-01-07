@@ -26,6 +26,10 @@ export class TeamStats {
   }
 
   toString() {
-    return `wins: ${this.wins}, loses: ${this.loses}, draws: ${this.draws}`
+    return `W: ${this.wins},
+    L: ${this.loses},
+    D: ${this.draws},
+    P: ${this.gamesPlayed()},
+    Pts: ${this.points()}`
   }
 }

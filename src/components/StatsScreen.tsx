@@ -8,7 +8,7 @@ import {
   useTeams,
 } from '../db/hooks.ts'
 import SelectInput from './SelectInput.tsx'
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 
 type StatsScreenProps = {
   className?: string
@@ -52,9 +52,10 @@ function StatsScreen({ className }: StatsScreenProps) {
         value={selectedTournament[0]}
       />
       {teams.map((t) => (
-        <span key={t.id}>
-          {t.id}: {teamStats[t.id].toString()}
-        </span>
+        <Fragment key={t.id}>
+          <span>{t.id}:</span>
+          <span>{teamStats[t.id].toString()}</span>
+        </Fragment>
       ))}
     </div>
   )
