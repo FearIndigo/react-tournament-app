@@ -6,6 +6,7 @@ import AddNewTeamButton from './AddNewTeamButton.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import { useState } from 'react'
 import EditModeToggle from './EditModeToggle.tsx'
+import TextInfo from './TextInfo.tsx'
 
 function AllTeams() {
   const [editModeOff, setEditModeOff] = useState(true)
@@ -37,15 +38,17 @@ function AllTeams() {
         </div>
       </div>
       <div className='p-3 pt-2'>
-        {isFetching ? (
-          <TextLoading className='h-6' />
-        ) : (
+        {teams.length > 0 ? (
           <TeamList
             teams={teams}
             showEditButton={true}
             showMembers={membersVisible}
             readOnly={editModeOff}
           />
+        ) : isFetching ? (
+          <TextLoading className='h-6' />
+        ) : (
+          <TextInfo text='No teams' className='h-6' />
         )}
       </div>
     </div>

@@ -5,6 +5,7 @@ import { MemberDocType } from '../db/types/member'
 import AddNewMemberButton from './AddNewMemberButton.tsx'
 import EditModeToggle from './EditModeToggle.tsx'
 import { useState } from 'react'
+import TextInfo from './TextInfo.tsx'
 
 function AllMembers() {
   const [editModeOff, setEditModeOff] = useState(true)
@@ -30,15 +31,17 @@ function AllMembers() {
         </div>
       </div>
       <div className='p-3 pt-2'>
-        {isFetching ? (
-          <TextLoading className='h-6' />
-        ) : (
+        {members.length > 0 ? (
           <MemberList
             members={members}
             showEditButton={true}
             readOnly={editModeOff}
             className='space-y-2'
           />
+        ) : isFetching ? (
+          <TextLoading className='h-6' />
+        ) : (
+          <TextInfo text='No members' className='h-6' />
         )}
       </div>
     </div>

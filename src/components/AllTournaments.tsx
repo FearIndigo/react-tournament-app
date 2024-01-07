@@ -6,6 +6,7 @@ import { TournamentDocType } from '../db/types/tournament'
 import TournamentList from './TournamentList'
 import AddNewTournamentButton from './AddNewTournamentButton'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
+import TextInfo from './TextInfo.tsx'
 
 function AllTournaments() {
   const [editModeOff, setEditModeOff] = useState(true)
@@ -37,15 +38,17 @@ function AllTournaments() {
         </div>
       </div>
       <div className='p-3 pt-2'>
-        {isFetching ? (
-          <TextLoading className='h-6' />
-        ) : (
+        {tournaments.length > 0 ? (
           <TournamentList
             tournaments={tournaments}
             showEditButton={true}
             readOnly={editModeOff}
             showBrackets={bracketsVisible}
           />
+        ) : isFetching ? (
+          <TextLoading className='h-6' />
+        ) : (
+          <TextInfo text='No tournaments' className='h-6' />
         )}
       </div>
     </div>

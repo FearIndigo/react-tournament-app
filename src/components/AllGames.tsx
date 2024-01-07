@@ -6,6 +6,7 @@ import { GameDocType } from '../db/types/game'
 import AddNewGameButton from './AddNewGameButton'
 import GameList from './GameList'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
+import TextInfo from './TextInfo.tsx'
 
 function AllGames() {
   const [editModeOff, setEditModeOff] = useState(true)
@@ -37,9 +38,7 @@ function AllGames() {
         </div>
       </div>
       <div className='p-3 pt-2'>
-        {isFetching ? (
-          <TextLoading className='h-6' />
-        ) : (
+        {games.length > 0 ? (
           <GameList
             games={games}
             showEditButton={true}
@@ -47,6 +46,10 @@ function AllGames() {
             showScores={scoresVisible}
             className='space-y-2'
           />
+        ) : isFetching ? (
+          <TextLoading className='h-6' />
+        ) : (
+          <TextInfo text='No games' className='h-6' />
         )}
       </div>
     </div>
