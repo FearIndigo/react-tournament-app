@@ -12,7 +12,7 @@ import { MemberDocType } from './types/member'
 import { TournamentDocType } from './types/tournament'
 
 export function useTeamName(team: TeamDocument) {
-  const [teamName, setTeamName] = useState('')
+  const [teamName, setTeamName] = useState(team.name)
 
   useEffect(() => {
     getTeamName(team).then(setTeamName)
@@ -22,7 +22,7 @@ export function useTeamName(team: TeamDocument) {
 }
 
 export function useGameName(game: GameDocument) {
-  const [gameName, setGameName] = useState('')
+  const [gameName, setGameName] = useState(game.name)
   const [scores] = useScores(game.scores)
   const [teams] = useTeams(scores.map((score) => score.team))
 
