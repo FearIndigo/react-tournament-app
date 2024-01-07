@@ -1,10 +1,10 @@
 import TextInput from './TextInput.tsx'
 import { MemberDocument, TeamDocument } from '../db/types'
-import { useEffect, useState } from 'react'
 import EditModeToggle from './EditModeToggle.tsx'
 import RemoveTeamMemberButton from './RemoveTeamMemberButton.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { MemberDocType } from '../db/types/member'
+import { usePropState } from '../hooks.tsx'
 
 type MemberProps = {
   member: MemberDocument
@@ -13,16 +13,8 @@ type MemberProps = {
   team?: TeamDocument
 }
 
-Member.defaultProps = {
-  readOnly: true,
-}
-
 function Member({ member, readOnly, showEditButton, team }: MemberProps) {
-  const [editModeOff, setEditModeOff] = useState(readOnly)
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
+  const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
 
   function updateName(name: string) {
     member.incrementalPatch({
@@ -57,7 +49,7 @@ function Member({ member, readOnly, showEditButton, team }: MemberProps) {
             ))}
           {showEditButton && (
             <EditModeToggle
-              readOnly={readOnly}
+              editModeOff={editModeOff}
               onChange={setEditModeOff}
               title='Toggle member edit mode'
             />

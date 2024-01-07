@@ -10,7 +10,6 @@ type TournamentListProps = {
 }
 
 TournamentList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 

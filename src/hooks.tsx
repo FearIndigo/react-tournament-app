@@ -1,4 +1,4 @@
-import { Children, ReactElement, ReactNode, useMemo } from 'react'
+import { Children, ReactElement, ReactNode, useMemo, useState } from 'react'
 import Slot from './components/Slot.tsx'
 
 export function useSlots(children: ReactNode) {
@@ -25,4 +25,16 @@ export function useSlots(children: ReactNode) {
       ),
     [children]
   )
+}
+
+export function usePropState<T>(propValue: T) {
+  const [state, setState] = useState(propValue)
+
+  const [prevPropValue, setPrevPropValue] = useState(propValue)
+  if (propValue != prevPropValue) {
+    setPrevPropValue(propValue)
+    setState(propValue)
+  }
+
+  return [state, setState] as const
 }

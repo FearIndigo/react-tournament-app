@@ -24,10 +24,12 @@ function AllGames() {
         <span className='grow p-2 font-bold'>Games</span>
         <div className='flex h-full flex-row items-center space-x-1'>
           <EditModeToggle
+            editModeOff={editModeOff}
             onChange={setEditModeOff}
             title='Toggle edit mode all games'
           />
           <AccordionOpenToggle
+            open={scoresVisible}
             onChange={setScoresVisible}
             title='Toggle show all game teams'
           />

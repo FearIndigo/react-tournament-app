@@ -1,5 +1,5 @@
 import { GameDocument, ScoreDocument } from '../db/types'
-import { KeyboardEvent, useEffect, useState } from 'react'
+import { KeyboardEvent } from 'react'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from '../db/types/team'
 import Team from './Team.tsx'
@@ -10,6 +10,7 @@ import TextError from './TextError'
 import Slot from './Slot.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { useWinningScore } from '../db/hooks.ts'
+import { usePropState } from '../hooks.tsx'
 
 type ScoreProps = {
   score: ScoreDocument
@@ -18,12 +19,8 @@ type ScoreProps = {
   showRemoveButton?: boolean
 }
 
-Score.defaultProps = {
-  readOnly: true,
-}
-
 function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
-  const [editModeOff, setEditModeOff] = useState(readOnly)
+  const [editModeOff, setEditModeOff] = usePropState(readOnly)
   const { result: teams, isFetching } = useRxData<TeamDocType>(
     'teams',
     (collection) =>
@@ -35,10 +32,6 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
   )
   const team = teams[0]
   const isWinningScore = useWinningScore(game) == score
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
 
   if (isFetching) {
     return <TextLoading className='h-6' />

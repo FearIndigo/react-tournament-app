@@ -24,10 +24,12 @@ function AllTournaments() {
         <span className='grow p-2 font-bold'>Tournaments</span>
         <div className='flex h-full flex-row items-center space-x-1'>
           <EditModeToggle
+            editModeOff={editModeOff}
             onChange={setEditModeOff}
             title='Toggle edit mode all tournaments'
           />
           <AccordionOpenToggle
+            open={bracketsVisible}
             onChange={setBracketsVisible}
             title='Toggle show all tournament brackets'
           />

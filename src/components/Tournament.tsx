@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import TextInput from './TextInput'
 import { TournamentDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
@@ -11,6 +10,7 @@ import AddTournamentBracket from './AddTournamentBracket'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TournamentDocType } from '../db/types/tournament'
 import TextInfo from './TextInfo.tsx'
+import { usePropState } from '../hooks.tsx'
 
 type TournamentProps = {
   tournament: TournamentDocument
@@ -21,7 +21,6 @@ type TournamentProps = {
 }
 
 Tournament.defaultProps = {
-  readOnly: true,
   className: '',
 }
 
@@ -32,8 +31,10 @@ function Tournament({
   className,
   showEditButton,
 }: TournamentProps) {
-  const [editModeOff, setEditModeOff] = useState(readOnly)
-  const [bracketsVisible, setBracketsVisible] = useState(showBrackets)
+  const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
+  const [bracketsVisible, setBracketsVisible] = usePropState(
+    showBrackets ?? false
+  )
   const { result: brackets, isFetching } = useRxData<BracketDocType>(
     'brackets',
     (collection) =>
@@ -44,14 +45,6 @@ function Tournament({
         index: ['createdAt'],
       })
   )
-
-  useEffect(() => {
-    setBracketsVisible(showBrackets)
-  }, [showBrackets])
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
 
   function updateName(name: string) {
     tournament.incrementalPatch({
@@ -87,7 +80,7 @@ function Tournament({
             )}
             {showEditButton && (
               <EditModeToggle
-                readOnly={readOnly}
+                editModeOff={editModeOff}
                 onChange={setEditModeOff}
                 title='Toggle tournament edit mode'
               />

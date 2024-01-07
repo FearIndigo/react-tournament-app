@@ -9,7 +9,6 @@ type RoundListProps = {
 }
 
 RoundList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 

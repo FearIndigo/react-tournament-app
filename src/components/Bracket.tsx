@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import TextInput from './TextInput'
 import { BracketDocument, BracketTypes } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
@@ -13,6 +13,7 @@ import { BracketDocType } from '../db/types/bracket'
 import SelectInput from './SelectInput.tsx'
 import { camel2Title } from '../helpers.ts'
 import TextInfo from './TextInfo.tsx'
+import { usePropState } from '../hooks.tsx'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -22,13 +23,12 @@ type BracketProps = {
 }
 
 Bracket.defaultProps = {
-  readOnly: true,
   className: '',
 }
 
 function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
-  const [editModeOff, setEditModeOff] = useState(readOnly)
-  const [roundsVisible, setRoundsVisible] = useState(showRounds)
+  const [editModeOff] = usePropState(readOnly)
+  const [roundsVisible, setRoundsVisible] = usePropState(showRounds ?? false)
   const { result: rounds, isFetching } = useRxData<RoundDocType>(
     'rounds',
     (collection) =>
@@ -39,14 +39,6 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
         index: ['createdAt'],
       })
   )
-
-  useEffect(() => {
-    setRoundsVisible(showRounds)
-  }, [showRounds])
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
 
   const bracketName = getBracketName(bracket)
 

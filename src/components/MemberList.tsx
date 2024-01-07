@@ -10,7 +10,6 @@ type MemberListProps = {
 }
 
 MemberList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 

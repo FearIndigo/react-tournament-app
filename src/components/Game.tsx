@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { GameDocument, GameTypes } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
 import TextLoading from './TextLoading'
@@ -14,6 +14,7 @@ import TextInput from './TextInput'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { GameDocType } from '../db/types/game'
 import TextInfo from './TextInfo.tsx'
+import { usePropState } from '../hooks.tsx'
 
 type GameProps = {
   game: GameDocument
@@ -22,13 +23,9 @@ type GameProps = {
   showScores?: boolean
 }
 
-Game.defaultProps = {
-  readOnly: true,
-}
-
 function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
-  const [editModeOff, setEditModeOff] = useState(readOnly)
-  const [scoresVisible, setScoresVisible] = useState(showScores)
+  const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
+  const [scoresVisible, setScoresVisible] = usePropState(showScores ?? false)
   const { result: scores, isFetching } = useRxData<ScoreDocType>(
     'scores',
     (collection) =>
@@ -41,14 +38,6 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
   )
 
   const gameName = useGameName(game)
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
-
-  useEffect(() => {
-    setScoresVisible(showScores)
-  }, [showScores])
 
   function updateGameName(newName: string) {
     game.incrementalPatch({
@@ -96,7 +85,7 @@ function Game({ game, readOnly, showEditButton, showScores }: GameProps) {
             )}
             {showEditButton && (
               <EditModeToggle
-                readOnly={readOnly}
+                editModeOff={editModeOff}
                 onChange={setEditModeOff}
                 title='Toggle game edit mode'
               />

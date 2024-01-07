@@ -24,10 +24,12 @@ function AllTeams() {
         <span className='grow p-2 font-bold'>Teams</span>
         <div className='flex h-full flex-row items-center space-x-1'>
           <EditModeToggle
+            editModeOff={editModeOff}
             onChange={setEditModeOff}
             title='Toggle edit mode all teams'
           />
           <AccordionOpenToggle
+            open={membersVisible}
             onChange={setMembersVisible}
             title='Toggle show all team members'
           />

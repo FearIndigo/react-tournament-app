@@ -22,6 +22,7 @@ function AllMembers() {
         <span className='grow p-2 font-bold'>Members</span>
         <div className='flex h-full flex-row items-center space-x-1'>
           <EditModeToggle
+            editModeOff={editModeOff}
             onChange={setEditModeOff}
             title='Toggle edit mode all members'
           />

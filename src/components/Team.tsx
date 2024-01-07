@@ -1,5 +1,5 @@
 import MemberList from './MemberList.tsx'
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode } from 'react'
 import TextInput from './TextInput.tsx'
 import { TeamDocument } from '../db/types'
 import { useRxData } from 'rxdb-hooks'
@@ -9,7 +9,7 @@ import EditModeToggle from './EditModeToggle.tsx'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import AddTeamMember from './AddTeamMember.tsx'
 import { useTeamName } from '../db/hooks'
-import { useSlots } from '../hooks.tsx'
+import { usePropState, useSlots } from '../hooks.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
 import { TeamDocType } from '../db/types/team'
 import TextInfo from './TextInfo.tsx'
@@ -24,7 +24,6 @@ type TeamProps = {
 }
 
 Team.defaultProps = {
-  readOnly: true,
   className: '',
 }
 
@@ -37,8 +36,8 @@ function Team({
   children,
 }: TeamProps) {
   const slots = useSlots(children)
-  const [membersVisible, setMembersVisible] = useState(showMembers)
-  const [editModeOff, setEditModeOff] = useState(readOnly)
+  const [membersVisible, setMembersVisible] = usePropState(showMembers ?? false)
+  const [editModeOff, setEditModeOff] = usePropState(readOnly ?? true)
   const { result: members, isFetching } = useRxData<MemberDocType>(
     'members',
     (collection) =>
@@ -50,14 +49,6 @@ function Team({
       })
   )
   const teamName = useTeamName(team)
-
-  useEffect(() => {
-    setMembersVisible(showMembers)
-  }, [showMembers])
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
 
   function updateName(name: string) {
     team.incrementalPatch({
@@ -98,7 +89,7 @@ function Team({
             )}
             {showEditButton && (
               <EditModeToggle
-                readOnly={readOnly}
+                editModeOff={editModeOff}
                 onChange={setEditModeOff}
                 title='Toggle team edit mode'
               />

@@ -10,7 +10,6 @@ type GameListProps = {
 }
 
 GameList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 

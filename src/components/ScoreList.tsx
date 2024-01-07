@@ -10,7 +10,6 @@ type ScoreListProps = {
 }
 
 ScoreList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 

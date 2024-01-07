@@ -1,29 +1,16 @@
 import { CheckIcon, PencilIcon } from '@heroicons/react/24/outline'
-import { useEffect, useState } from 'react'
 
 type EditModeToggleProps = {
-  readOnly?: boolean
+  editModeOff: boolean
   title?: string
   onChange: (editModeOff: boolean) => void
 }
 
 EditModeToggle.defaultProps = {
-  readOnly: true,
   title: 'Toggle edit mode',
 }
 
-function EditModeToggle({ readOnly, title, onChange }: EditModeToggleProps) {
-  const [editModeOff, setEditModeOff] = useState(readOnly)
-
-  useEffect(() => {
-    setEditModeOff(readOnly)
-  }, [readOnly])
-
-  function toggleEditMode() {
-    onChange(!editModeOff)
-    setEditModeOff(!editModeOff)
-  }
-
+function EditModeToggle({ editModeOff, title, onChange }: EditModeToggleProps) {
   return (
     <div className='relative'>
       {!editModeOff && (
@@ -34,7 +21,7 @@ function EditModeToggle({ readOnly, title, onChange }: EditModeToggleProps) {
         className={`relative z-10 h-8 w-8 rounded-3xl  p-2 shadow ${
           editModeOff ? 'bg-100 text-violet-800' : 'bg-blue-400 text-blue-800'
         }`}
-        onClick={toggleEditMode}
+        onClick={() => onChange(!editModeOff)}
       >
         {editModeOff ? <PencilIcon /> : <CheckIcon />}
       </button>

@@ -10,7 +10,6 @@ type TeamListProps = {
 }
 
 TeamList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 

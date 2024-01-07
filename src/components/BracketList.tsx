@@ -8,7 +8,6 @@ type BracketListProps = {
 }
 
 BracketList.defaultProps = {
-  readOnly: true,
   className: '',
 }
 
