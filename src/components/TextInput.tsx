@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { ChangeEvent, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 type TextInputProps = {
@@ -22,14 +22,7 @@ function TextInput({
   className,
   onChange,
 }: TextInputProps) {
-  const [inputValue, setInputValue] = useState(value)
-
-  useEffect(() => {
-    setInputValue(value)
-  }, [value])
-
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value)
     onChange(e.target.value)
   }
 
@@ -46,12 +39,12 @@ function TextInput({
         <span
           className={`bg-300 flex h-8 items-center truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
         >
-          {inputValue}
+          {value}
         </span>
       ) : (
         <input
           id={inputId}
-          value={inputValue}
+          value={value}
           placeholder={placeholder}
           onChange={handleOnChange}
           className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}

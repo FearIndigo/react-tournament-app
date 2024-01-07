@@ -84,7 +84,7 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
                   className='w-16'
                   onKeyDown={handleKeyDown}
                   onBlur={handleSubmit}
-                  focusOnRender={readOnly}
+                  focused={readOnly}
                 />
               )}
             </Slot>

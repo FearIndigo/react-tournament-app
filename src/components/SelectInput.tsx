@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { ChangeEvent, useMemo } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 type SelectInputProps = {
@@ -23,16 +23,8 @@ function SelectInput({
   className,
   onChange,
 }: SelectInputProps) {
-  const [inputValue, setInputValue] = useState(value)
-
-  useEffect(() => {
-    setInputValue(value)
-  }, [value])
-
   function handleOnChange(e: ChangeEvent<HTMLSelectElement>) {
-    const selectedOption = options[e.target.selectedIndex - 1]
-    setInputValue(selectedOption[0])
-    onChange(selectedOption)
+    onChange(options[e.target.selectedIndex - 1])
   }
 
   const inputId = useMemo(() => uuidv4(), [])
@@ -46,7 +38,7 @@ function SelectInput({
       )}
       <select
         id={inputId}
-        value={inputValue}
+        value={value}
         className={`bg-100 h-8 truncate rounded-3xl px-1 shadow-inner ring-1 ring-current ${className}`}
         onChange={handleOnChange}
       >

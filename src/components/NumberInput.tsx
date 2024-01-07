@@ -5,7 +5,6 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
 } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -21,7 +20,7 @@ type NumberInputProps = {
   onChange: (newValue: number) => void
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>
   onBlur?: FocusEventHandler<HTMLInputElement>
-  focusOnRender?: boolean
+  focused?: boolean
 }
 
 NumberInput.defaultProps = {
@@ -40,27 +39,20 @@ function NumberInput({
   onChange,
   onKeyDown,
   onBlur,
-  focusOnRender,
+  focused,
 }: NumberInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [inputValue, setInputValue] = useState<string>(value.toString())
-
-  useEffect(() => {
-    setInputValue(value.toString())
-  }, [value])
 
   function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    const newValue = e.target.value
-    setInputValue(newValue)
-    let newIntValue = parseInt(newValue)
-    if (isNaN(newIntValue)) newIntValue = 0
-    onChange(newIntValue)
+    let newValue = parseInt(e.target.value)
+    if (isNaN(newValue)) newValue = 0
+    onChange(newValue)
   }
 
   useEffect(() => {
-    if (!focusOnRender) return
+    if (!focused) return
     inputRef.current?.focus()
-  }, [focusOnRender, inputRef])
+  }, [focused, inputRef])
 
   const inputId = useMemo(() => uuidv4(), [])
 
@@ -75,13 +67,13 @@ function NumberInput({
         <span
           className={`bg-300 flex h-8 items-center truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
         >
-          {inputValue}
+          {value}
         </span>
       ) : (
         <input
           id={inputId}
           ref={inputRef}
-          value={inputValue}
+          value={value}
           placeholder={placeholder}
           onChange={handleOnChange}
           className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}

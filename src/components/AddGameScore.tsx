@@ -103,7 +103,7 @@ function AddGameScore({ game, currentScores }: AddGameScoreProps) {
         onChange={setSelectedOption}
         placeholder={options.length > 0 ? options[0][1] : 'Team name...'}
         options={options}
-        value={selectedOption[0]}
+        value={selectedOption}
         className='h-full w-full'
       />
       <div className='flex h-full items-center'>

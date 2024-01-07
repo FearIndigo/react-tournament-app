@@ -75,7 +75,7 @@ function AddTeamMember({ team }: AddTeamMemberProps) {
         onChange={setSelectedOption}
         placeholder={options.length > 0 ? options[0][1] : 'Member name...'}
         options={options}
-        value={selectedOption[0]}
+        value={selectedOption}
         className='h-full w-full'
       />
       <div className='flex h-full items-center'>
