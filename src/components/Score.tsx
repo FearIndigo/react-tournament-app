@@ -9,7 +9,7 @@ import { ScoreDocType } from '../db/types/score'
 import TextError from './TextError'
 import Slot from './Slot.tsx'
 import RemoveDocumentButton from './RemoveDocumentButton.tsx'
-import { useTeamPoints } from '../db/hooks.ts'
+import { useGameTeamStats } from '../db/hooks.ts'
 import { usePropState } from '../hooks.tsx'
 
 type ScoreProps = {
@@ -31,7 +31,7 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
       })
   )
   const team = teams[0]
-  const teamPoints = useTeamPoints(game)[score.team]
+  const teamPoints = useGameTeamStats(game)[score.team]?.points()
 
   if (isFetching) {
     return <TextLoading className='h-6' />
