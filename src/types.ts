@@ -24,4 +24,8 @@ export class TeamStats {
 
     return this
   }
+
+  toString() {
+    return `wins: ${this.wins}, loses: ${this.loses}, draws: ${this.draws}`
+  }
 }
