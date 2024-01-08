@@ -40,26 +40,30 @@ function StatsTable({ teamStats, name, className }: StatsTableProps) {
           {sortedTeamIds.length == 0 ? (
             <TextInfo text='No stats found' className='h-8' />
           ) : (
-            <table className='w-full table-fixed'>
+            <table className='w-full table-fixed border-separate border-spacing-1'>
               <thead>
                 <tr className='h-10'>
                   <th className='text-left'>Team</th>
-                  <th>W</th>
-                  <th>L</th>
-                  <th>D</th>
+                  <th className='rounded-3xl bg-green-300 text-green-800'>W</th>
+                  <th className='rounded-3xl bg-red-200 text-red-800'>L</th>
+                  <th className='rounded-3xl bg-sky-200 text-sky-800'>D</th>
                   <th>P</th>
-                  <th>Pts</th>
+                  <th className='rounded-3xl bg-yellow-200 text-yellow-800'>
+                    Pts
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {sortedTeamIds.map((teamId) => (
-                  <tr key={teamId} className='h-10 text-center'>
+                  <tr key={teamId} className='h-8 text-center'>
                     <td className='truncate text-left'>{teamNames[teamId]}</td>
-                    <td>{teamStats[teamId].wins}</td>
-                    <td>{teamStats[teamId].loses}</td>
-                    <td>{teamStats[teamId].draws}</td>
+                    <td className='text-green-800'>{teamStats[teamId].wins}</td>
+                    <td className='text-red-800'>{teamStats[teamId].loses}</td>
+                    <td className='text-sky-800'>{teamStats[teamId].draws}</td>
                     <td>{teamStats[teamId].gamesPlayed()}</td>
-                    <td>{teamStats[teamId].points()}</td>
+                    <td className='text-yellow-800'>
+                      {teamStats[teamId].points()}
+                    </td>
                   </tr>
                 ))}
               </tbody>

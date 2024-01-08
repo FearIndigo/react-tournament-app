@@ -41,12 +41,14 @@ function StatsScreen({ className }: StatsScreenProps) {
   return (
     <div className={`container my-4 flex justify-center px-4 ${className}`}>
       <div className='flex w-full flex-col items-center justify-center space-y-2'>
-        <SelectInput
-          onChange={setSelectedOption}
-          options={options}
-          value={selectedOption[0]}
-          className='w-full md:w-96'
-        />
+        <div className='text-violet-800'>
+          <SelectInput
+            onChange={setSelectedOption}
+            options={options}
+            value={selectedOption[0]}
+            className='w-full md:w-96'
+          />
+        </div>
         {selectedTournament && (
           <TournamentStats tournament={selectedTournament} className='' />
         )}
