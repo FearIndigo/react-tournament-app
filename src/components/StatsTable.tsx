@@ -43,7 +43,7 @@ function StatsTable({ teamStats, name, className }: StatsTableProps) {
             <table className='w-full table-fixed border-separate border-spacing-1'>
               <thead>
                 <tr className='h-10'>
-                  <th className='text-left'>Team</th>
+                  <th className='w-1/3 text-left'>Team</th>
                   <th className='rounded-3xl bg-green-300 text-green-800'>W</th>
                   <th className='rounded-3xl bg-red-200 text-red-800'>L</th>
                   <th className='rounded-3xl bg-sky-200 text-sky-800'>D</th>
@@ -55,7 +55,7 @@ function StatsTable({ teamStats, name, className }: StatsTableProps) {
               </thead>
               <tbody>
                 {sortedTeamIds.map((teamId) => (
-                  <tr key={teamId} className='h-8 text-center'>
+                  <tr key={teamId} className='text-center'>
                     <td className='truncate text-left'>{teamNames[teamId]}</td>
                     <td className='text-green-800'>{teamStats[teamId].wins}</td>
                     <td className='text-red-800'>{teamStats[teamId].loses}</td>
