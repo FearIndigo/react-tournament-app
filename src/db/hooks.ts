@@ -5,6 +5,7 @@ import {
   getGameName,
   getGameTeamStats,
   getTeamName,
+  getTeamNames,
 } from './helpers'
 import { useRxData } from 'rxdb-hooks'
 import { TeamDocType } from './types/team'
@@ -24,6 +25,21 @@ export function useTeamName(team: TeamDocument) {
   }, [team])
 
   return teamName
+}
+
+export function useTeamNames(teams: TeamDocument[]) {
+  const [teamNames, setTeamNames] = useState<Record<string, string>>(
+    teams.reduce((acc: Record<string, string>, t) => {
+      acc[t.id] = t.name
+      return acc
+    }, {})
+  )
+
+  useEffect(() => {
+    getTeamNames(teams).then(setTeamNames)
+  }, [teams])
+
+  return teamNames
 }
 
 export function useGameName(game: GameDocument) {

@@ -23,6 +23,17 @@ export async function getTeamName(team: TeamDocument) {
     : 'New Team'
 }
 
+export async function getTeamNames(teams: TeamDocument[]) {
+  if (!teams || teams.length == 0) return {}
+
+  const teamNames: Record<string, string> = {}
+  for (const team of teams) {
+    teamNames[team.id] = await getTeamName(team)
+  }
+
+  return teamNames
+}
+
 export async function getGameName(game: GameDocument) {
   if (!game) return ''
 
