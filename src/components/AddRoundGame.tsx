@@ -30,6 +30,7 @@ function AddRoundGame({ round }: AddRoundGameProps) {
       id: uuidv4(),
       name: `Game ${round.games.length + 1}`,
       type: gameType,
+      completed: false,
       scores: [],
     })
 

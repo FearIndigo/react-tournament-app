@@ -18,6 +18,10 @@
       "enum": ["highestScore", "lowestScore"],
       "default": "highestScore"
     },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    },
     "scores": {
       "ref": "scores",
       "type": "array",
@@ -38,6 +42,6 @@
       "default": ""
     }
   },
-  "required": ["id", "name", "type", "scores"],
+  "required": ["id", "name", "type", "completed", "scores"],
   "indexes": ["createdAt"]
 }
