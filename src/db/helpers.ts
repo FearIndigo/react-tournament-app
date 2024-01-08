@@ -110,14 +110,16 @@ export async function getGameTeamStats(game: GameDocument) {
   const dict: Record<string, TeamStats> = {}
   for (const score of scores) {
     const stats = new TeamStats()
-    if (winningTeamIds.includes(score.team)) {
-      if (winningTeamIds.length == 1) {
-        stats.wins = 1
+    if (game.completed) {
+      if (winningTeamIds.includes(score.team)) {
+        if (winningTeamIds.length == 1) {
+          stats.wins = 1
+        } else {
+          stats.draws = 1
+        }
       } else {
-        stats.draws = 1
+        stats.loses = 1
       }
-    } else {
-      stats.loses = 1
     }
     dict[score.team] = stats
   }
