@@ -26,6 +26,12 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
   if (isFetching) {
     return <TextLoading className='h-6' />
   }
+
+  function handleOnClick() {
+    if (game.completed) return
+    setEditModeOff(false)
+  }
+
   function updateScore(newScore: number) {
     score.incrementalPatch({
       score: newScore,
@@ -50,13 +56,17 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
             <Slot name='preHeader'>
               {editModeOff ? (
                 <span
-                  onClick={() => setEditModeOff(false)}
-                  className={`flex h-full w-12 cursor-pointer items-center justify-center truncate rounded-3xl font-bold shadow ${
-                    teamPoints == 3
-                      ? 'bg-green-300 text-green-800'
-                      : teamPoints == 1
-                        ? 'bg-100'
-                        : 'bg-red-100 text-red-800'
+                  onClick={handleOnClick}
+                  className={`flex h-full w-12 items-center justify-center truncate rounded-3xl font-bold shadow ${
+                    game.completed ? '' : 'cursor-pointer'
+                  } ${
+                    game.completed
+                      ? teamPoints == 3
+                        ? 'bg-green-300 text-green-800'
+                        : teamPoints == 1
+                          ? 'bg-100'
+                          : 'bg-red-100 text-red-800'
+                      : 'bg-100'
                   }`}
                 >
                   {score.score}

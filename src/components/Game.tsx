@@ -15,6 +15,7 @@ import TextInfo from './TextInfo.tsx'
 import { usePropState } from '../hooks.tsx'
 import Slot from './Slot.tsx'
 import Card from './Card.tsx'
+import GameCompletedToggle from './GameCompletedToggle.tsx'
 
 type GameProps = {
   game: GameDocument
@@ -56,6 +57,12 @@ function Game({
     })
   }
 
+  function updateGameCompleted(completed: boolean) {
+    game.incrementalPatch({
+      completed: completed,
+    })
+  }
+
   const options: [gameType: string, label: string][] = useMemo(
     () => Object.values(GameTypes).map((type) => [type, camel2Title(type)]),
     []
@@ -77,10 +84,15 @@ function Game({
           )}
 
           <div className='flex h-full space-x-1'>
-            {!editModeOff && (
+            {!editModeOff ? (
               <RemoveDocumentButton<GameDocType>
                 document={game}
                 title='Remove game'
+              />
+            ) : (
+              <GameCompletedToggle
+                completed={game.completed}
+                onChange={updateGameCompleted}
               />
             )}
             {showEditButton && (
