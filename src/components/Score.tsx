@@ -64,8 +64,8 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
                       ? teamPoints == 3
                         ? 'bg-green-300 text-green-800'
                         : teamPoints == 1
-                          ? 'bg-100'
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-sky-200 text-sky-800'
+                          : 'bg-red-200 text-red-800'
                       : 'bg-100'
                   }`}
                 >
