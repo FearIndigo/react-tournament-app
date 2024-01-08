@@ -49,7 +49,7 @@ function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
   return (
     <Card className='bg-white/20 backdrop-blur-sm'>
       <Slot name='header'>
-        <span className='px-3 font-bold'>Tournament Data</span>
+        <span className='px-3 font-bold'>Tournament</span>
       </Slot>
       <Slot name='content'>
         <div className='flex w-full flex-col space-y-2 p-3 pt-2'>
