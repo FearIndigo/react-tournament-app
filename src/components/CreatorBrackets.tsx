@@ -66,7 +66,7 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
           </Slot>
           <Slot name='content'>
             <div className='flex w-full flex-col space-y-2 p-3 pt-2'>
-              <div className='flex flex-col'>
+              <div>
                 <SelectInput
                   onChange={(selected) => updateType(bracketIndex, selected[0])}
                   options={typeOptions}
@@ -74,8 +74,7 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
                   label='Bracket Type'
                 />
               </div>
-
-              <div className='flex flex-col'>
+              <div>
                 <NumberInput
                   onChange={() => {}}
                   value={bracketData.teamsIn}
@@ -83,8 +82,7 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
                   label='Teams In'
                 />
               </div>
-
-              <div className='flex flex-col'>
+              <div>
                 <NumberInput
                   onChange={(value) => updateTeamsOut(bracketIndex, value)}
                   value={bracketData.teamsOut}
@@ -93,8 +91,7 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
                   max={bracketData.teamsIn}
                 />
               </div>
-
-              <div className='flex flex-col'>
+              <div>
                 <NumberInput
                   onChange={(value) => updateNumRounds(bracketIndex, value)}
                   value={bracketData.numRounds}
@@ -105,14 +102,16 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
               </div>
 
               {bracketData.rounds.length > 0 && (
-                <div className='flex w-full flex-col space-y-2 pt-2'>
+                <div className='flex w-full flex-col space-y-4'>
                   {bracketData.rounds.map((roundData, roundIndex) => (
-                    <div key={roundIndex} className='flex flex-col'>
+                    <div
+                      key={roundIndex}
+                      className='flex flex-col space-y-2 first:mt-2'
+                    >
                       <span className='text-center font-bold'>{`Round ${
                         roundIndex + 1
                       }`}</span>
-
-                      <div className='flex flex-col'>
+                      <div>
                         <NumberInput
                           onChange={() => {}}
                           value={roundData.numTeams}
@@ -121,8 +120,7 @@ function CreatorBrackets({ data, onChange }: CreatorBracketsProps) {
                           disabled={nonCustomType(bracketData)}
                         />
                       </div>
-
-                      <div className='flex flex-col'>
+                      <div>
                         <NumberInput
                           onChange={() => {}}
                           value={roundData.numGames}

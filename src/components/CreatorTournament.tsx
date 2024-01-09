@@ -53,11 +53,10 @@ function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
       </Slot>
       <Slot name='content'>
         <div className='flex w-full flex-col space-y-2 p-3 pt-2'>
-          <div className='flex flex-col'>
+          <div>
             <TextInput onChange={updateName} value={data.name} label='Name' />
           </div>
-
-          <div className='flex flex-col'>
+          <div>
             <NumberInput
               onChange={updateNumTeams}
               value={data.numTeams}
@@ -65,8 +64,7 @@ function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
               min={2}
             />
           </div>
-
-          <div className='flex flex-col'>
+          <div>
             <NumberInput
               onChange={updateNumBrackets}
               value={data.numBrackets}

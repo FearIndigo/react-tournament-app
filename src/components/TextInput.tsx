@@ -47,23 +47,21 @@ function TextInput({
           {label}
         </label>
       )}
-      {disabled ? (
-        <span
-          className={`bg-300 flex h-8 items-center truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
-        >
-          {value}
-        </span>
-      ) : (
-        <input
-          id={inputId}
-          type='text'
-          inputMode={inputMode}
-          value={value}
-          placeholder={placeholder}
-          onChange={handleOnChange}
-          className={`bg-100 h-8 truncate rounded-3xl px-2 shadow-inner ring-1 ring-current ${className}`}
-        />
-      )}
+      <div className={`rounded-3xl shadow ${className}`}>
+        {disabled ? (
+          <span className='bg-300 input'>{value}</span>
+        ) : (
+          <input
+            id={inputId}
+            type='text'
+            inputMode={inputMode}
+            value={value}
+            placeholder={placeholder}
+            onChange={handleOnChange}
+            className='bg-100 input'
+          />
+        )}
+      </div>
     </>
   )
 }

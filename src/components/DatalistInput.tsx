@@ -53,18 +53,18 @@ function DatalistInput({
         )
 
   return (
-    <div className={`relative flex h-8 ${className}`}>
-      <TextInput
-        value={value[1]}
-        placeholder={placeholder}
-        onChange={textInputOnChange}
-        className='relative z-10 mr-4 w-full ring-0'
-      />
+    <div className={`relative flex h-8 w-full ${className}`}>
       <SelectInput
         onChange={selectInputOnChange}
         options={filteredOptions}
         value={value[0]}
-        className='absolute left-0 w-full'
+        className='absolute inset-0'
+      />
+      <TextInput
+        value={value[1]}
+        placeholder={placeholder}
+        onChange={textInputOnChange}
+        className='relative mr-7 w-full shadow-none'
       />
     </div>
   )
