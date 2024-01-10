@@ -15,6 +15,7 @@ import { usePropState } from '../hooks.tsx'
 import { useRounds } from '../db/hooks.ts'
 import Slot from './Slot.tsx'
 import Card from './Card.tsx'
+import Collapsible from './Collapsible.tsx'
 
 type BracketProps = {
   bracket: BracketDocument
@@ -87,42 +88,36 @@ function Bracket({ bracket, showRounds, readOnly, className }: BracketProps) {
         </div>
       </Slot>
       <Slot name='content'>
-        <div
-          className={`collapsible-wrapper flex-col rounded-b-3xl ${
-            roundsVisible ? '' : 'collapsed'
-          }`}
-        >
-          <div className='collapsible'>
-            {!editModeOff && (
-              <div className='flex items-center p-2 py-1'>
-                <SelectInput
-                  value={bracket.type}
-                  options={options}
-                  onChange={updateBracketType}
-                  className='w-full'
-                />
-              </div>
-            )}
-            <div className='p-2 pt-1'>
-              {rounds.length > 0 ? (
-                <RoundList
-                  rounds={rounds}
-                  readOnly={editModeOff}
-                  bracket={bracket}
-                />
-              ) : isFetching ? (
-                <TextLoading className='h-6' />
-              ) : (
-                <TextInfo text='No rounds' className='h-6' />
-              )}
+        <Collapsible open={roundsVisible}>
+          {!editModeOff && (
+            <div className='flex items-center p-2 py-1'>
+              <SelectInput
+                value={bracket.type}
+                options={options}
+                onChange={updateBracketType}
+                className='w-full'
+              />
             </div>
-            {!editModeOff && (
-              <div className='self-end p-2 pt-0'>
-                <AddBracketRound bracket={bracket} />
-              </div>
+          )}
+          <div className='p-2 pt-1'>
+            {rounds.length > 0 ? (
+              <RoundList
+                rounds={rounds}
+                readOnly={editModeOff}
+                bracket={bracket}
+              />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No rounds' className='h-6' />
             )}
           </div>
-        </div>
+          {!editModeOff && (
+            <div className='self-end p-2 pt-0'>
+              <AddBracketRound bracket={bracket} />
+            </div>
+          )}
+        </Collapsible>
       </Slot>
     </Card>
   )

@@ -16,6 +16,7 @@ import { usePropState } from '../hooks.tsx'
 import Slot from './Slot.tsx'
 import Card from './Card.tsx'
 import GameCompletedToggle from './GameCompletedToggle.tsx'
+import Collapsible from './Collapsible.tsx'
 
 type GameProps = {
   game: GameDocument
@@ -111,45 +112,39 @@ function Game({
         </div>
       </Slot>
       <Slot name='content'>
-        <div
-          className={`collapsible-wrapper flex-col rounded-b-3xl ${
-            scoresVisible ? '' : 'collapsed'
-          }`}
-        >
-          <div className='collapsible'>
-            {!editModeOff && (
-              <div className='flex items-center p-2 py-1'>
-                <SelectInput
-                  value={game.type}
-                  options={options}
-                  onChange={updateGameType}
-                  className='w-full'
-                />
-              </div>
-            )}
-
-            <div className='p-2 pt-1'>
-              {scores.length > 0 ? (
-                <ScoreList
-                  scores={scores}
-                  readOnly={editModeOff}
-                  game={game}
-                  showRemoveButton={!editModeOff}
-                />
-              ) : isFetching ? (
-                <TextLoading className='h-6' />
-              ) : (
-                <TextInfo text='No teams' className='h-6' />
-              )}
+        <Collapsible open={scoresVisible}>
+          {!editModeOff && (
+            <div className='flex items-center p-2 py-1'>
+              <SelectInput
+                value={game.type}
+                options={options}
+                onChange={updateGameType}
+                className='w-full'
+              />
             </div>
+          )}
 
-            {!editModeOff && (
-              <div className='p-2 pt-0'>
-                <AddGameScore game={game} currentScores={scores} />
-              </div>
+          <div className='p-2 pt-1'>
+            {scores.length > 0 ? (
+              <ScoreList
+                scores={scores}
+                readOnly={editModeOff}
+                game={game}
+                showRemoveButton={!editModeOff}
+              />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No teams' className='h-6' />
             )}
           </div>
-        </div>
+
+          {!editModeOff && (
+            <div className='p-2 pt-0'>
+              <AddGameScore game={game} currentScores={scores} />
+            </div>
+          )}
+        </Collapsible>
       </Slot>
     </Card>
   )

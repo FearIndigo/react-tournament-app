@@ -12,6 +12,7 @@ import { usePropState } from '../hooks.tsx'
 import { useBrackets } from '../db/hooks.ts'
 import Slot from './Slot.tsx'
 import Card from './Card.tsx'
+import Collapsible from './Collapsible.tsx'
 
 type TournamentProps = {
   tournament: TournamentDocument
@@ -82,28 +83,22 @@ function Tournament({
         </div>
       </Slot>
       <Slot name='content'>
-        <div
-          className={`collapsible-wrapper flex-col rounded-b-3xl ${
-            bracketsVisible ? '' : 'collapsed'
-          }`}
-        >
-          <div className='collapsible'>
-            <div className='p-2 pt-1'>
-              {brackets.length > 0 ? (
-                <BracketList brackets={brackets} readOnly={editModeOff} />
-              ) : isFetching ? (
-                <TextLoading className='h-6' />
-              ) : (
-                <TextInfo text='No brackets' className='h-6' />
-              )}
-            </div>
-            {!editModeOff && (
-              <div className='p-2 pt-0'>
-                <AddTournamentBracket tournament={tournament} />
-              </div>
+        <Collapsible open={bracketsVisible}>
+          <div className='p-2 pt-1'>
+            {brackets.length > 0 ? (
+              <BracketList brackets={brackets} readOnly={editModeOff} />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No brackets' className='h-6' />
             )}
           </div>
-        </div>
+          {!editModeOff && (
+            <div className='p-2 pt-0'>
+              <AddTournamentBracket tournament={tournament} />
+            </div>
+          )}
+        </Collapsible>
       </Slot>
     </Card>
   )

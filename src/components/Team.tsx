@@ -13,6 +13,7 @@ import { TeamDocType } from '../db/types/team'
 import TextInfo from './TextInfo.tsx'
 import Slot from './Slot.tsx'
 import Card from './Card.tsx'
+import Collapsible from './Collapsible.tsx'
 
 type TeamProps = {
   team: TeamDocument
@@ -90,32 +91,26 @@ function Team({
         </div>
       </Slot>
       <Slot name='content'>
-        <div
-          className={`collapsible-wrapper flex-col rounded-b-3xl ${
-            membersVisible ? '' : 'collapsed'
-          }`}
-        >
-          <div className='collapsible'>
-            <div className='p-2 pt-1'>
-              {members.length > 0 ? (
-                <MemberList
-                  members={members}
-                  readOnly={editModeOff}
-                  team={team}
-                />
-              ) : isFetching ? (
-                <TextLoading className='h-6' />
-              ) : (
-                <TextInfo text='No members' className='h-6' />
-              )}
-            </div>
-            {!editModeOff && (
-              <div className='p-2 pt-0'>
-                <AddTeamMember team={team} />
-              </div>
+        <Collapsible open={membersVisible}>
+          <div className='p-2 pt-1'>
+            {members.length > 0 ? (
+              <MemberList
+                members={members}
+                readOnly={editModeOff}
+                team={team}
+              />
+            ) : isFetching ? (
+              <TextLoading className='h-6' />
+            ) : (
+              <TextInfo text='No members' className='h-6' />
             )}
           </div>
-        </div>
+          {!editModeOff && (
+            <div className='p-2 pt-0'>
+              <AddTeamMember team={team} />
+            </div>
+          )}
+        </Collapsible>
       </Slot>
     </Card>
   )
