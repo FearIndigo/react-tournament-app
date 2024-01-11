@@ -32,12 +32,13 @@ function App() {
           </span>
         </div>
 
-        <TabButtons
-          tabs={['Creator', 'Data', 'Layout', 'Stats']}
-          defaultTabIndex={tabIndex}
-          onChanged={updateTabIndex}
-          className='mb-8'
-        />
+        <div className='container mb-8 w-full px-4 md:w-auto'>
+          <TabButtons
+            tabs={['Creator', 'Data', 'Layout', 'Stats']}
+            defaultTabIndex={tabIndex}
+            onChanged={updateTabIndex}
+          />
+        </div>
 
         <CreatorScreen className={tabIndex != 0 ? 'hidden' : ''} />
         <DataScreen className={tabIndex != 1 ? 'hidden' : ''} />
