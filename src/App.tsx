@@ -4,6 +4,7 @@ import TabButtons from './components/TabButtons'
 import CreatorScreen from './components/CreatorScreen'
 import DataScreen from './components/DataScreen'
 import StatsScreen from './components/StatsScreen.tsx'
+import Screen from './components/Screen.tsx'
 
 function App() {
   const [tabIndex, updateTabIndex] = useState(0)
@@ -15,7 +16,7 @@ function App() {
         style={{ backgroundImage: 'url(/topography.svg)' }}
       />
 
-      <main className='relative flex flex-col items-center'>
+      <main className='relative flex flex-col items-center space-y-8'>
         <div className='flex flex-col items-center justify-center space-y-2 px-8 py-16 text-center text-violet-100'>
           <Trophy className='h-16 w-16' />
           <h1 className='text-5xl font-bold'>Tournament App</h1>
@@ -32,7 +33,7 @@ function App() {
           </span>
         </div>
 
-        <div className='container mb-8 w-full px-4 md:w-auto'>
+        <div className='container w-full px-4 md:w-auto'>
           <TabButtons
             tabs={['Creator', 'Data', 'Layout', 'Stats']}
             defaultTabIndex={tabIndex}
@@ -40,10 +41,20 @@ function App() {
           />
         </div>
 
-        <CreatorScreen className={tabIndex != 0 ? 'hidden' : ''} />
-        <DataScreen className={tabIndex != 1 ? 'hidden' : ''} />
+        <div className='container w-full px-4'>
+          <div className='relative w-full'>
+            <Screen visible={tabIndex == 0}>
+              <CreatorScreen />
+            </Screen>
+            <Screen visible={tabIndex == 1}>
+              <DataScreen />
+            </Screen>
 
-        <StatsScreen className={tabIndex != 3 ? 'hidden' : ''} />
+            <Screen visible={tabIndex == 3}>
+              <StatsScreen />
+            </Screen>
+          </div>
+        </div>
       </main>
     </div>
   )

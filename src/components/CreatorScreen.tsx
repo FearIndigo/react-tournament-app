@@ -1,17 +1,19 @@
-import Creator from './Creator'
+import CreatorTournament from './CreatorTournament'
+import { useState } from 'react'
+import CreatorBrackets from './CreatorBrackets.tsx'
+import { defaultCreatorData, CreatorData, deepCopy } from '../creator.ts'
 
-type CreatorScreenProps = {
-  className?: string
-}
+function CreatorScreen() {
+  const [data, setData] = useState<CreatorData>(defaultCreatorData)
 
-CreatorScreen.defaultProps = {
-  className: '',
-}
+  function updateCreatorData(newData: CreatorData) {
+    setData(deepCopy(newData))
+  }
 
-function CreatorScreen({ className }: CreatorScreenProps) {
   return (
-    <div className={`container my-4 flex justify-center px-4 ${className}`}>
-      <Creator />
+    <div className='flex w-full flex-col space-y-4 md:w-96'>
+      <CreatorTournament data={data} onChange={updateCreatorData} />
+      <CreatorBrackets data={data} onChange={updateCreatorData} />
     </div>
   )
 }

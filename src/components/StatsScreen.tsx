@@ -39,18 +39,18 @@ function StatsScreen({ className }: StatsScreenProps) {
   }
 
   return (
-    <div className={`container my-4 flex justify-center px-4 ${className}`}>
-      <div className='flex w-full flex-col items-center justify-center space-y-4'>
-        <SelectInput
-          onChange={setSelectedOption}
-          options={options}
-          value={selectedOption[0]}
-          className='w-full text-violet-800 sm:w-96'
-        />
-        {selectedTournament && (
-          <TournamentStats tournament={selectedTournament} className='' />
-        )}
-      </div>
+    <div
+      className={`flex w-full flex-col items-center justify-center space-y-4 ${className}`}
+    >
+      <SelectInput
+        onChange={setSelectedOption}
+        options={options}
+        value={selectedOption[0]}
+        className='w-full text-violet-800 md:w-96'
+      />
+      {selectedTournament && (
+        <TournamentStats tournament={selectedTournament} className='' />
+      )}
     </div>
   )
 }
