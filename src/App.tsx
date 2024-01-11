@@ -10,7 +10,7 @@ function App() {
   const [tabIndex, updateTabIndex] = useState(0)
 
   return (
-    <div className='bg-500 relative min-h-screen'>
+    <div className='bg-500 relative min-h-screen overflow-hidden'>
       <div
         className='fixed left-0 top-0 h-screen w-full bg-repeat opacity-[0.1]'
         style={{ backgroundImage: 'url(/topography.svg)' }}
