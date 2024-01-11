@@ -5,12 +5,13 @@ import CreatorScreen from './components/CreatorScreen'
 import DataScreen from './components/DataScreen'
 import StatsScreen from './components/StatsScreen.tsx'
 import Screen from './components/Screen.tsx'
+import Footer from './components/Footer.tsx'
 
 function App() {
   const [tabIndex, updateTabIndex] = useState(0)
 
   return (
-    <div className='bg-500 relative min-h-screen overflow-hidden'>
+    <div className='bg-500 relative flex min-h-screen flex-col justify-between space-y-8 overflow-hidden'>
       <div
         className='fixed left-0 top-0 h-screen w-full bg-repeat opacity-[0.1]'
         style={{ backgroundImage: 'url(/topography.svg)' }}
@@ -56,6 +57,8 @@ function App() {
           </div>
         </div>
       </main>
+
+      <Footer />
     </div>
   )
 }
