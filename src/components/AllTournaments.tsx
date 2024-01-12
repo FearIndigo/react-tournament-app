@@ -22,7 +22,7 @@ function AllTournaments() {
   )
 
   return (
-    <Card className='bg-white/20 backdrop-blur-sm'>
+    <Card>
       <Slot name='header'>
         <div className='flex h-full w-full items-center justify-between p-1'>
           <span className='px-2 font-bold'>Tournaments</span>

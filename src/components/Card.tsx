@@ -15,7 +15,7 @@ function Card({ className, children }: CardProps) {
   return (
     <div className='w-full'>
       <div
-        className={`mx-2 flex h-full flex-col rounded-3xl text-violet-800 ${className}`}
+        className={`bg-100 mx-2 flex h-full flex-col rounded-3xl text-violet-800 ${className}`}
       >
         <div className='bg-300 -mx-2 flex h-10 items-center rounded-3xl'>
           {slots.header}
