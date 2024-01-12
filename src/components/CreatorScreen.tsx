@@ -14,6 +14,9 @@ function CreatorScreen() {
     <div className='flex w-full flex-col space-y-4 md:w-96'>
       <CreatorTournament data={data} onChange={updateCreatorData} />
       <CreatorBrackets data={data} onChange={updateCreatorData} />
+      <div className='flex justify-center text-violet-800'>
+        <button className='button bg-100 font-bold'>Create Tournament!</button>
+      </div>
     </div>
   )
 }

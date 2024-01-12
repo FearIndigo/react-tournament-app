@@ -8,6 +8,9 @@ import {
   recursiveUpdateTeamsInOut,
   calculateNumRounds,
 } from '../creator.ts'
+import { useState } from 'react'
+import AccordionOpenToggle from './AccordionOpenToggle.tsx'
+import Collapsible from './Collapsible.tsx'
 
 type CreatorTournamentProps = {
   data: CreatorData
@@ -15,6 +18,8 @@ type CreatorTournamentProps = {
 }
 
 function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
+  const [viewData, setViewData] = useState(true)
+
   function updateName(name: string) {
     data.name = name
     onChange(data)
@@ -47,32 +52,37 @@ function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
   }
 
   return (
-    <Card className='bg-white/20 backdrop-blur-sm'>
+    <Card>
       <Slot name='header'>
-        <span className='px-3 font-bold'>Tournament</span>
+        <div className='flex w-full items-center justify-between p-1'>
+          <span className='px-2 font-bold'>Tournament</span>
+          <AccordionOpenToggle onChange={setViewData} open={viewData} />
+        </div>
       </Slot>
       <Slot name='content'>
-        <div className='flex w-full flex-col space-y-2 p-3 pt-2'>
-          <div>
-            <TextInput onChange={updateName} value={data.name} label='Name' />
+        <Collapsible open={viewData}>
+          <div className='flex w-full flex-col space-y-2 p-3 pt-2'>
+            <div>
+              <TextInput onChange={updateName} value={data.name} label='Name' />
+            </div>
+            <div>
+              <NumberInput
+                onChange={updateNumTeams}
+                value={data.numTeams}
+                label='Number of Teams'
+                min={2}
+              />
+            </div>
+            <div>
+              <NumberInput
+                onChange={updateNumBrackets}
+                value={data.numBrackets}
+                label='Number of Brackets'
+                min={1}
+              />
+            </div>
           </div>
-          <div>
-            <NumberInput
-              onChange={updateNumTeams}
-              value={data.numTeams}
-              label='Number of Teams'
-              min={2}
-            />
-          </div>
-          <div>
-            <NumberInput
-              onChange={updateNumBrackets}
-              value={data.numBrackets}
-              label='Number of Brackets'
-              min={1}
-            />
-          </div>
-        </div>
+        </Collapsible>
       </Slot>
     </Card>
   )
