@@ -6,6 +6,10 @@
   .input {
     @apply appearance-none flex h-8 items-center truncate rounded-3xl px-2 ring-1 ring-gray-950/10 focus-visible:outline-0 focus-visible:ring-gray-950/50 focus-visible:ring-2 w-full;
   }
+  
+  .button {
+    @apply input text-center h-10 px-3 w-auto shadow;
+  }
 }
 
 @layer utilities {
