@@ -24,8 +24,8 @@ function App() {
           <span>
             {'By '}
             <a
-              href='https://github.com/JoeMcCleery'
-              title='Joseph McCleery Github'
+              href='https://joemccleery.com.au'
+              title='Joseph McCleery Website'
               target='_blank'
               rel='noreferrer'
             >
