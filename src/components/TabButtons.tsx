@@ -21,9 +21,7 @@ function TabButtons({
   }
 
   return (
-    <div
-      className={`bg-300 rounded-full p-1 text-violet-800 shadow ${className}`}
-    >
+    <div className={`bg-300 rounded-full p-1 text-violet-800 ${className}`}>
       <div
         className='relative grid h-10'
         style={{ gridTemplateColumns: `repeat(${tabs.length},1fr)` }}
