@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Provider } from 'rxdb-hooks'
-import initialize from './db/initialize.ts'
+import initialize from './db/initialise.ts'
 import App from './App.tsx'
 import { AppDatabase } from './db/types'
 

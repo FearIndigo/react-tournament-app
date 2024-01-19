@@ -55,5 +55,14 @@ export type AppDatabaseCollections = {
   tournaments: TournamentCollection
 }
 
+export type AnyCollection =
+  | BracketCollection
+  | GameCollection
+  | MemberCollection
+  | RoundCollection
+  | ScoreCollection
+  | TeamCollection
+  | TournamentCollection
+
 // Database
 export type AppDatabase = RxDatabase<AppDatabaseCollections>

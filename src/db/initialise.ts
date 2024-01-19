@@ -1,14 +1,8 @@
-import {
-  addRxPlugin,
-  createRxDatabase,
-  RxCollection,
-  RxDocument,
-  RxJsonSchema,
-} from 'rxdb'
+import { addRxPlugin, createRxDatabase, RxJsonSchema } from 'rxdb'
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie'
 import { wrappedKeyCompressionStorage } from 'rxdb/plugins/key-compression'
 
-import { AppDatabase, AppDatabaseCollections, ITimestamps } from './types'
+import { AppDatabase, AppDatabaseCollections } from './types'
 
 import { BracketDocType } from './types/bracket'
 import { GameDocType } from './types/game'
@@ -27,8 +21,9 @@ import teamsSchemaJson from './schema/team.json'
 import tournamentsSchemaJson from './schema/tournament.json'
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup'
 import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election'
+import initMiddleware from './middleware.ts'
 
-async function initialize() {
+async function initialise() {
   // Enable dev mode
   if (process.env.NODE_ENV !== 'production') {
     await import('rxdb/plugins/dev-mode').then((module) =>
@@ -52,7 +47,7 @@ async function initialize() {
     eventReduce: true,
   })
 
-  // Schemas
+  // Define schemas
   const bracketsSchema: RxJsonSchema<BracketDocType> = bracketsSchemaJson
   const gamesSchema: RxJsonSchema<GameDocType> = gamesSchemaJson
   const membersSchema: RxJsonSchema<MemberDocType> = membersSchemaJson
@@ -62,7 +57,7 @@ async function initialize() {
   const tournamentsSchema: RxJsonSchema<TournamentDocType> =
     tournamentsSchemaJson
 
-  // Create collections
+  // Add collections
   const collections: AppDatabaseCollections = await db.addCollections({
     brackets: {
       schema: bracketsSchema,
@@ -87,14 +82,8 @@ async function initialize() {
     },
   })
 
-  // Add collection hooks
-  addCollectionHooks<BracketDocType>(collections.brackets)
-  addCollectionHooks<GameDocType>(collections.games)
-  addCollectionHooks<MemberDocType>(collections.members)
-  addCollectionHooks<RoundDocType>(collections.rounds)
-  addCollectionHooks<ScoreDocType>(collections.scores)
-  addCollectionHooks<TeamDocType>(collections.teams)
-  addCollectionHooks<TournamentDocType>(collections.tournaments)
+  // Initialise middleware
+  initMiddleware(collections)
 
   // maybe sync collection to a remote
   // ...
@@ -102,20 +91,4 @@ async function initialize() {
   return db
 }
 
-function addCollectionHooks<T extends ITimestamps>(
-  collection: RxCollection<T>
-) {
-  // Pre-insert hook
-  collection.preInsert((plainData: T) => {
-    const isoDateTime = new Date().toISOString()
-    plainData.createdAt = isoDateTime
-    plainData.updatedAt = isoDateTime
-  }, false)
-
-  // Pre-save hook
-  collection.preSave((plainData: T, rxDocument: RxDocument<T>) => {
-    plainData.updatedAt = new Date().toISOString()
-  }, false)
-}
-
-export default initialize
+export default initialise
