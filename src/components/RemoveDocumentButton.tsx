@@ -14,11 +14,7 @@ function RemoveDocumentButton<T>({
   document,
   title,
 }: RemoveDocumentButtonProps<T>) {
-  function removeDocument() {
-    document.remove()
-  }
-
-  return <RemoveButton title={title} onClick={removeDocument} />
+  return <RemoveButton title={title} onClick={document.remove} />
 }
 
 export default RemoveDocumentButton
