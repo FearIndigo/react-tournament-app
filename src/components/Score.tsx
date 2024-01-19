@@ -57,8 +57,8 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
               {editModeOff ? (
                 <span
                   onClick={handleOnClick}
-                  className={`flex h-full w-12 items-center justify-center truncate rounded-3xl font-bold shadow ${
-                    game.completed ? '' : 'cursor-pointer'
+                  className={`flex h-full w-12 items-center justify-center truncate rounded-3xl font-bold ${
+                    game.completed ? '' : 'cursor-pointer shadow'
                   } ${
                     game.completed
                       ? teamPoints == 3
