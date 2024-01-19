@@ -18,7 +18,7 @@ function RemoveTeamMemberButton({
 }: RemoveTeamMemberButtonProps) {
   function removeTeamMember() {
     team.incrementalPatch({
-      members: team.members.filter((teamMemberId) => teamMemberId != member.id),
+      members: team.members.filter((memberId) => memberId != member.id),
     })
   }
 
