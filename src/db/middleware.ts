@@ -17,77 +17,80 @@ function initMiddleware(collections: AppDatabaseCollections) {
   Object.values(collections).forEach((collection) => initTimestamps(collection))
 
   // When tournament removed, also remove it's brackets
-  collections.tournaments.preRemove((data) => {
+  collections.tournaments.postRemove((data) => {
     return collections.brackets.bulkRemove(data.brackets)
   }, false)
 
-  // When bracket removed, also remove it's ID from tournaments and remove it's rounds
+  // When removing bracket, also remove it's ID from tournaments
   collections.brackets.preRemove((data) => {
-    return Promise.all([
-      collections.tournaments
-        .find({
-          selector: {
-            brackets: data.id,
-          },
-        })
-        .exec()
-        .then((docs) => {
-          for (const doc of docs) {
-            doc.incrementalModify((docData) => {
-              docData.brackets = docData.brackets.filter((id) => id != data.id)
-              return docData
-            })
-          }
-        }),
-      collections.rounds.bulkRemove(data.rounds),
-    ])
+    return collections.tournaments
+      .find({
+        selector: {
+          brackets: data.id,
+        },
+      })
+      .exec()
+      .then((docs) => {
+        for (const doc of docs) {
+          doc.incrementalModify((docData) => {
+            docData.brackets = docData.brackets.filter((id) => id != data.id)
+            return docData
+          })
+        }
+      })
+  }, false)
+  // When bracket removed, also remove it's rounds
+  collections.brackets.postRemove((data) => {
+    return collections.rounds.bulkRemove(data.rounds)
   }, false)
 
-  // When round removed, also remove it's ID from brackets and remove it's games
+  // When removing round, also remove it's ID from brackets
   collections.rounds.preRemove((data) => {
-    return Promise.all([
-      collections.brackets
-        .find({
-          selector: {
-            rounds: data.id,
-          },
-        })
-        .exec()
-        .then((docs) => {
-          for (const doc of docs) {
-            doc.incrementalModify((docData) => {
-              docData.rounds = docData.rounds.filter((id) => id != data.id)
-              return docData
-            })
-          }
-        }),
-      collections.games.bulkRemove(data.games),
-    ])
+    return collections.brackets
+      .find({
+        selector: {
+          rounds: data.id,
+        },
+      })
+      .exec()
+      .then((docs) => {
+        for (const doc of docs) {
+          doc.incrementalModify((docData) => {
+            docData.rounds = docData.rounds.filter((id) => id != data.id)
+            return docData
+          })
+        }
+      })
+  }, false)
+  // When round removed, also remove it's games
+  collections.rounds.postRemove((data) => {
+    return collections.games.bulkRemove(data.games)
   }, false)
 
-  // When game removed, also remove it's ID from rounds and remove it's scores
+  // When removing game, also remove it's ID from rounds
   collections.games.preRemove((data) => {
-    return Promise.all([
-      collections.rounds
-        .find({
-          selector: {
-            games: data.id,
-          },
-        })
-        .exec()
-        .then((docs) => {
-          for (const doc of docs) {
-            doc.incrementalModify((docData) => {
-              docData.games = docData.games.filter((id) => id != data.id)
-              return docData
-            })
-          }
-        }),
-      collections.scores.bulkRemove(data.scores),
-    ])
+    return collections.rounds
+      .find({
+        selector: {
+          games: data.id,
+        },
+      })
+      .exec()
+      .then((docs) => {
+        for (const doc of docs) {
+          doc.incrementalModify((docData) => {
+            docData.games = docData.games.filter((id) => id != data.id)
+            return docData
+          })
+        }
+      })
+  }, false)
+  // When game removed, also remove it's scores
+  collections.games.postRemove((data) => {
+    return collections.scores.bulkRemove(data.scores)
   }, false)
 
-  // When score removed, also remove it's ID from games
+  // When removing score, also remove it's ID from games
   collections.scores.preRemove((data) => {
     return collections.games
       .find({
@@ -106,7 +109,7 @@ function initMiddleware(collections: AppDatabaseCollections) {
       })
   }, false)
 
-  // When member removed, also remove it's ID from teams
+  // When removing member, also remove it's ID from teams
   collections.members.preRemove((data) => {
     return collections.teams
       .find({
@@ -125,7 +128,7 @@ function initMiddleware(collections: AppDatabaseCollections) {
       })
   }, false)
 
-  // When team removed, also remove any scores associated with it
+  // When removing team, also remove any scores associated with it
   collections.teams.preRemove((data) => {
     return collections.scores
       .find({
