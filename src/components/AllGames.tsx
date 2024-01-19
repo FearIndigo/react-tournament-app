@@ -3,7 +3,6 @@ import TextLoading from './TextLoading'
 import { useState } from 'react'
 import EditModeToggle from './EditModeToggle'
 import { GameDocType } from '../db/types/game'
-import AddNewGameButton from './AddNewGameButton'
 import GameList from './GameList'
 import AccordionOpenToggle from './AccordionOpenToggle.tsx'
 import TextInfo from './TextInfo.tsx'
@@ -37,7 +36,6 @@ function AllGames() {
               onChange={setScoresVisible}
               title='Toggle show all game teams'
             />
-            <AddNewGameButton />
           </div>
         </div>
       </Slot>
