@@ -72,9 +72,17 @@ function Game({
   return (
     <Card className={`bg-100 ${className}`}>
       <Slot name='header'>
-        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
+        <div className='flex h-full w-full items-center space-x-1 p-1'>
           {editModeOff ? (
-            <span className='truncate px-2 font-bold'>{gameName}</span>
+            <>
+              <div className='h-full'>
+                <GameCompletedToggle
+                  completed={game.completed}
+                  onChange={updateGameCompleted}
+                />
+              </div>
+              <span className='w-full truncate px-2 font-bold'>{gameName}</span>
+            </>
           ) : (
             <TextInput
               value={game.name}
@@ -85,15 +93,10 @@ function Game({
           )}
 
           <div className='flex h-full space-x-1'>
-            {!editModeOff ? (
+            {!editModeOff && (
               <RemoveDocumentButton<GameDocType>
                 document={game}
                 title='Remove game'
-              />
-            ) : (
-              <GameCompletedToggle
-                completed={game.completed}
-                onChange={updateGameCompleted}
               />
             )}
             {showEditButton && (
