@@ -73,7 +73,7 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
         <Collapsible open={gamesVisible}>
           <div className='p-2 pt-1'>
             {games.length > 0 ? (
-              <GameList games={games} readOnly={editModeOff} />
+              <GameList games={games} />
             ) : isFetching ? (
               <TextLoading className='h-6' />
             ) : (
