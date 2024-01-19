@@ -51,7 +51,7 @@ function Team({
   return (
     <Card className={`bg-100 ${className}`}>
       <Slot name='header'>
-        <div className='flex h-full w-full items-center justify-between space-x-1 p-1'>
+        <div className='flex h-full w-full items-center space-x-1 p-1'>
           {editModeOff ? (
             <>
               {slots.preHeader && (
