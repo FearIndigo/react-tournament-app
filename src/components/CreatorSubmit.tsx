@@ -24,6 +24,7 @@ function CreatorSubmit({ data }: CreatorSubmitProps) {
     )
       return
 
+    console.log(uuidv4())
     console.log(data)
   }
 
