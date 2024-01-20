@@ -1,0 +1,47 @@
+{
+  "title": "gameDocType",
+  "version": 0,
+  "keyCompression": true,
+  "primaryKey": "id",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "type": {
+      "type": "string",
+      "enum": ["highestScore", "lowestScore"],
+      "default": "highestScore"
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "scores": {
+      "ref": "scores",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "createdAt": {
+      "type": "string",
+      "maxLength": 100,
+      "default": "",
+      "final": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "required": ["id", "name", "type", "completed", "scores"],
+  "indexes": ["createdAt"]
+}

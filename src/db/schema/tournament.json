@@ -1,0 +1,38 @@
+{
+  "title": "tournamentDocType",
+  "version": 0,
+  "keyCompression": true,
+  "primaryKey": "id",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "name": {
+      "type": "string",
+      "default": ""
+    },
+    "brackets": {
+      "ref": "brackets",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "createdAt": {
+      "type": "string",
+      "maxLength": 100,
+      "default": "",
+      "final": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "required": ["id", "name", "brackets"],
+  "indexes": ["createdAt"]
+}

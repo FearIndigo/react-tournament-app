@@ -1,0 +1,33 @@
+{
+  "title": "scoreDocType",
+  "version": 0,
+  "keyCompression": true,
+  "primaryKey": "id",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "score": {
+      "type": "integer",
+      "default": 0
+    },
+    "team": {
+      "ref": "teams",
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "maxLength": 100,
+      "default": "",
+      "final": true
+    },
+    "updatedAt": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "required": ["id", "score", "team"],
+  "indexes": ["createdAt"]
+}
