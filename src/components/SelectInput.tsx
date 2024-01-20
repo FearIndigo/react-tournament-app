@@ -7,12 +7,15 @@ type SelectInputProps = {
   options: [value: string, label: string][]
   placeholder?: string
   label?: string
+  name?: string
+  title?: string
   className?: string
   onChange: (newOption: [value: string, label: string]) => void
 }
 
 SelectInput.defaultProps = {
   placeholder: 'Choose Option:',
+  title: 'Select option',
   className: '',
 }
 
@@ -21,6 +24,8 @@ function SelectInput({
   options,
   placeholder,
   label,
+  name,
+  title,
   className,
   onChange,
 }: SelectInputProps) {
@@ -32,11 +37,9 @@ function SelectInput({
 
   return (
     <>
-      {label && (
-        <label htmlFor={inputId} className='mx-2'>
-          {label}
-        </label>
-      )}
+      <label htmlFor={inputId} className={`mx-2 ${!label && 'hidden'}`}>
+        {label || title}
+      </label>
       <div className={`rounded-3xl shadow ${className}`}>
         <div className='relative w-full'>
           <select
@@ -44,12 +47,18 @@ function SelectInput({
             value={value}
             className='bg-100 input relative pr-8'
             onChange={handleOnChange}
+            name={name}
+            title={title}
           >
-            <option value='' disabled>
+            <option value='' label={placeholder} disabled>
               {placeholder}
             </option>
             {options.map((option, index) => (
-              <option key={`${index}-${option[0]}`} value={option[0]}>
+              <option
+                key={`${index}-${option[0]}`}
+                value={option[0]}
+                label={option[1]}
+              >
                 {option[1]}
               </option>
             ))}
