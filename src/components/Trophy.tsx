@@ -1,4 +1,5 @@
 import { useRive } from '@rive-app/react-canvas-lite'
+import trophy from '../assets/trophy.riv?url'
 
 type TrophyProps = {
   className?: string
@@ -10,7 +11,7 @@ Trophy.defaultProps = {
 
 function Trophy({ className }: TrophyProps) {
   const { rive, RiveComponent } = useRive({
-    src: '/trophy.riv',
+    src: trophy,
     autoplay: true,
   })
 

@@ -6,6 +6,7 @@ import DataScreen from './components/DataScreen'
 import StatsScreen from './components/StatsScreen.tsx'
 import Screen from './components/Screen.tsx'
 import Footer from './components/Footer.tsx'
+import topography from './assets/topography.svg'
 
 function App() {
   const [tabIndex, updateTabIndex] = useState(0)
@@ -14,7 +15,7 @@ function App() {
     <div className='bg-500 relative flex min-h-screen flex-col justify-between space-y-8 overflow-hidden'>
       <div
         className='fixed left-0 top-0 h-screen w-full bg-repeat opacity-[0.1]'
-        style={{ backgroundImage: 'url(/topography.svg)' }}
+        style={{ backgroundImage: `url(${topography})` }}
       />
 
       <main className='relative flex flex-col items-center space-y-8'>
