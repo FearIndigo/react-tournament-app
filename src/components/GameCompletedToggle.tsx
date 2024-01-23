@@ -1,8 +1,4 @@
-import {
-  LockClosedIcon,
-  LockOpenIcon,
-  TrophyIcon,
-} from '@heroicons/react/24/outline'
+import { LockClosedIcon, LockOpenIcon } from '@heroicons/react/24/outline'
 
 type GameCompletedToggleProps = {
   completed: boolean
