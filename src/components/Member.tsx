@@ -38,9 +38,9 @@ function Member({
   return (
     <Card className={`${className}`}>
       <Slot name='header'>
-        <div className='flex h-full w-full items-center space-x-1 p-1'>
+        <div className='flex h-full w-full items-center space-x-2 p-1'>
           {editModeOff ? (
-            <span className='w-full truncate px-2'>{member.name}</span>
+            <span className='ml-2 w-full truncate'>{member.name}</span>
           ) : (
             <TextInput
               value={member.name}

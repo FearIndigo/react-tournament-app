@@ -40,28 +40,51 @@ function StatsTable({ teamStats, name, className }: StatsTableProps) {
           {sortedTeamIds.length == 0 ? (
             <TextInfo text='No stats found' className='h-8' />
           ) : (
-            <table className='w-full table-fixed border-separate border-spacing-1'>
+            <table className='w-full table-fixed'>
               <thead>
                 <tr className='h-10'>
-                  <th className='w-1/3 text-left'>Team</th>
-                  <th className='rounded-3xl bg-green-300 text-green-800'>W</th>
-                  <th className='rounded-3xl bg-red-200 text-red-800'>L</th>
-                  <th className='rounded-3xl bg-sky-200 text-sky-800'>D</th>
-                  <th>P</th>
-                  <th className='rounded-3xl bg-yellow-200 text-yellow-800'>
+                  <th className='w-1/3'></th>
+                  <th
+                    title='Wins'
+                    className='rounded-3xl bg-green-300 text-green-800'
+                  >
+                    W
+                  </th>
+                  <th
+                    title='Loses'
+                    className='rounded-3xl bg-red-200 text-red-800'
+                  >
+                    L
+                  </th>
+                  <th
+                    title='Draws'
+                    className='rounded-3xl bg-sky-200 text-sky-800'
+                  >
+                    D
+                  </th>
+                  <th title='Played'>P</th>
+                  <th
+                    title='Points'
+                    className='rounded-3xl bg-yellow-200 text-yellow-800'
+                  >
                     Pts
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {sortedTeamIds.map((teamId) => (
-                  <tr key={teamId} className='text-center'>
-                    <td className='truncate text-left'>{teamNames[teamId]}</td>
-                    <td className='text-green-800'>{teamStats[teamId].wins}</td>
-                    <td className='text-red-800'>{teamStats[teamId].loses}</td>
-                    <td className='text-sky-800'>{teamStats[teamId].draws}</td>
+                  <tr
+                    key={teamId}
+                    className='hover:bg-300 text-center transition-colors odd:bg-violet-950/[0.03]'
+                  >
+                    <td className='truncate rounded-l-3xl pl-3 text-left'>
+                      {teamNames[teamId]}
+                    </td>
+                    <td>{teamStats[teamId].wins}</td>
+                    <td>{teamStats[teamId].loses}</td>
+                    <td>{teamStats[teamId].draws}</td>
                     <td>{teamStats[teamId].gamesPlayed()}</td>
-                    <td className='text-yellow-800'>
+                    <td className='rounded-r-3xl'>
                       {teamStats[teamId].points()}
                     </td>
                   </tr>

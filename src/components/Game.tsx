@@ -72,7 +72,7 @@ function Game({
   return (
     <Card className={`bg-100 ${className}`}>
       <Slot name='header'>
-        <div className='flex h-full w-full items-center space-x-1 p-1'>
+        <div className='flex h-full w-full items-center space-x-2 p-1'>
           {editModeOff ? (
             <>
               <div className='h-full'>
@@ -81,7 +81,7 @@ function Game({
                   onChange={updateGameCompleted}
                 />
               </div>
-              <span className='w-full truncate px-2 font-bold'>{gameName}</span>
+              <span className='w-full truncate font-bold'>{gameName}</span>
             </>
           ) : (
             <TextInput

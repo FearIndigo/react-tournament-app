@@ -1,4 +1,8 @@
-import { TrophyIcon } from '@heroicons/react/24/outline'
+import {
+  LockClosedIcon,
+  LockOpenIcon,
+  TrophyIcon,
+} from '@heroicons/react/24/outline'
 
 type GameCompletedToggleProps = {
   completed: boolean
@@ -18,12 +22,12 @@ function GameCompletedToggle({
   return (
     <button
       title={title}
-      className={`h-8 w-8 rounded-3xl p-2 shadow ${
-        completed ? 'bg-yellow-200 text-yellow-800' : 'bg-100 text-violet-800'
+      className={`h-8 w-8 rounded-3xl p-2 text-violet-800 shadow ${
+        completed ? 'bg-300 text-violet-100' : 'bg-100'
       }`}
       onClick={() => onChange(!completed)}
     >
-      <TrophyIcon />
+      {completed ? <LockClosedIcon /> : <LockOpenIcon />}
     </button>
   )
 }

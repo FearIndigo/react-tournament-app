@@ -42,9 +42,9 @@ function Round({ round, showGames, readOnly, className, bracket }: RoundProps) {
   return (
     <Card className={`bg-100 ${className}`}>
       <Slot name='header'>
-        <div className='flex h-full w-full items-center space-x-1 p-1'>
+        <div className='flex h-full w-full items-center space-x-2 p-1'>
           {editModeOff ? (
-            <span className='w-full truncate px-2 font-bold'>{roundName}</span>
+            <span className='ml-2 w-full truncate font-bold'>{roundName}</span>
           ) : (
             <TextInput
               value={round.name}
