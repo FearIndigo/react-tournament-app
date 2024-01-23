@@ -34,18 +34,14 @@ function CreatorBracket({ data, index, onChange }: CreatorBracketProps) {
   }
 
   function updateTeamsOut(teamsOut: number) {
-    const int = Math.ceil(teamsOut)
-    if (isNaN(int) || int < 1) return
-    data.brackets[index].teamsOut = int
+    data.brackets[index].teamsOut = teamsOut
     recursiveUpdateTeamsInOut(index + 1, data)
     calculateNumRounds(index, data)
     onChange(data)
   }
 
   function updateNumRounds(numRounds: number) {
-    const int = Math.ceil(numRounds)
-    if (isNaN(int) || int < 0) return
-    data.brackets[index].numRounds = int
+    data.brackets[index].numRounds = numRounds
     calculateRoundData(index, data)
     onChange(data)
   }

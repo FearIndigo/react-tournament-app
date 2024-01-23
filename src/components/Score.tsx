@@ -40,10 +40,10 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
 
   function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key != 'Enter') return
-    handleSubmit()
+    handleOnBlur()
   }
 
-  function handleSubmit() {
+  function handleOnBlur() {
     if (!readOnly) return
     setEditModeOff(true)
   }
@@ -78,7 +78,7 @@ function Score({ score, game, readOnly, showRemoveButton }: ScoreProps) {
                   onChange={updateScore}
                   className='w-16'
                   onKeyDown={handleKeyDown}
-                  onBlur={handleSubmit}
+                  onBlur={handleOnBlur}
                   focused={readOnly}
                 />
               )}

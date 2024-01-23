@@ -26,23 +26,17 @@ function CreatorTournament({ data, onChange }: CreatorTournamentProps) {
   }
 
   function updateNumTeams(numTeams: number) {
-    const int = Math.ceil(numTeams)
-    if (isNaN(int) || int < 1) return
-    data.numTeams = int
-
+    data.numTeams = numTeams
     recursiveUpdateTeamsInOut(0, data)
-
     onChange(data)
   }
 
   function updateNumBrackets(numBrackets: number) {
-    const int = Math.ceil(numBrackets)
-    if (isNaN(int) || int < 1) return
-    data.numBrackets = int
-    if (int != data.brackets.length) {
+    data.numBrackets = numBrackets
+    if (numBrackets != data.brackets.length) {
       const oldLength = data.brackets.length
-      data.brackets.length = int
-      if (int > oldLength) {
+      data.brackets.length = numBrackets
+      if (numBrackets > oldLength) {
         data.brackets.fill({ ...defaultBracketData }, oldLength)
         recursiveUpdateTeamsInOut(oldLength, data)
         calculateNumRounds(oldLength, data)

@@ -31,9 +31,12 @@ export function usePropState<T>(propValue: T) {
   const [state, setState] = useState(propValue)
 
   const [prevPropValue, setPrevPropValue] = useState(propValue)
-  if (propValue != prevPropValue) {
+  if (prevPropValue != propValue) {
     setPrevPropValue(propValue)
-    setState(propValue)
+
+    if (state != propValue) {
+      setState(propValue)
+    }
   }
 
   return [state, setState] as const

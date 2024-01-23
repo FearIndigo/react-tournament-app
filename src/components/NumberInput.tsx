@@ -1,5 +1,6 @@
 import {
   ChangeEvent,
+  FocusEvent,
   FocusEventHandler,
   KeyboardEventHandler,
   useEffect,
@@ -7,6 +8,7 @@ import {
   useRef,
 } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { usePropState } from '../hooks.tsx'
 
 type NumberInputProps = {
   value: number
@@ -54,12 +56,9 @@ function NumberInput({
   focused,
 }: NumberInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
-
-  function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
-    let newValue = parseInt(e.target.value)
-    if (isNaN(newValue)) newValue = 0
-    onChange(newValue)
-  }
+  const [internalValue, setInternalValue] = usePropState<string>(
+    value.toString()
+  )
 
   useEffect(() => {
     if (!focused) return
@@ -67,6 +66,38 @@ function NumberInput({
   }, [focused, inputRef])
 
   const inputId = useMemo(() => uuidv4(), [])
+
+  function tryGetValidNumber(input: string) {
+    const inputStep = step ?? 1
+    return Math.min(
+      max ?? Infinity,
+      Math.max(
+        min ?? -Infinity,
+        Math.round(parseFloat(input) / inputStep) * inputStep
+      )
+    )
+  }
+
+  function handleOnChange(e: ChangeEvent<HTMLInputElement>) {
+    const num = tryGetValidNumber(e.target.value)
+    if (isNaN(num)) {
+      setInternalValue(e.target.value)
+    } else {
+      setInternalValue(num.toString())
+      onChange(num)
+    }
+  }
+
+  function handleOnBlur(e: FocusEvent<HTMLInputElement>) {
+    if (isNaN(parseFloat(e.target.value))) {
+      const num = tryGetValidNumber('0')
+      setInternalValue(num.toString())
+      onChange(num)
+    }
+
+    if (!onBlur) return
+    onBlur(e)
+  }
 
   return (
     <>
@@ -84,7 +115,7 @@ function NumberInput({
             ref={inputRef}
             type='number'
             inputMode={inputMode}
-            value={value}
+            value={internalValue}
             placeholder={placeholder}
             onChange={handleOnChange}
             className='bg-100 input'
@@ -92,7 +123,7 @@ function NumberInput({
             max={max}
             step={step}
             onKeyDown={onKeyDown}
-            onBlur={onBlur}
+            onBlur={handleOnBlur}
           />
         )}
       </div>

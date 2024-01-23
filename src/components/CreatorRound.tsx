@@ -17,16 +17,12 @@ function CreatorRound({ data, index, onChange }: CreatorRoundProps) {
   const [viewData, setViewData] = useState(false)
 
   function updateTeamsInRound(numRounds: number) {
-    const int = Math.ceil(numRounds)
-    if (isNaN(int) || int < 0) return
-    data.rounds[index].numTeams = int
+    data.rounds[index].numTeams = numRounds
     onChange(data)
   }
 
   function updateGamesInRound(numGames: number) {
-    const int = Math.ceil(numGames)
-    if (isNaN(int) || int < 0) return
-    data.rounds[index].numGames = int
+    data.rounds[index].numGames = numGames
     onChange(data)
   }
 
@@ -54,6 +50,7 @@ function CreatorRound({ data, index, onChange }: CreatorRoundProps) {
                 onChange={updateTeamsInRound}
                 value={roundData.numTeams}
                 label='Teams in Round'
+                min={0}
                 max={data.teamsIn}
                 disabled={nonCustomType(data)}
               />
