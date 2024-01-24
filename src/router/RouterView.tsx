@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 import { useCurrentPath } from './hooks.ts'
 
 type RouterViewProps = {
@@ -15,7 +15,11 @@ RouterView.defaultProps = {
 function RouterView({ routes, renderFunc }: RouterViewProps) {
   const currentPath = useCurrentPath()
 
-  return routes.map((route) => currentPath == route.path && renderFunc(route))
+  return routes.map((route) =>
+    route.path == currentPath ? (
+      <Fragment key={route.path}>{renderFunc(route)}</Fragment>
+    ) : null
+  )
 }
 
 export default RouterView
