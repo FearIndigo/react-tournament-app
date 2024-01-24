@@ -31,6 +31,7 @@ function TabButtons({
           style={{
             transform: `translateX(${tabIndex * 100}%)`,
             width: `${(1 / tabs.length) * 100}%`,
+            display: tabIndex < 0 ? 'none' : 'block',
           }}
         ></span>
         {tabs.map((tab, index) => (

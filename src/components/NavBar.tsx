@@ -10,7 +10,7 @@ function NavBar({ links }: NavBarProps) {
   const currentPath = useCurrentPath()
 
   const activeLink = links.find((link) => link.path == currentPath)
-  const tabIndex = activeLink ? links.indexOf(activeLink) : 0
+  const tabIndex = activeLink ? links.indexOf(activeLink) : -1
 
   function handleOnChanged(index: number) {
     navigate(links[index].path)
