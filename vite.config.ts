@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     visualizer({
+      filename: 'bundle-visualizer.html',
       gzipSize: true,
       brotliSize: true,
     }) as PluginOption,
