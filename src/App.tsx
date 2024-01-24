@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import Trophy from './components/Trophy.tsx'
 import TabButtons from './components/TabButtons'
-import CreatorScreen from './components/CreatorScreen'
-import DataScreen from './components/DataScreen'
-import StatsScreen from './components/StatsScreen.tsx'
-import Screen from './components/Screen.tsx'
 import Footer from './components/Footer.tsx'
 import topography from './assets/topography.svg'
+import RouterView from './router/RouterView.tsx'
+import CreatorScreen from './components/CreatorScreen.tsx'
+import DataScreen from './components/DataScreen.tsx'
+import StatsScreen from './components/StatsScreen.tsx'
+
+const routes = [
+  { name: 'Creator', path: '/creator', component: <CreatorScreen /> },
+  { name: 'Data', path: '/data', component: <DataScreen /> },
+  { name: 'Layout', path: '/layout', component: '' },
+  { name: 'Stats', path: '/stats', component: <StatsScreen /> },
+]
 
 function App() {
   const [tabIndex, updateTabIndex] = useState(0)
@@ -44,17 +51,8 @@ function App() {
         </div>
 
         <div className='container w-full px-4'>
-          <div className='relative w-full'>
-            <Screen visible={tabIndex == 0}>
-              <CreatorScreen />
-            </Screen>
-            <Screen visible={tabIndex == 1}>
-              <DataScreen />
-            </Screen>
-
-            <Screen visible={tabIndex == 3}>
-              <StatsScreen />
-            </Screen>
+          <div className='relative flex w-full justify-center'>
+            <RouterView routes={routes} />
           </div>
         </div>
       </main>
