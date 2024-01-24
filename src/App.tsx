@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import Trophy from './components/Trophy.tsx'
-import TabButtons from './components/TabButtons'
 import Footer from './components/Footer.tsx'
 import topography from './assets/topography.svg'
 import RouterView from './router/RouterView.tsx'
 import CreatorScreen from './components/CreatorScreen.tsx'
 import DataScreen from './components/DataScreen.tsx'
 import StatsScreen from './components/StatsScreen.tsx'
+import NavBar from './components/NavBar.tsx'
 
 const routes = [
   { name: 'Creator', path: '/creator', component: <CreatorScreen /> },
@@ -16,8 +15,6 @@ const routes = [
 ]
 
 function App() {
-  const [tabIndex, updateTabIndex] = useState(0)
-
   return (
     <div className='bg-500 relative flex min-h-screen flex-col justify-between space-y-8 overflow-hidden'>
       <div
@@ -43,10 +40,11 @@ function App() {
         </div>
 
         <div className='container w-full px-4 md:w-auto'>
-          <TabButtons
-            tabs={['Creator', 'Data', 'Layout', 'Stats']}
-            defaultTabIndex={tabIndex}
-            onChanged={updateTabIndex}
+          <NavBar
+            links={routes.map((route) => ({
+              path: route.path,
+              label: route.name,
+            }))}
           />
         </div>
 
