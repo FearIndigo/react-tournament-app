@@ -1,25 +1,11 @@
-import { useState } from 'react'
-
 type TabButtonsProps = {
   tabs: string[]
-  defaultTabIndex?: number
+  tabIndex: number
   onChanged: (tabIndex: number) => void
   className?: string
 }
 
-function TabButtons({
-  tabs,
-  defaultTabIndex,
-  onChanged,
-  className,
-}: TabButtonsProps) {
-  const [tabIndex, setTabIndex] = useState(defaultTabIndex ?? 0)
-
-  function updateTabIndex(index: number) {
-    setTabIndex(index)
-    onChanged(index)
-  }
-
+function TabButtons({ tabs, tabIndex, onChanged, className }: TabButtonsProps) {
   return (
     <div className={`bg-300 rounded-full p-1 text-violet-800 ${className}`}>
       <div
@@ -40,8 +26,9 @@ function TabButtons({
               type='radio'
               id={`tab-button-${index}`}
               name={`tab-buttons`}
-              onChange={() => updateTabIndex(index)}
+              onChange={() => onChanged(index)}
               className='hidden'
+              checked={index == tabIndex}
             />
             <label
               htmlFor={`tab-button-${index}`}

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 export function useNavigate() {
   return useCallback((path: string) => {
     window.history.pushState({}, '', path)
-    window.dispatchEvent(new PopStateEvent('navigate'))
+    window.dispatchEvent(new PopStateEvent('popstate'))
   }, [])
 }
 
@@ -14,8 +14,8 @@ export function useCurrentPath() {
     function onLocationChange() {
       setCurrentPath(window.location.pathname)
     }
-    window.addEventListener('navigate', onLocationChange)
-    return () => window.removeEventListener('navigate', onLocationChange)
+    window.addEventListener('popstate', onLocationChange)
+    return () => window.removeEventListener('popstate', onLocationChange)
   }, [])
 
   return currentPath
