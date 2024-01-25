@@ -49,7 +49,7 @@ function App() {
         </div>
 
         <div className='container w-full px-4'>
-          <div className='relative flex w-full justify-center'>
+          <div className='relative w-full'>
             <RouterView routes={routes} />
           </div>
         </div>
