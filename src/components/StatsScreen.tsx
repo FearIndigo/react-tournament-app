@@ -29,6 +29,10 @@ function StatsScreen({ className }: StatsScreenProps) {
     [tournaments]
   )
 
+  if (options.length > 0 && selectedOption[0] == '') {
+    setSelectedOption(options[0])
+  }
+
   const selectedTournament = useMemo(
     () => tournaments.find((t) => t.id == selectedOption[0]),
     [tournaments, selectedOption]
