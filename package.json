@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "generate-schema-types": "rxdb-schema-types -i ./src/db/schema -o ./src/db/types",
-    "deploy": "yarn build && gh-pages -d dist"
+    "deploy": "yarn build && cd dist && copy index.html 404.html && cd .. && gh-pages -d dist"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.1",
