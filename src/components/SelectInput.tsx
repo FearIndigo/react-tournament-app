@@ -37,9 +37,11 @@ function SelectInput({
 
   return (
     <>
-      <label htmlFor={inputId} className={`mx-2 ${!label && 'hidden'}`}>
-        {label || title}
-      </label>
+      {label && (
+        <label htmlFor={inputId} className='mx-2'>
+          {label || title}
+        </label>
+      )}
       <div className={`rounded-3xl shadow ${className}`}>
         <div className='relative w-full'>
           <select
